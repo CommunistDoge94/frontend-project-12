@@ -85,6 +85,10 @@ const chatSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(sendMessage.fulfilled, (state, action) => {
+        state.messages.push(action.payload);
+        state.error = null;
+      })
       .addCase(sendMessage.rejected, (state, action) => {
         state.error = action.payload;
       });
