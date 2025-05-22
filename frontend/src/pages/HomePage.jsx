@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchChatData } from '../slices/chatSlice';
+import { fetchInitialData } from '../slices/chatSlice';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const HomePage = () => {
     if (!isAuthenticated) {
       navigate('/login');
     } else {
-      dispatch(fetchChatData());
+      dispatch(fetchInitialData());
     }
   }, [isAuthenticated, dispatch, navigate]);
 

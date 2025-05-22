@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchChatData = createAsyncThunk(
+export const fetchInitialData = createAsyncThunk(
   'chat/fetchData',
-  async (_, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
-      const user = JSON.parse(localStorage.getItem('user'));
+      const token = getState().auth.token;
       const response = await axios.get('/api/v1/data', {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       return {
@@ -34,17 +34,17 @@ const chatSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChatData.pending, (state) => {
+      .addCase(fetchInitialData.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchChatData.fulfilled, (state, action) => {
+      .addCase(fetchInitialData.fulfilled, (state, action) => {
         state.loading = false;
-        state.channels = action.payload.channels || [];
-        state.messages = action.payload.messages || [];
-        state.currentChannelId = action.payload.currentChannelId || null;
+        state.channels = action.payload.channels;
+        state.messages = action.payload.messages;
+        state.currentChannelId = action.payload.currentChannelId;
       })
-      .addCase(fetchChatData.rejected, (state, action) => {
+      .addCase(fetchInitialData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
