@@ -11,7 +11,11 @@ export const fetchChatData = createAsyncThunk(
           Authorization: `Bearer ${user.token}`,
         },
       });
-      return response.data;
+      return {
+        channels: response.data.channels || [],
+        messages: response.data.messages || [],
+        currentChannelId: response.data.currentChannelId || null,
+      };
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Network error');
     }
@@ -36,9 +40,9 @@ const chatSlice = createSlice({
       })
       .addCase(fetchChatData.fulfilled, (state, action) => {
         state.loading = false;
-        state.channels = action.payload.channels;
-        state.messages = action.payload.messages;
-        state.currentChannelId = action.payload.currentChannelId;
+        state.channels = action.payload.channels || [];
+        state.messages = action.payload.messages || [];
+        state.currentChannelId = action.payload.currentChannelId || null;
       })
       .addCase(fetchChatData.rejected, (state, action) => {
         state.loading = false;
