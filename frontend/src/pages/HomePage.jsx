@@ -78,65 +78,48 @@ const HomePage = () => {
   if (error) return <p>Ошибка: {error}</p>;
 
   return (
-    <div className="container mt-4">
-      <div className="row">
-        <div className="col-4">
-          <h5>Каналы</h5>
-          <ul className="list-group">
-            {channels.map((channel) => (
-              <li
-                key={channel.id}
-                className={`list-group-item ${
-                  channel.id === currentChannelId ? 'active' : ''
-                }`}
-                onClick={() => handleChannelSelect(channel.id)}
-                style={{ cursor: 'pointer' }}
-              >
-                {channel.name}
-              </li>
-            ))}
-          </ul>
+    <div className="container">
+    <div className="channels">
+      <h5>Каналы</h5>
+      {channels.map((channel) => (
+        <div
+          key={channel.id}
+          className={`channel-item ${channel.id === currentChannelId ? 'active' : ''}`}
+          onClick={() => handleChannelSelect(channel.id)}
+        >
+          {channel.name}
         </div>
-        <div className="col-8 d-flex flex-column">
-          <h5>
-            Сообщения{' '}
-            {!socketConnected && (
-              <span className="text-danger"> (Оффлайн)</span>
-            )}
-          </h5>
-          <ul
-            className="list-group mb-3 flex-grow-1 overflow-auto"
-            style={{ maxHeight: '400px' }}
-          >
-            {filteredMessages.map((message) => (
-              <li key={message.id} className="list-group-item">
-                <strong>{message.username}: </strong>
-                {message.body}
-              </li>
-            ))}
-            <div ref={messagesEndRef} />
-          </ul>
-          <form onSubmit={handleSendMessage} className="d-flex">
-            <input
-              type="text"
-              className="form-control me-2"
-              placeholder="Введите сообщение..."
-              value={messageBody}
-              onChange={(e) => setMessageBody(e.target.value)}
-              disabled={!socketConnected}
-              autoComplete="off"
-            />
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={!socketConnected || !messageBody.trim()}
-            >
-              Отправить
-            </button>
-          </form>
-        </div>
-      </div>
+      ))}
     </div>
+
+    <div className="chat">
+      <div className="chat-header">
+        <span>Канал: {channels.find((ch) => ch.id === currentChannelId)?.name || ''}</span>
+        {!socketConnected && <span className="status-offline">Оффлайн</span>}
+      </div>
+
+      <div className="messages-list" id="messages-list">
+        {filteredMessages.map((message) => (
+          <div key={message.id} className="message">
+            <strong>{message.username}:</strong> {message.body}
+          </div>
+        ))}
+      </div>
+
+      <form onSubmit={handleSendMessage} className="input-group">
+        <input
+          type="text"
+          placeholder="Введите сообщение..."
+          value={messageBody}
+          onChange={(e) => setMessageBody(e.target.value)}
+          disabled={!socketConnected}
+        />
+        <button type="submit" disabled={!socketConnected || !messageBody.trim()}>
+          Отправить
+        </button>
+      </form>
+    </div>
+  </div>
   );
 };
 

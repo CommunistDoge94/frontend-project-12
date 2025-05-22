@@ -1,0 +1,138 @@
+body {
+  background-color: #f4f7f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  border-radius: 8px;
+  display: flex;
+  height: 600px;
+  overflow: hidden;
+}
+
+.channels {
+  width: 240px;
+  background: #2c3e50;
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.channels h5 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.channel-item {
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.channel-item:hover {
+  background-color: #34495e;
+}
+
+.channel-item.active {
+  background-color: #2980b9;
+  font-weight: 700;
+}
+
+.chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.chat-header {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #2980b9;
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #34495e;
+}
+
+.messages-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-bottom: 15px;
+}
+
+.message {
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #ecf0f1;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.message strong {
+  color: #2980b9;
+  margin-right: 6px;
+}
+
+.input-group {
+  display: flex;
+}
+
+.input-group input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border-radius: 25px 0 0 25px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #2980b9;
+}
+
+.input-group button {
+  background-color: #2980b9;
+  border: none;
+  color: #fff;
+  padding: 0 20px;
+  border-radius: 0 25px 25px 0;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+.input-group button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.input-group button:hover:not(:disabled) {
+  background-color: #1c5980;
+}
+
+.status-offline {
+  color: #e74c3c;
+  font-weight: 700;
+  margin-left: 8px;
+}
