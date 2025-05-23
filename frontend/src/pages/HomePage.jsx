@@ -14,6 +14,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const username = useSelector((state) => state.auth.username);
   const {
     channels,
     messages,
@@ -33,7 +34,7 @@ const HomePage = () => {
       dispatch(fetchInitialData())
         .unwrap()
         .then((data) => {
-          if (!data.currentChannelId && data.channels.length > 0) {
+          if (data.channels.length > 0) {
             const generalChannel = data.channels.find(
               (ch) => ch.name.toLowerCase() === 'general'
             );
@@ -41,6 +42,9 @@ const HomePage = () => {
             dispatch(setCurrentChannelId(channelId));
           }
           dispatch(initializeSocket());
+        })
+        .catch((err) => {
+          console.error('Failed to fetch initial data:', err);
         });
     }
 
@@ -67,6 +71,7 @@ const HomePage = () => {
       ).unwrap();
       setMessageBody('');
     } catch (err) {
+      console.error('Failed to send message:', err);
     }
   };
 
@@ -74,52 +79,62 @@ const HomePage = () => {
     dispatch(setCurrentChannelId(id));
   };
 
-  if (loading) return <p>Загрузка...</p>;
-  if (error) return <p>Ошибка: {error}</p>;
+  if (loading) return <div className="container">Загрузка...</div>;
+  if (error) return <div className="container">Ошибка: {error}</div>;
 
   return (
     <div className="container">
-    <div className="channels">
-      <h5>Каналы</h5>
-      {channels.map((channel) => (
-        <div
-          key={channel.id}
-          className={`channel-item ${channel.id === currentChannelId ? 'active' : ''}`}
-          onClick={() => handleChannelSelect(channel.id)}
-        >
-          {channel.name}
-        </div>
-      ))}
-    </div>
-
-    <div className="chat">
-      <div className="chat-header">
-        <span>Канал: {channels.find((ch) => ch.id === currentChannelId)?.name || ''}</span>
-        {!socketConnected && <span className="status-offline">Оффлайн</span>}
-      </div>
-
-      <div className="messages-list" id="messages-list">
-        {filteredMessages.map((message) => (
-          <div key={message.id} className="message">
-            <strong>{message.username}:</strong> {message.body}
+      <div className="channels">
+        <h5>Каналы</h5>
+        {channels.map((channel) => (
+          <div
+            key={channel.id}
+            className={`channel-item ${channel.id === currentChannelId ? 'active' : ''}`}
+            onClick={() => handleChannelSelect(channel.id)}
+          >
+            {channel.name}
           </div>
         ))}
       </div>
 
-      <form onSubmit={handleSendMessage} className="input-group">
-        <input
-          type="text"
-          placeholder="Введите сообщение..."
-          value={messageBody}
-          onChange={(e) => setMessageBody(e.target.value)}
-          disabled={!socketConnected}
-        />
-        <button type="submit" disabled={!socketConnected || !messageBody.trim()}>
-          Отправить
-        </button>
-      </form>
+      <div className="chat">
+        <div className="chat-header">
+          <span>
+            Канал: {channels.find((ch) => ch.id === currentChannelId)?.name || ''} | 
+            Пользователь: {username}
+          </span>
+          {!socketConnected && <span className="status-offline">Оффлайн</span>}
+        </div>
+
+        <div className="messages-list">
+          {filteredMessages.map((message) => (
+            <div key={message.id} className="message">
+              <strong>{message.username}:</strong> {message.body}
+              <small className="text-muted d-block">
+                {new Date(message.createdAt).toLocaleTimeString()}
+              </small>
+            </div>
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
+
+        <form onSubmit={handleSendMessage} className="input-group">
+          <input
+            type="text"
+            placeholder="Введите сообщение..."
+            value={messageBody}
+            onChange={(e) => setMessageBody(e.target.value)}
+            disabled={!socketConnected}
+          />
+          <button 
+            type="submit" 
+            disabled={!socketConnected || !messageBody.trim()}
+          >
+            Отправить
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
   );
 };
 
