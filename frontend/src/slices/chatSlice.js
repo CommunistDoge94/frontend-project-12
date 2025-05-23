@@ -12,6 +12,9 @@ export const fetchInitialData = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+
+      console.log('Data from server:', response.data);
+      
       return {
         channels: response.data.channels || [],
         messages: response.data.messages || [],
@@ -47,16 +50,18 @@ export const sendMessage = createAsyncThunk(
   }
 );
 
+const initialState = {
+  channels: [{ id: '1', name: 'General', removable: false }],
+  messages: [],
+  currentChannelId: '1',
+  loading: false,
+  error: null,
+  socketConnected: false,
+};
+
 const chatSlice = createSlice({
   name: 'chat',
-  initialState: {
-    channels: [],
-    messages: [],
-    currentChannelId: null,
-    loading: false,
-    error: null,
-    socketConnected: false,
-  },
+  initialState,
   reducers: {
     addMessage: (state, action) => {
       if (!state.messages.some(msg => msg.id === action.payload.id)) {

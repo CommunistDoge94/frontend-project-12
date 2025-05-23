@@ -34,16 +34,22 @@ const HomePage = () => {
       dispatch(fetchInitialData())
         .unwrap()
         .then((data) => {
-          if (data.channels.length > 0) {
-            const generalChannel = data.channels.find(
-              (ch) => ch.name.toLowerCase() === 'general'
-            );
-            if (generalChannel) {
-              dispatch(setCurrentChannelId(generalChannel.id));
-            } else if (data.channels.length > 0) {
-              dispatch(setCurrentChannelId(data.channels[0].id));
-            }
+          console.log('Fetched data:', data);
+          
+          let channels = data.channels || [];
+          const generalChannelExists = channels.some(ch => ch.name.toLowerCase() === 'general');
+          
+          if (!generalChannelExists) {
+            channels = [...channels, { id: '1', name: 'General', removable: false }];
           }
+
+          const generalChannel = channels.find(ch => ch.name.toLowerCase() === 'general');
+          const initialChannelId = generalChannel ? generalChannel.id : channels[0]?.id;
+          
+          if (initialChannelId) {
+            dispatch(setCurrentChannelId(initialChannelId));
+          }
+
           dispatch(initializeSocket());
         })
         .catch((err) => {
@@ -85,6 +91,8 @@ const HomePage = () => {
   if (loading) return <div className="container">Загрузка...</div>;
   if (error) return <div className="container">Ошибка: {error}</div>;
 
+  console.log('Текущие каналы из Redux:', channels);
+  
   return (
     <div className="container">
       <div className="channels">
@@ -98,7 +106,7 @@ const HomePage = () => {
             >
               {channel.name}
               {channel.name.toLowerCase() === 'general' && (
-                <span className="badge bg-primary ms-2">По умолчанию</span>
+                <span className="badge">По умолчанию</span>
               )}
             </div>
           ))
