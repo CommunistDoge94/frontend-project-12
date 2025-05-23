@@ -59,10 +59,12 @@ const chatSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
-      state.messages.push({
-        ...action.payload,
-        createdAt: action.payload.createdAt || new Date().toISOString()
-      });
+      if (!state.messages.some(msg => msg.id === action.payload.id)) {
+        state.messages.push({
+          ...action.payload,
+          createdAt: action.payload.createdAt || new Date().toISOString()
+        });
+      }
     },
     setSocketConnected: (state, action) => {
       state.socketConnected = action.payload;
@@ -92,7 +94,6 @@ const chatSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
-        state.messages.push(action.payload);
         state.error = null;
       })
       .addCase(sendMessage.rejected, (state, action) => {
