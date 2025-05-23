@@ -38,8 +38,11 @@ const HomePage = () => {
             const generalChannel = data.channels.find(
               (ch) => ch.name.toLowerCase() === 'general'
             );
-            const channelId = generalChannel ? generalChannel.id : data.channels[0].id;
-            dispatch(setCurrentChannelId(channelId));
+            if (generalChannel) {
+              dispatch(setCurrentChannelId(generalChannel.id));
+            } else if (data.channels.length > 0) {
+              dispatch(setCurrentChannelId(data.channels[0].id));
+            }
           }
           dispatch(initializeSocket());
         })
@@ -86,25 +89,33 @@ const HomePage = () => {
     <div className="container">
       <div className="channels">
         <h5>Каналы</h5>
-        {channels.map((channel) => (
-          <div
-            key={channel.id}
-            className={`channel-item ${channel.id === currentChannelId ? 'active' : ''}`}
-            onClick={() => handleChannelSelect(channel.id)}
-          >
-            {channel.name}
-          </div>
-        ))}
+        {channels.length > 0 ? (
+          channels.map((channel) => (
+            <div
+              key={channel.id}
+              className={`channel-item ${channel.id === currentChannelId ? 'active' : ''}`}
+              onClick={() => handleChannelSelect(channel.id)}
+            >
+              {channel.name}
+              {channel.name.toLowerCase() === 'general' && (
+                <span className="badge bg-primary ms-2">По умолчанию</span>
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="text-muted">Нет доступных каналов</div>
+        )}
       </div>
 
       <div className="chat">
         <div className="chat-header">
           <span>
-            Канал: {channels.find((ch) => ch.id === currentChannelId)?.name || ''} | 
-            Пользователь: {username}
+            Канал: {currentChannelId ? channels.find((ch) => ch.id === currentChannelId)?.name : 'Не выбран'}
           </span>
+          <span className="user-info">Пользователь: {username}</span>
           {!socketConnected && <span className="status-offline">Оффлайн</span>}
         </div>
+
 
         <div className="messages-list">
           {filteredMessages.map((message) => (
