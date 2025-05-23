@@ -29,53 +29,57 @@ const LoginPage = () => {
       localStorage.setItem('user', JSON.stringify({ token, username: user }));
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Ошибка входа');
+      const status = err.response?.status;
+      const message = status === 401 ? 'Неверный логин или пароль' : 'Ошибка входа';
+      setError(message);
     }
   };
 
   return (
-    <div className="container" style={{ maxWidth: '600px', padding: '20px' }}>
-      <h3 style={{ marginBottom: '20px' }}>Вход в чат</h3>
-      
-      <div className="mb-4" style={{ background: '#f8f9fa', padding: '15px', borderRadius: '5px' }}>
-        <h5>Тестовые пользователи:</h5>
-        <ul className="list-unstyled">
-          {testUsers.map(user => (
-            <li key={user.username} style={{ marginBottom: '5px' }}>
-              <strong>Логин:</strong> {user.username}, <strong>Пароль:</strong> {user.password}
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div className="container login-container">
+      <h3 className="login-title">Вход в чат</h3>
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="username" className="form-label">Имя пользователя</label>
-          <input
-            id="username"
-            type="text"
-            className="form-control"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+      <div className="login-content">
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="mb-3">
+            <label htmlFor="username" className="form-label">Имя пользователя</label>
+            <input
+              id="username"
+              type="text"
+              className="form-control"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">Пароль</label>
+            <input
+              id="password"
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <div className="alert alert-danger">{error}</div>}
+          <button type="submit" className="btn btn-primary w-100">
+            Войти
+          </button>
+        </form>
+
+        <div className="test-users">
+          <h5>Тестовые пользователи:</h5>
+          <ul className="list-unstyled">
+            {testUsers.map(user => (
+              <li key={user.username} style={{ marginBottom: '5px' }}>
+                <strong>Логин:</strong> {user.username}, <strong>Пароль:</strong> {user.password}
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Пароль</label>
-          <input
-            id="password"
-            type="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <div className="alert alert-danger">{error}</div>}
-        <button type="submit" className="btn btn-primary w-100">
-          Войти
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
