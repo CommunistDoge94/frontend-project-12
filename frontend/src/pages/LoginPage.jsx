@@ -22,7 +22,7 @@ const LoginPage = () => {
     setError(null);
 
     try {
-      const response = await axios.post('/api/v1/login', { username, password });
+      const response = await axios.post('https://chat-project-o3lh.onrender.com/api/v1/login', { username, password });
       const { token, username: user } = response.data;
 
       dispatch(loginSuccess({ token, username: user }));
