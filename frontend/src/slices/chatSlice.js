@@ -37,7 +37,10 @@ export const sendMessage = createAsyncThunk(
           },
         }
       );
-      return response.data;
+      return { 
+        ...response.data,
+        createdAt: new Date().toISOString()
+      };
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'Network error');
     }
@@ -56,7 +59,10 @@ const chatSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
-      state.messages.push(action.payload);
+      state.messages.push({
+        ...action.payload,
+        createdAt: action.payload.createdAt || new Date().toISOString()
+      });
     },
     setSocketConnected: (state, action) => {
       state.socketConnected = action.payload;
