@@ -1,148 +1,63 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { connectSocket, disconnectSocket, getSocket } from '../utils/socket';
 
-export const fetchInitialData = createAsyncThunk(
-  'chat/fetchInitialData',
-  async (_, { getState, rejectWithValue }) => {
+const fetchChatData = createAsyncThunk(
+  'chat/fetchChatData',
+  async (_, { rejectWithValue }) => {
     try {
-      const token = getState().auth.token;
+      const token = localStorage.getItem('token');
       const response = await axios.get('/api/v1/data', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      console.log('Data from server:', response.data);
-      
-      return {
-        channels: response.data.channels || [],
-        messages: response.data.messages || [],
-        currentChannelId: response.data.currentChannelId || null,
-      };
-    } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Network error');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
   }
 );
-
-export const sendMessage = createAsyncThunk(
-  'chat/sendMessage',
-  async ({ body, channelId }, { getState, rejectWithValue }) => {
-    try {
-      const token = getState().auth.token;
-      const response = await axios.post(
-        '/api/v1/messages',
-        { body, channelId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return { 
-        ...response.data,
-        createdAt: new Date().toISOString()
-      };
-    } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Network error');
-    }
-  }
-);
-
-const initialState = {
-  channels: [{ id: '1', name: 'General', removable: false }],
-  messages: [],
-  currentChannelId: '1',
-  loading: false,
-  error: null,
-  socketConnected: false,
-};
 
 const chatSlice = createSlice({
   name: 'chat',
-  initialState,
+  initialState: {
+    channels: [],
+    messages: [],
+    loading: false,
+    error: null,
+  },
   reducers: {
     addMessage: (state, action) => {
-      if (!state.messages.some(msg => msg.id === action.payload.id)) {
-        state.messages.push({
-          ...action.payload,
-          createdAt: action.payload.createdAt || new Date().toISOString()
-        });
+      if (!Array.isArray(state.messages)) {
+        state.messages = [];
       }
-    },
-    setSocketConnected: (state, action) => {
-      state.socketConnected = action.payload;
-    },
-    setCurrentChannelId: (state, action) => {
-      state.currentChannelId = action.payload;
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
+      state.messages.push(action.payload);
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchInitialData.pending, (state) => {
+      .addCase(fetchChatData.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchInitialData.fulfilled, (state, action) => {
-        state.loading = false;
-        state.channels = action.payload.channels;
-        state.messages = action.payload.messages;
-        state.currentChannelId = action.payload.currentChannelId;
-        state.error = null;
-      })
-      .addCase(fetchInitialData.rejected, (state, action) => {
+      .addCase(fetchChatData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(sendMessage.fulfilled, (state, action) => {
-        state.error = null;
+      .addCase(fetchChatData.fulfilled, (state, action) => {
+        state.loading = false;
+        const channels = Array.isArray(action.payload.channels) ? action.payload.channels : [];
+        const hasGeneral = channels.some((ch) => ch.name === 'General');
+        if (!hasGeneral) {
+          channels.unshift({ id: 0, name: 'General' });
+        }
+      
+        state.channels = channels;
+        state.messages = Array.isArray(action.payload.messages) ? action.payload.messages : [];
       })
-      .addCase(sendMessage.rejected, (state, action) => {
-        state.error = action.payload;
-      });
   },
 });
 
-export const {
-  addMessage,
-  setSocketConnected,
-  setCurrentChannelId,
-  setError,
-} = chatSlice.actions;
-
-export const initializeSocket = () => (dispatch, getState) => {
-  const token = getState().auth.token;
-  const socket = connectSocket(token);
-
-  socket.off('connect');
-  socket.off('disconnect');
-  socket.off('newMessage');
-  socket.off('connect_error');
-
-  socket.on('connect', () => {
-    dispatch(setSocketConnected(true));
-  });
-
-  socket.on('disconnect', () => {
-    dispatch(setSocketConnected(false));
-  });
-
-  socket.on('newMessage', (message) => {
-    dispatch(addMessage(message));
-  });
-
-  socket.on('connect_error', (err) => {
-    dispatch(setSocketConnected(false));
-    dispatch(setError(err.message));
-  });
-};
-
-export const closeSocket = () => () => {
-  disconnectSocket();
-};
-
+export const { addMessage } = chatSlice.actions;
 export default chatSlice.reducer;
+export { fetchChatData };

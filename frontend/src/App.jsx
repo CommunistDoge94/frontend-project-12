@@ -1,17 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
-import HomePage from './pages/HomePage.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
+import ChatPage from './pages/ChatPage.jsx';
 
 const App = () => (
-  <Router>
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
-  </Router>
+  <Routes>
+    <Route path="/login" element={<LoginPage />} />
+    <Route
+      path="/"
+      element={(
+        <PrivateRoute>
+          <ChatPage />
+        </PrivateRoute>
+      )}
+    />
+    <Route path="*" element={<NotFoundPage />} />
+  </Routes>
 );
 
 export default App;
