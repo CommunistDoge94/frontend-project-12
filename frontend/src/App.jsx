@@ -1,23 +1,22 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Header from './components/Header.jsx';
+import SignupPage from './pages/SignupPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-import NotFoundPage from './pages/NotFoundPage.jsx';
-import PrivateRoute from './components/PrivateRoute.jsx';
-import ChatPage from './pages/ChatPage.jsx';
+import ChannelsPage from './pages/ChatPage.jsx';
 
-const App = () => (
-  <Routes>
-    <Route path="/login" element={<LoginPage />} />
-    <Route
-      path="/"
-      element={(
-        <PrivateRoute>
-          <ChatPage />
-        </PrivateRoute>
-      )}
-    />
-    <Route path="*" element={<NotFoundPage />} />
-  </Routes>
-);
+function App() {
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/channels/:id" element={<ChannelsPage />} />
+        <Route path="/" element={<Navigate to="/channels/1" />} />
+      </Routes>
+    </>
+  );
+}
 
 export default App;

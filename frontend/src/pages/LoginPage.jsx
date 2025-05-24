@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../slices/authSlice';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [authError, setAuthError] = useState(null);
 
   return (
@@ -18,10 +21,12 @@ const LoginPage = () => {
               setAuthError(null);
               const response = await axios.post('/api/v1/login', values);
               const { token, username } = response.data;
-          
+
               localStorage.setItem('token', token);
               localStorage.setItem('username', username);
-          
+
+              dispatch(loginSuccess({ username, token }));
+
               navigate('/');
             } catch (err) {
               if (err.response?.status === 401) {
