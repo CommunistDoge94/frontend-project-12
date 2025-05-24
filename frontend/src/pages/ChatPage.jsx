@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchChatData, addMessage, addChannel } from '../slices/chatSlice';
+import { openModal } from '../slices/modalSlice';
 import AddChannelModal from '../components/AddChannelModal';
+import ModalManager from '../components/ModalManager.jsx';
 import socket from '../socket';
 import axios from 'axios';
+import { Dropdown } from 'react-bootstrap';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
@@ -94,12 +97,33 @@ const ChatPage = () => {
             {channels.map((channel) => (
               <li
                 key={channel.id}
-                className={`list-group-item ${channel.id === activeChannelId ? 'active' : ''}`}
+                className={`list-group-item d-flex justify-content-between align-items-center ${channel.id === activeChannelId ? 'active' : ''}`}
                 role="button"
                 onClick={() => setActiveChannelId(channel.id)}
                 style={{ cursor: 'pointer' }}
               >
-                #{' '}{channel.name}
+                <span># {channel.name}</span>
+                <Dropdown onClick={(e) => e.stopPropagation()}>
+                  <Dropdown.Toggle variant="link" size="sm" className="p-0 text-decoration-none">
+                    ⋮
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() => dispatch(openModal({
+                        type: 'renameChannel',
+                        extra: { channelId: channel.id, channelName: channel.name },
+                      }))}
+                    >
+                      Переименовать
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => dispatch(openModal({ type: 'removeChannel', extra: { channelId: channel.id } }))}
+                      disabled={channel.removable === false}
+                    >
+                      Удалить
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </li>
             ))}
           </ul>
@@ -131,6 +155,7 @@ const ChatPage = () => {
       </div>
 
       <AddChannelModal show={showAddModal} onHide={() => setShowAddModal(false)} />
+      <ModalManager />
     </div>
   );
 };
