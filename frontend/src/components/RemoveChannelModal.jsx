@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '../slices/modalSlice.js';
+import { removeChannel } from '../slices/chatSlice.js';
 import socket from '../socket.js';
 
 const RemoveChannelModal = () => {
@@ -11,13 +12,13 @@ const RemoveChannelModal = () => {
   const handleClose = () => dispatch(closeModal());
 
   const handleRemove = () => {
-    socket.emit('removeChannel', { id: channelId }, () => {
-      dispatch(closeModal());
-    });
+    dispatch(removeChannel(channelId));
+    socket.emit('removeChannel', { id: channelId });
+    dispatch(closeModal());
   };
 
   return (
-    <Modal show onHide={handleClose}>
+    <Modal show onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>Удалить канал</Modal.Title>
       </Modal.Header>

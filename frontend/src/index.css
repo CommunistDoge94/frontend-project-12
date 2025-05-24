@@ -73,8 +73,8 @@ button:focus-visible {
 }
 
 .chat-messages {
-  max-height: 70vh;
+  flex-grow: 1;
   overflow-y: auto;
-  border: 1px solid #ccc;
   padding: 10px;
+  border: 1px solid #ccc;
 }

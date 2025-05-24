@@ -1,21 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import AddChannelModal from './AddChannelModal.jsx';
-import RemoveChannelModal from './RemoveChannelModal.jsx';
-import RenameChannelModal from './RenameChannelModal.jsx';
-
-const mapping = {
-  addChannel: AddChannelModal,
-  removeChannel: RemoveChannelModal,
-  renameChannel: RenameChannelModal,
-};
+import AddChannelModal from './AddChannelModal';
+import RemoveChannelModal from './RemoveChannelModal';
+import RenameChannelModal from './RenameChannelModal';
 
 const ModalManager = () => {
-  const { type } = useSelector((state) => state.modal);
-  if (!type) return null;
+  const type = useSelector((state) => state.modal.type);
+  console.log('ModalManager type=', type);
 
-  const Component = mapping[type];
-  return <Component />;
+  if (type === 'addChannel') return <AddChannelModal />;
+  if (type === 'removeChannel') return <RemoveChannelModal />;
+  if (type === 'renameChannel') return <RenameChannelModal />;
+  return null;
 };
 
 export default ModalManager;

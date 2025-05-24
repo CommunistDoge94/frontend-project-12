@@ -1,31 +1,35 @@
-import React from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
-import { useFormik } from 'formik';
+import React, { useEffect, useRef } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
-import socket from '../socket.js';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { closeModal } from '../slices/modalSlice.js';
+import { renameChannel } from '../slices/chatSlice.js';
+import socket from '../socket.js';
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch();
   const { channelId, channelName } = useSelector((state) => state.modal.extra);
+  const inputRef = useRef();
 
-  const handleClose = () => dispatch(closeModal());
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const formik = useFormik({
     initialValues: { name: channelName },
-    validationSchema: yup.object({
-      name: yup.string().required('Обязательное поле'),
+    validationSchema: Yup.object({
+      name: Yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Обязательное поле'),
     }),
     onSubmit: ({ name }) => {
-      socket.emit('renameChannel', { id: channelId, name }, () => {
-        dispatch(closeModal());
-      });
+      dispatch(renameChannel({ id: channelId, name }));
+      socket.emit('renameChannel', { id: channelId, name });
+      dispatch(closeModal());
     },
   });
 
   return (
-    <Modal show onHide={handleClose}>
+    <Modal show onHide={() => dispatch(closeModal())} centered>
       <Modal.Header closeButton>
         <Modal.Title>Переименовать канал</Modal.Title>
       </Modal.Header>
@@ -34,19 +38,23 @@ const RenameChannelModal = () => {
           <Form.Group controlId="name">
             <Form.Control
               name="name"
-              onChange={formik.handleChange}
+              innerRef={inputRef}
               value={formik.values.name}
-              isInvalid={formik.touched.name && formik.errors.name}
-              autoFocus
+              onChange={formik.handleChange}
+              isInvalid={formik.touched.name && !!formik.errors.name}
             />
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>
           </Form.Group>
-          <div className="mt-3 d-flex justify-content-end">
-            <Button variant="secondary" onClick={handleClose}>Отменить</Button>
-            <Button type="submit" className="ms-2">Переименовать</Button>
-          </div>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => dispatch(closeModal())}>
+              Отменить
+            </Button>
+            <Button type="submit">
+              Переименовать
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
     </Modal>
