@@ -66,3 +66,15 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.chat-sidebar {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.chat-messages {
+  max-height: 70vh;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+}

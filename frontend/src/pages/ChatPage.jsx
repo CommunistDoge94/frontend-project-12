@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchChatData, addMessage } from '../slices/chatSlice';
+import { fetchChatData, addMessage, addChannel } from '../slices/chatSlice';
+import AddChannelModal from '../components/AddChannelModal';
 import socket from '../socket';
 import axios from 'axios';
 
@@ -10,11 +11,12 @@ const ChatPage = () => {
 
   const [activeChannelId, setActiveChannelId] = useState(null);
   const [messageText, setMessageText] = useState('');
+  const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchChatData());
   }, [dispatch]);
-  
+
   useEffect(() => {
     if (channels.length > 0) {
       const generalChannel = channels.find((ch) => ch.name === 'General') || channels[0];
@@ -26,11 +28,17 @@ const ChatPage = () => {
     const handleNewMessage = (message) => {
       dispatch(addMessage(message));
     };
-
+  
+    const handleNewChannel = (channel) => {
+      dispatch(addChannel(channel));
+    };
+  
     socket.on('newMessage', handleNewMessage);
-
+    socket.on('newChannel', handleNewChannel);
+  
     return () => {
       socket.off('newMessage', handleNewMessage);
+      socket.off('newChannel', handleNewChannel);
     };
   }, [dispatch]);
 
@@ -71,8 +79,17 @@ const ChatPage = () => {
   return (
     <div className="container mt-3">
       <div className="row">
-        <div className="col-4 border-end" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
-          <h5>Каналы</h5>
+        <div className="col-4 chat-sidebar border-end">
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <h5 className="mb-0">Каналы</h5>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-primary"
+              onClick={() => setShowAddModal(true)}
+            >
+              +
+            </button>
+          </div>
           <ul className="list-group">
             {channels.map((channel) => (
               <li
@@ -82,22 +99,14 @@ const ChatPage = () => {
                 onClick={() => setActiveChannelId(channel.id)}
                 style={{ cursor: 'pointer' }}
               >
-                {channel.name}
+                #{' '}{channel.name}
               </li>
             ))}
           </ul>
         </div>
         <div className="col-8 d-flex flex-column">
           <h5>Сообщения</h5>
-          <div
-            style={{
-              maxHeight: '70vh',
-              overflowY: 'auto',
-              border: '1px solid #ccc',
-              padding: '10px',
-              flexGrow: 1,
-            }}
-          >
+          <div className="chat-messages flex-grow-1 mb-3">
             {filteredMessages.map((message) => (
               <div key={message.id} className="mb-2">
                 <b>{message.username}: </b>
@@ -105,7 +114,7 @@ const ChatPage = () => {
               </div>
             ))}
           </div>
-          <form onSubmit={sendMessage} className="mt-3 d-flex">
+          <form onSubmit={sendMessage} className="d-flex">
             <input
               type="text"
               className="form-control me-2"
@@ -120,6 +129,8 @@ const ChatPage = () => {
           </form>
         </div>
       </div>
+
+      <AddChannelModal show={showAddModal} onHide={() => setShowAddModal(false)} />
     </div>
   );
 };
