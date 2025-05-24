@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../slices/authSlice';
@@ -43,16 +43,19 @@ const LoginPage = () => {
             <Form>
               <div className="mb-3">
                 <label htmlFor="username" className="form-label">Имя пользователя</label>
-                <Field id="username" name="username" className="form-control" />
+                <Field id="username" name="username" className="form-control" required />
               </div>
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">Пароль</label>
-                <Field id="password" name="password" type="password" className="form-control" />
+                <Field id="password" name="password" type="password" className="form-control" required />
               </div>
               {authError && <div className="alert alert-danger">{authError}</div>}
-              <button type="submit" className="btn btn-primary w-100" disabled={isSubmitting}>
-                {isSubmitting ? 'Вход...' : 'Войти'}
+              <button type="submit" disabled={isSubmitting} className="btn btn-primary w-100 mb-3">
+                Войти
               </button>
+              <div className="text-center">
+                <Link to="/signup">Зарегистрироваться</Link>
+              </div>
             </Form>
           )}
         </Formik>

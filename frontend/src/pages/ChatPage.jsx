@@ -67,9 +67,9 @@ const ChatPage = () => {
   const filteredMessages = messages.filter((msg) => msg.channelId === activeChannelId);
 
   return (
-    <div className="container mt-3" style={{ height: 'calc(100vh - 40px)' }}>
+    <div className="container-fluid vh-100 p-3">
       <div className="row h-100">
-        <div className="col-4 chat-sidebar border-end" style={{ height: '100%' }}>
+        <div className="col-4 chat-sidebar border-end d-flex flex-column">
           <div className="d-flex justify-content-between align-items-center mb-2">
             <h5 className="mb-0">Каналы</h5>
             <button
@@ -80,7 +80,7 @@ const ChatPage = () => {
               +
             </button>
           </div>
-          <ul className="list-group">
+          <ul className="list-group flex-grow-1 overflow-auto">
             {channels.map((channel) => (
               <li
                 key={channel.id}
@@ -130,7 +130,7 @@ const ChatPage = () => {
         </div>
         <div className="col-8 d-flex flex-column" style={{ height: '100%' }}>
           <h5>Сообщения</h5>
-          <div className="chat-messages flex-grow-1 overflow-auto mb-3">
+          <div className="chat-messages flex-grow-1 overflow-auto mb-3" style={{ maxHeight: 'calc(100% - 85px)' }}>
             {filteredMessages.map((message) => (
               <div key={message.id} className="mb-2">
                 <b>{message.username}: </b>
