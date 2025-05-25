@@ -21,7 +21,7 @@ const chatSlice = createSlice({
   initialState: {
     channels: [],
     messages: [],
-    activeChannelId: null,
+    activeChannelId: 1,
     loading: false,
     error: null,
   },
@@ -31,8 +31,11 @@ const chatSlice = createSlice({
       state.messages.push(action.payload);
     },
     addChannel: (state, action) => {
-      state.channels.push(action.payload);
-      state.activeChannelId = action.payload.id;
+      const channel = action.payload;
+      if (!state.channels.some(c => c.id === channel.id)) {
+        state.channels.push(channel);
+      }
+      state.activeChannelId = channel.id;
     },
     setActiveChannel: (state, action) => {
       state.activeChannelId = action.payload;
@@ -54,23 +57,22 @@ const chatSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchChatData.pending, state => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchChatData.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
       .addCase(fetchChatData.fulfilled, (state, action) => {
         state.loading = false;
         let channels = Array.isArray(action.payload.channels) ? action.payload.channels : [];
         const hasGeneral = channels.some(ch => ch.name === 'General');
+        
         if (!hasGeneral) {
-          channels.unshift({ id: 0, name: 'General', removable: false });
+          channels.unshift({ id: 1, name: 'General', removable: false });
         }
+        
         state.channels = channels;
         state.messages = Array.isArray(action.payload.messages) ? action.payload.messages : [];
+        
+        if (!state.activeChannelId) {
+          const general = channels.find(ch => ch.name === 'General');
+          state.activeChannelId = general?.id || 1;
+        }
       });
   },
 });

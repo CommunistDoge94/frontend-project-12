@@ -7,15 +7,12 @@ export default defineConfig({
     port: 5002,
     proxy: {
       '/api': {
-        target: 'https://chat.hexlet.io',
-        changeOrigin: true,
-        secure: true,
+        target: 'http://localhost:5001',
       },
       '/socket.io': {
-        target: 'wss://chat.hexlet.io',
+        target: 'ws://localhost:5001',
         ws: true,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/socket.io/, '/socket.io'),
+        rewriteWsOrigin: true,
       },
     },
   },

@@ -1,27 +1,54 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { addChannel } from '../slices/chatSlice';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+import { closeModal } from '../slices/modalSlice';
+import * as Yup from 'yup';
 
-const AddChannelModal = ({ show, onHide }) => {
+const AddChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [channelName, setChannelName] = useState('');
+  const [error, setError] = useState('');
+  const show = useSelector((state) => state.modal.type === 'addChannel');
+  const token = localStorage.getItem('token');
 
-  const handleSubmit = (e) => {
+  const schema = Yup.object().shape({
+    channelName: Yup.string()
+      .min(3, t('min3Chars'))
+      .max(20, t('max20Chars'))
+      .required(t('required')),
+  });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (channelName.trim()) {
-      dispatch(addChannel({ name: channelName }));
-      toast.success(t('channelCreated'));
-      setChannelName('');
-      onHide();
+    try {
+      await schema.validate({ channelName });
+      
+      const response = await axios.post('/api/v1/channels', 
+        { name: channelName },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.data.id) {
+        toast.success(t('channelCreated'));
+        handleClose();
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
     }
   };
 
+  const handleClose = () => {
+    dispatch(closeModal());
+    setChannelName('');
+    setError('');
+  };
+
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('addChannel')}</Modal.Title>
       </Modal.Header>
@@ -33,12 +60,14 @@ const AddChannelModal = ({ show, onHide }) => {
               type="text"
               value={channelName}
               onChange={(e) => setChannelName(e.target.value)}
+              isInvalid={!!error}
               autoFocus
             />
+            {error && <Alert variant="danger" className="mt-2">{error}</Alert>}
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={onHide}>
+          <Button variant="secondary" onClick={handleClose}>
             {t('cancel')}
           </Button>
           <Button variant="primary" type="submit">
