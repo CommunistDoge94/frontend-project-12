@@ -15,17 +15,26 @@ import socket from '../socket';
 import axios from 'axios';
 import { Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { channels = [], messages = [], loading, error, activeChannelId } = useSelector((state) => state.chat);
+  const { channels = [], messages = [], loading, error, activeChannelId } = useSelector(
+    (state) => state.chat,
+  );
   const [messageText, setMessageText] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchChatData());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(t('loadError'));
+    }
+  }, [error, t]);
 
   useEffect(() => {
     const handleNewMessage = (message) => dispatch(addMessage(message));
@@ -55,16 +64,16 @@ const ChatPage = () => {
       await axios.post(
         '/api/v1/messages',
         { body: messageText, channelId: activeChannelId, username },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       setMessageText('');
     } catch (err) {
-      console.error(err.message);
+      toast.error(t('networkErrorToast'));
     }
   };
 
   if (loading) return <p>{t('loading')}</p>;
-  if (error) return <p>{t('error', { error })}</p>;
+  if (error) return null;
 
   const filteredMessages = messages.filter((msg) => msg.channelId === activeChannelId);
 
@@ -108,7 +117,7 @@ const ChatPage = () => {
                             openModal({
                               type: 'renameChannel',
                               extra: { channelId: channel.id, channelName: channel.name },
-                            })
+                            }),
                           );
                         }}
                       >

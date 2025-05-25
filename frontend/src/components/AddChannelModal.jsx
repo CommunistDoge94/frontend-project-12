@@ -3,6 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { addChannel } from '../slices/chatSlice';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 const AddChannelModal = ({ show, onHide }) => {
   const { t } = useTranslation();
@@ -13,13 +14,14 @@ const AddChannelModal = ({ show, onHide }) => {
     e.preventDefault();
     if (channelName.trim()) {
       dispatch(addChannel({ name: channelName }));
+      toast.success(t('channelCreated'));
       setChannelName('');
       onHide();
     }
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('addChannel')}</Modal.Title>
       </Modal.Header>
