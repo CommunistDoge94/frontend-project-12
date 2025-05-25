@@ -1,11 +1,13 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { closeModal } from '../slices/modalSlice.js';
 import { removeChannel } from '../slices/chatSlice.js';
 import socket from '../socket.js';
 
 const RemoveChannelModal = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { channelId } = useSelector((state) => state.modal.extra);
 
@@ -20,12 +22,12 @@ const RemoveChannelModal = () => {
   return (
     <Modal show onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('removeChannel')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Вы уверены, что хотите удалить канал?</Modal.Body>
+      <Modal.Body>{t('removeConfirmation')}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>Отменить</Button>
-        <Button variant="danger" onClick={handleRemove}>Удалить</Button>
+        <Button variant="secondary" onClick={handleClose}>{t('cancel')}</Button>
+        <Button variant="danger" onClick={handleRemove}>{t('remove')}</Button>
       </Modal.Footer>
     </Modal>
   );

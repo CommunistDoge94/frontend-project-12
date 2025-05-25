@@ -4,28 +4,30 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { loginSuccess } from '../slices/authSlice';
 
-const SignupSchema = Yup.object({
-  username: Yup.string()
-    .min(3, 'Не менее 3 символов')
-    .max(20, 'Не более 20 символов')
-    .required('Обязательное поле'),
-  password: Yup.string()
-    .min(6, 'Не менее 6 символов')
-    .required('Обязательное поле'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
-    .required('Обязательное поле'),
-});
-
 function SignupPage() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const SignupSchema = Yup.object({
+    username: Yup.string()
+      .min(3, t('min3Chars'))
+      .max(20, t('max20Chars'))
+      .required(t('required')),
+    password: Yup.string()
+      .min(6, t('min6Chars'))
+      .required(t('required')),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], t('passwordsMustMatch'))
+      .required(t('required')),
+  });
+
   return (
     <div className="container mt-3">
-      <h2>Регистрация</h2>
+      <h2>{t('registration')}</h2>
       <Formik
         initialValues={{ username: '', password: '', confirmPassword: '' }}
         validationSchema={SignupSchema}
@@ -41,9 +43,9 @@ function SignupPage() {
           } catch (error) {
             actions.setSubmitting(false);
             if (error.response && error.response.status === 409) {
-              actions.setStatus('Пользователь уже существует');
+              actions.setStatus(t('userExists'));
             } else {
-              actions.setStatus('Ошибка регистрации');
+              actions.setStatus(t('signupError'));
             }
           }
         }}
@@ -52,22 +54,22 @@ function SignupPage() {
           <Form>
             {status && <div className="alert alert-danger">{status}</div>}
             <div className="mb-3">
-              <label htmlFor="username">Имя пользователя</label>
+              <label htmlFor="username">{t('username')}</label>
               <Field name="username" type="text" className="form-control" />
               <ErrorMessage name="username" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
-              <label htmlFor="password">Пароль</label>
+              <label htmlFor="password">{t('password')}</label>
               <Field name="password" type="password" className="form-control" />
               <ErrorMessage name="password" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
-              <label htmlFor="confirmPassword">Подтвердите пароль</label>
+              <label htmlFor="confirmPassword">{t('confirmPassword')}</label>
               <Field name="confirmPassword" type="password" className="form-control" />
               <ErrorMessage name="confirmPassword" component="div" className="text-danger" />
             </div>
             <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-              Зарегистрироваться
+              {t('signup')}
             </button>
           </Form>
         )}

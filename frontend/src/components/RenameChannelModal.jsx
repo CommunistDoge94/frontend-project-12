@@ -1,63 +1,31 @@
-import React, { useEffect, useRef } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { closeModal } from '../slices/modalSlice.js';
-import { renameChannel } from '../slices/chatSlice.js';
-import socket from '../socket.js';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import socket from '../socket';
 
-const RenameChannelModal = () => {
-  const dispatch = useDispatch();
-  const { channelId, channelName } = useSelector((state) => state.modal.extra);
-  const inputRef = useRef();
+const RenameChannelModal = ({ channelId, currentName, onClose }) => {
+  const { t } = useTranslation();
+  const [name, setName] = useState(currentName);
+  const channels = useSelector((state) => state.channels.channels);
 
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const formik = useFormik({
-    initialValues: { name: channelName },
-    validationSchema: Yup.object({
-      name: Yup.string().min(3, 'От 3 до 20 символов').max(20, 'От 3 до 20 символов').required('Обязательное поле'),
-    }),
-    onSubmit: ({ name }) => {
-      dispatch(renameChannel({ id: channelId, name }));
-      socket.emit('renameChannel', { id: channelId, name });
-      dispatch(closeModal());
-    },
-  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (channels.some((c) => c.name === name && c.id !== channelId)) {
+      return;
+    }
+    socket.emit('renameChannel', { id: channelId, name });
+    onClose();
+  };
 
   return (
-    <Modal show onHide={() => dispatch(closeModal())} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={formik.handleSubmit}>
-          <Form.Group controlId="name">
-            <Form.Control
-              name="name"
-              innerRef={inputRef}
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              isInvalid={formik.touched.name && !!formik.errors.name}
-            />
-            <Form.Control.Feedback type="invalid">
-              {formik.errors.name}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => dispatch(closeModal())}>
-              Отменить
-            </Button>
-            <Button type="submit">
-              Переименовать
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal.Body>
-    </Modal>
+    <form onSubmit={handleSubmit}>
+      <h5>{t('renameChannel')}</h5>
+      <input value={name} onChange={(e) => setName(e.target.value)} autoFocus />
+      <button type="submit">{t('rename')}</button>
+      <button type="button" onClick={onClose}>
+        {t('cancel')}
+      </button>
+    </form>
   );
 };
 

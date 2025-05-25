@@ -14,8 +14,10 @@ import ModalManager from '../components/ModalManager';
 import socket from '../socket';
 import axios from 'axios';
 import { Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const ChatPage = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { channels = [], messages = [], loading, error, activeChannelId } = useSelector((state) => state.chat);
   const [messageText, setMessageText] = useState('');
@@ -61,8 +63,8 @@ const ChatPage = () => {
     }
   };
 
-  if (loading) return <p>Загрузка данных...</p>;
-  if (error) return <p>Ошибка: {error}</p>;
+  if (loading) return <p>{t('loading')}</p>;
+  if (error) return <p>{t('error', { error })}</p>;
 
   const filteredMessages = messages.filter((msg) => msg.channelId === activeChannelId);
 
@@ -71,7 +73,7 @@ const ChatPage = () => {
       <div className="row h-100">
         <div className="col-4 chat-sidebar border-end d-flex flex-column">
           <div className="d-flex justify-content-between align-items-center mb-2">
-            <h5 className="mb-0">Каналы</h5>
+            <h5 className="mb-0">{t('channels')}</h5>
             <button
               type="button"
               className="btn btn-sm btn-outline-primary"
@@ -110,7 +112,7 @@ const ChatPage = () => {
                           );
                         }}
                       >
-                        Переименовать
+                        {t('rename')}
                       </Dropdown.Item>
                       <Dropdown.Item
                         onClick={(e) => {
@@ -119,7 +121,7 @@ const ChatPage = () => {
                           dispatch(openModal({ type: 'removeChannel', extra: { channelId: channel.id } }));
                         }}
                       >
-                        Удалить
+                        {t('remove')}
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -128,9 +130,9 @@ const ChatPage = () => {
             ))}
           </ul>
         </div>
-        <div className="col-8 d-flex flex-column" style={{ height: '100%' }}>
-          <h5>Сообщения</h5>
-          <div className="chat-messages flex-grow-1 overflow-auto mb-3" style={{ maxHeight: 'calc(100% - 85px)' }}>
+        <div className="col-8 d-flex flex-column h-100">
+          <h5>{t('messages')}</h5>
+          <div className="flex-grow-1 overflow-auto mb-3">
             {filteredMessages.map((message) => (
               <div key={message.id} className="mb-2">
                 <b>{message.username}: </b>
@@ -142,13 +144,13 @@ const ChatPage = () => {
             <input
               type="text"
               className="form-control me-2"
-              placeholder="Введите сообщение"
+              placeholder={t('enterMessage')}
               value={messageText}
               onChange={(e) => setMessageText(e.target.value)}
               autoComplete="off"
             />
             <button type="submit" className="btn btn-primary">
-              Отправить
+              {t('send')}
             </button>
           </form>
         </div>
