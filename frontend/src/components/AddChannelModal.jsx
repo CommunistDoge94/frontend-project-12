@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { closeModal } from '../slices/modalSlice';
 import * as Yup from 'yup';
+import { filterProfanity } from '../utils/profanityFilter';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();
@@ -27,8 +28,14 @@ const AddChannelModal = () => {
     try {
       await schema.validate({ channelName });
       
-      const response = await axios.post('/api/v1/channels', 
-        { name: channelName },
+      const filteredName = filterProfanity(channelName.trim());
+      if (!filteredName) {
+        throw new Error(t('channel.emptyNameError'));
+      }
+
+      const response = await axios.post(
+        '/api/v1/channels',
+        { name: filteredName },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

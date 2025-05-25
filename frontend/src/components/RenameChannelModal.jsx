@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { closeModal } from '../slices/modalSlice';
 import * as Yup from 'yup';
+import { filterProfanity } from '../utils/profanityFilter';
 
 const RenameChannelModal = ({ channelId, currentName }) => {
   const { t } = useTranslation();
@@ -26,8 +27,14 @@ const RenameChannelModal = ({ channelId, currentName }) => {
     try {
       await schema.validate({ name });
       
-      await axios.patch(`/api/v1/channels/${channelId}`, 
-        { name },
+      const filteredName = filterProfanity(name.trim());
+      if (!filteredName) {
+        throw new Error(t('channel.emptyNameError'));
+      }
+
+      await axios.patch(
+        `/api/v1/channels/${channelId}`,
+        { name: filteredName },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       

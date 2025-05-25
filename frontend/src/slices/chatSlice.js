@@ -27,7 +27,6 @@ const chatSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
-      if (!Array.isArray(state.messages)) state.messages = [];
       state.messages.push(action.payload);
     },
     addChannel: (state, action) => {
@@ -38,44 +37,75 @@ const chatSlice = createSlice({
       state.activeChannelId = channel.id;
     },
     setActiveChannel: (state, action) => {
-      state.activeChannelId = action.payload;
+      state.activeChannelId = Number(action.payload);
     },
     removeChannel: (state, action) => {
-      const id = action.payload;
+      const id = Number(action.payload);
       state.channels = state.channels.filter(ch => ch.id !== id);
       state.messages = state.messages.filter(msg => msg.channelId !== id);
       if (state.activeChannelId === id) {
         const general = state.channels.find(ch => ch.name === 'General');
-        state.activeChannelId = general ? general.id : null;
+        state.activeChannelId = general ? general.id : 1;
       }
     },
     renameChannel: (state, action) => {
       const { id, name } = action.payload;
-      const ch = state.channels.find(c => c.id === id);
-      if (ch) ch.name = name;
+      const channel = state.channels.find(c => c.id === Number(id));
+      if (channel) {
+        channel.name = name;
+      }
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
+      .addCase(fetchChatData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchChatData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(fetchChatData.fulfilled, (state, action) => {
         state.loading = false;
-        let channels = Array.isArray(action.payload.channels) ? action.payload.channels : [];
-        const hasGeneral = channels.some(ch => ch.name === 'General');
-        
+        const serverChannels = Array.isArray(action.payload.channels)
+          ? action.payload.channels.map(ch => ({
+              id: Number(ch.id),
+              name: ch.name,
+              removable: ch.removable !== undefined ? ch.removable : true
+            }))
+          : [];
+
+        const hasGeneral = serverChannels.some(ch => ch.name === 'General');
+        let channels = serverChannels;
         if (!hasGeneral) {
-          channels.unshift({ id: 1, name: 'General', removable: false });
+          channels = [{ id: 1, name: 'General', removable: false }, ...serverChannels];
         }
-        
+
+        let activeChannelId = state.activeChannelId;
+        if (!channels.some(ch => ch.id === activeChannelId)) {
+          activeChannelId = channels[0]?.id || 1;
+        }
+
         state.channels = channels;
-        state.messages = Array.isArray(action.payload.messages) ? action.payload.messages : [];
-        
-        if (!state.activeChannelId) {
-          const general = channels.find(ch => ch.name === 'General');
-          state.activeChannelId = general?.id || 1;
-        }
+        state.activeChannelId = activeChannelId;
+        state.messages = Array.isArray(action.payload.messages)
+          ? action.payload.messages.map(msg => ({
+              ...msg,
+              channelId: Number(msg.channelId),
+              id: Number(msg.id)
+            }))
+          : [];
       });
   },
 });
 
-export const { addMessage, addChannel, setActiveChannel, removeChannel, renameChannel } = chatSlice.actions;
+export const {
+  addMessage,
+  addChannel,
+  setActiveChannel,
+  removeChannel,
+  renameChannel,
+} = chatSlice.actions;
+
 export default chatSlice.reducer;
