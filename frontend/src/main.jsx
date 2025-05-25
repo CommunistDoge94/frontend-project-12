@@ -10,8 +10,8 @@ import store from './store';
 import i18n from './i18n';
 
 const rollbarConfig = {
-  accessToken: '249bc8fee4cb4a56ae42f9b9dda1a45d',
-  environment: process.env.NODE_ENV || 'development',
+  accessToken: '4c3c83f9d3d6631b77227e47b90b93f5',
+  environment: 'production',
   captureUncaught: true,
   captureUnhandledRejections: true,
 };
