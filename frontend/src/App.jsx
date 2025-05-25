@@ -1,15 +1,23 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { ErrorBoundary as RollbarErrorBoundary } from '@rollbar/react';
 import Header from './components/Header.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import ChannelsPage from './pages/ChatPage.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 
+function TestError() {
+  const a = null;
+  return a.hello();
+}
+
 function App() {
   return (
-    <>
+    <RollbarErrorBoundary>
+      <TestError />
+
       <Header />
       <Routes>
         <Route path="/signup" element={<SignupPage />} />
@@ -35,7 +43,7 @@ function App() {
         draggable
         pauseOnHover
       />
-    </>
+    </RollbarErrorBoundary>
   );
 }
 
