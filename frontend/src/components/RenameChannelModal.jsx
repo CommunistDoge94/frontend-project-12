@@ -1,36 +1,76 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import socket from '../socket';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+import { closeModal } from '../slices/modalSlice';
+import * as Yup from 'yup';
 
-const RenameChannelModal = ({ channelId, currentName, onClose }) => {
+const RenameChannelModal = ({ channelId, currentName }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [name, setName] = useState(currentName);
-  const channels = useSelector((state) => state.chat.channels);
+  const [error, setError] = useState('');
+  const token = localStorage.getItem('token');
 
-  const handleSubmit = (e) => {
+  const schema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, t('min3Chars'))
+      .max(20, t('max20Chars'))
+      .required(t('required')),
+  });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!channels.some((c) => c.name === name && c.id !== channelId)) {
-      socket.emit('renameChannel', { id: channelId, name });
+    try {
+      await schema.validate({ name });
+      
+      await axios.patch(`/api/v1/channels/${channelId}`, 
+        { name },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
       toast.success(t('channelRenamed'));
-      onClose();
+      dispatch(closeModal());
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
     }
   };
 
+  const handleClose = () => {
+    dispatch(closeModal());
+    setName(currentName);
+    setError('');
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="p-3">
-      <h5>{t('renameChannel')}</h5>
-      <input value={name} onChange={(e) => setName(e.target.value)} autoFocus className="form-control mb-3" />
-      <div className="d-flex justify-content-end">
-        <button type="button" className="btn btn-secondary me-2" onClick={onClose}>
-          {t('cancel')}
-        </button>
-        <button type="submit" className="btn btn-primary">
-          {t('rename')}
-        </button>
-      </div>
-    </form>
+    <Modal show={!!channelId} onHide={handleClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>{t('renameChannel')}</Modal.Title>
+      </Modal.Header>
+      <Form onSubmit={handleSubmit}>
+        <Modal.Body>
+          <Form.Group controlId="channelName">
+            <Form.Control
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              isInvalid={!!error}
+              autoFocus
+            />
+            {error && <Alert variant="danger" className="mt-2">{error}</Alert>}
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            {t('cancel')}
+          </Button>
+          <Button variant="primary" type="submit">
+            {t('rename')}
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 };
 

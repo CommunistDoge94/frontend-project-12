@@ -5,12 +5,16 @@ import RemoveChannelModal from './RemoveChannelModal';
 import RenameChannelModal from './RenameChannelModal';
 
 const ModalManager = () => {
-  const type = useSelector((state) => state.modal.type);
-  console.log('ModalManager type=', type);
-
+  const { type, extra } = useSelector((state) => state.modal);
+  
   if (type === 'addChannel') return <AddChannelModal />;
   if (type === 'removeChannel') return <RemoveChannelModal />;
-  if (type === 'renameChannel') return <RenameChannelModal />;
+  if (type === 'renameChannel') return (
+    <RenameChannelModal 
+      channelId={extra.channelId}
+      currentName={extra.channelName}
+    />
+  );
   return null;
 };
 

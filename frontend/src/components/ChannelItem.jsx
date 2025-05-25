@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { openModal } from '../slices/modalSlice';
 
-const ChannelItem = ({ channel, isActive }) => {
+const ChannelItem = ({ channel, isActive, onClick }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -31,9 +31,10 @@ const ChannelItem = ({ channel, isActive }) => {
         isActive ? 'active' : ''
       }`}
       role="button"
+      onClick={onClick}
       style={{ cursor: 'pointer' }}
     >
-      <span># {channel.name}</span>
+      <span className="flex-grow-1"># {channel.name}</span>
       {channel.removable && (
         <Dropdown onClick={(e) => e.stopPropagation()}>
           <Dropdown.Toggle variant="link" size="sm" className="p-0 text-decoration-none">
