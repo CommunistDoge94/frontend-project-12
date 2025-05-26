@@ -34,16 +34,24 @@ const AddChannelModal = () => {
         validationSchema={Schema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           try {
+            const filteredName = filterProfanity(values.name.trim());
+            if (!filteredName) {
+              toast.error(t('channel.emptyNameError'));
+              return;
+            }
+
             await axios.post(
               '/api/v1/channels',
-              { name: values.name },
+              { name: filteredName },
               { headers: { Authorization: `Bearer ${token}` } }
             );
+            
             toast.success(t('channelCreated'));
             dispatch(closeModal());
             resetForm();
           } catch (err) {
-            toast.error(err.response?.data?.message || t('networkError'));
+            const errorMessage = err.response?.data?.message || t('networkError');
+            toast.error(errorMessage);
           } finally {
             setSubmitting(false);
           }
@@ -65,11 +73,13 @@ const AddChannelModal = () => {
                         type="text"
                         isInvalid={meta.touched && !!meta.error}
                         autoFocus
+                        aria-label={t('channelName')}
                       />
                       <ErrorMessage
                         name="name"
                         component="div"
                         className="text-danger mt-2"
+                        role="alert"
                       />
                     </>
                   )}
@@ -80,6 +90,7 @@ const AddChannelModal = () => {
               <Button
                 variant="secondary"
                 onClick={() => dispatch(closeModal())}
+                aria-label={t('cancel')}
               >
                 {t('cancel')}
               </Button>
@@ -87,6 +98,7 @@ const AddChannelModal = () => {
                 type="submit"
                 variant="primary"
                 disabled={isSubmitting}
+                aria-label={t('confirm')}
               >
                 {t('confirm')}
               </Button>
