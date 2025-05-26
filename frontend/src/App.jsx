@@ -8,16 +8,9 @@ import LoginPage from './pages/LoginPage.jsx';
 import ChannelsPage from './pages/ChatPage.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 
-function TestError() {
-  const a = null;
-  return a.hello();
-}
-
 function App() {
   return (
     <RollbarErrorBoundary>
-      <TestError />
-
       <Header />
       <Routes>
         <Route path="/signup" element={<SignupPage />} />
