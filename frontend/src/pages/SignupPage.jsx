@@ -55,17 +55,17 @@ function SignupPage() {
           <Form>
             {status && <div className="alert alert-danger">{status}</div>}
             <div className="mb-3">
-              <label htmlFor="username">{t('username')}</label>
+              <label id="username">{t('username')}</label>
               <Field name="username" type="text" className="form-control" data-testid="username-input" />
               <ErrorMessage name="username" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
-              <label htmlFor="password">{t('password')}</label>
+              <label id="password">{t('password')}</label>
               <Field name="password" type="password" className="form-control" data-testid="password-input" />
               <ErrorMessage name="password" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
-              <label htmlFor="confirmPassword">{t('confirmPassword')}</label>
+              <label id="confirmPassword">{t('confirmPassword')}</label>
               <Field name="confirmPassword" type="password" className="form-control" data-testid="confirm-password-input" />
               <ErrorMessage name="confirmPassword" component="div" className="text-danger" />
             </div>
