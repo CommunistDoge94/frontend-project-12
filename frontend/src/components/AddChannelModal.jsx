@@ -50,8 +50,7 @@ const AddChannelModal = () => {
             dispatch(closeModal());
             resetForm();
           } catch (err) {
-            const errorMessage = err.response?.data?.message || t('networkError');
-            toast.error(errorMessage);
+            toast.error(t('networkErrorToast'));
           } finally {
             setSubmitting(false);
           }
