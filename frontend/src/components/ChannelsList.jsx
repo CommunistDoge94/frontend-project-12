@@ -8,7 +8,7 @@ const ChannelsList = () => {
   const { channels, activeChannelId } = useSelector((state) => state.chat);
 
   return (
-    <ul className="list-group flex-grow-1 overflow-auto">
+    <ul className="list-group flex-grow-1 overflow-auto" role="list">
       {channels.map((channel) => (
         <ChannelItem
           key={channel.id}
