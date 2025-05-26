@@ -10,7 +10,7 @@
     "usernameMinError": "От 3 до 20 символов",
     "usernameMaxError": "От 3 до 20 символов",
     "requiredField": "Не должно быть пустым",
-    "passwordMinError": "От 6 символов",
+    "passwordMinError": "Не менее 6 символов",
     "passwordMismatch": "Пароли должны совпадать",
     "userExistsError": "Такой пользователь уже существует"
   }, 
