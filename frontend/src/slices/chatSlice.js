@@ -40,16 +40,18 @@ const chatSlice = createSlice({
       state.messages.push(action.payload);
     },
     addChannel: (state, action) => {
-    const channel = {
-      ...action.payload,
-      name: action.payload.name.toLowerCase()
-    };
-    
-    if (!state.channels.some(c => c.name === channel.name)) {
-      state.channels.push(channel);
-    }
-    state.activeChannelId = channel.id;
-  },
+      const newChannel = action.payload;
+      const existsById = state.channels.some(c => c.id === newChannel.id);
+      const existsByName = state.channels.some(c => 
+        c.name.toLowerCase() === newChannel.name.toLowerCase()
+      );
+      
+      if (!existsById && !existsByName) {
+        state.channels.push(newChannel);
+      }
+      
+      state.activeChannelId = newChannel.id;
+    },
     setActiveChannel: (state, action) => {
       state.activeChannelId = Number(action.payload);
     },

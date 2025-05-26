@@ -8,22 +8,19 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { closeModal } from '../slices/modalSlice';
 import { filterProfanity } from '../utils/profanityFilter';
+import { addChannel } from '../slices/chatSlice';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const show = useSelector((state) => state.modal.type === 'addChannel');
+  const channels = useSelector((state) => state.chat.channels);
   const token = localStorage.getItem('token');
 
   const Schema = Yup.object().shape({
     name: Yup.string()
       .min(3, t('chatPage.chatNameLengthError'))
       .max(20, t('chatPage.chatNameLengthError'))
-      .test(
-        'profanity-check',
-        t('profanity.error'),
-        value => filterProfanity(value) === value
-      )
       .required(t('chatPage.required')),
   });
 
@@ -34,23 +31,51 @@ const AddChannelModal = () => {
         validationSchema={Schema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           try {
-            const filteredName = filterProfanity(values.name.trim());
-            if (!filteredName) {
+            const rawName = values.name.trim();
+            if (!rawName) {
               toast.error(t('toast.channelEmptyNameError'));
               return;
             }
 
-            await axios.post(
-              '/api/v1/channels',
-              { name: filteredName },
-              { headers: { Authorization: `Bearer ${token}` } }
+            const filteredName = filterProfanity(rawName);
+            
+
+            const exists = channels.some(ch => 
+              ch.name.toLowerCase() === filteredName.toLowerCase()
             );
             
+            if (exists) {
+              toast.error(t('toast.channelExists'));
+              return;
+            }
+
+            const response = await axios.post(
+              '/api/v1/channels',
+              { name: filteredName },
+              { 
+                headers: { 
+                  Authorization: `Bearer ${token}`, 
+                  'Content-Type': 'application/json' 
+                } 
+              }
+            );
+
+            dispatch(addChannel({
+              id: response.data.id,
+              name: filteredName,
+              removable: true
+            }));
+
             toast.success(t('toast.channelCreated'));
             dispatch(closeModal());
             resetForm();
           } catch (err) {
-            toast.error(t('toast.networkError'));
+            console.error('Channel creation error:', err);
+            if (err.response?.status === 409) {
+              toast.error(t('toast.channelExists'));
+            } else {
+              toast.error(t('toast.networkError'));
+            }
           } finally {
             setSubmitting(false);
           }
