@@ -8,8 +8,8 @@ const NotFoundPage = () => {
   return (
     <div className="container text-center mt-5">
       <h1 className="display-4">404</h1>
-      <p className="lead">{t('notFound')}</p>
-      <Link to="/" className="btn btn-outline-primary mt-3">{t('goHome')}</Link>
+      <p className="lead">{t('notFoundPage.notFound')}</p>
+      <Link to="/" className="btn btn-outline-primary mt-3">{t('buttons.goHome')}</Link>
     </div>
   );
 };

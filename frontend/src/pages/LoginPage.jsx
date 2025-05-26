@@ -15,7 +15,7 @@ const LoginPage = () => {
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="card p-4 shadow-sm" style={{ maxWidth: '400px', width: '100%' }}>
-        <h2 className="text-center mb-4">{t('loginTitle')}</h2>
+        <h2 className="text-center mb-4">{t('loginForm.loginTitle')}</h2>
         <Formik
           initialValues={{ username: '', password: '' }}
           onSubmit={async (values, { setSubmitting }) => {
@@ -32,9 +32,9 @@ const LoginPage = () => {
               navigate('/');
             } catch (err) {
               if (err.response?.status === 401) {
-                setAuthError(t('authError'));
+                setAuthError(t('errors.authError'));
               } else {
-                setAuthError(t('networkErrorToast'));
+                setAuthError(t('errors.networkErrorToast'));
               }
             } finally {
               setSubmitting(false);
@@ -44,19 +44,19 @@ const LoginPage = () => {
           {({ isSubmitting }) => (
             <Form>
               <div className="mb-3">
-                <label htmlFor="username" className="form-label">{t('username')}</label>
+                <label htmlFor="username" className="form-label">{t('loginForm.username')}</label>
                 <Field id="username" name="username" className="form-control" required />
               </div>
               <div className="mb-3">
-                <label htmlFor="password" className="form-label">{t('password')}</label>
+                <label htmlFor="password" className="form-label">{t('loginForm.password')}</label>
                 <Field id="password" name="password" type="password" className="form-control" required />
               </div>
               {authError && <div className="alert alert-danger">{authError}</div>}
               <button type="submit" disabled={isSubmitting} className="btn btn-primary w-100 mb-3">
-                {t('login')}
+                {t('buttons.login')}
               </button>
               <div className="text-center">
-                <Link to="/signup">{t('signup')}</Link>
+                <Link to="/signup">{t('buttons.signup')}</Link>
               </div>
             </Form>
           )}

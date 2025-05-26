@@ -30,12 +30,12 @@ const ChatPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (error) toast.error(t('loadError'));
+    if (error) toast.error(t('toast.loadError'));
   }, [error, t]);
 
   const handleAddChannel = () => dispatch(openModal({ type: 'addChannel' }));
 
-  if (loading) return <p>{t('loading')}</p>;
+  if (loading) return <p>{t('status.loading')}</p>;
   if (error) return null;
 
   return (
@@ -43,19 +43,19 @@ const ChatPage = () => {
       <div className="row h-100">
         <div className="col-4 chat-sidebar border-end d-flex flex-column">
           <div className="d-flex justify-content-between align-items-center mb-2">
-            <h5 className="mb-0">{t('channels')}</h5>
+            <h5 className="mb-0">{t('chatPage.channels')}</h5>
             <button
               type="button"
               className="btn btn-sm btn-outline-primary"
               onClick={handleAddChannel}
             >
-              {t('plusSign')}
+              {t('chatPage.plusSign')}
             </button>
           </div>
           <ChannelsList />
         </div>
         <div className="col-8 d-flex flex-column h-100">
-          <h5>{t('messages')}</h5>
+          <h5>{t('chatPage.messages')}</h5>
           <MessagesList />
           <MessageForm />
         </div>

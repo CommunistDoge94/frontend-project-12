@@ -1,6 +1,18 @@
 {
   "buttons": {
+    "login": "Войти",
+    "signup": "Регистрация",
+    "goHome": "На главную",
+    "confirm": "Подтвердить",
+    "cancel": "Отмена"
   },
+
+  "loginForm": {
+    "loginTitle": "Вход в чат",
+    "username": "Ваш ник",
+    "password": "Пароль"
+  },
+
   "signupForm": {
     "registration": "Регистрация",
     "username": "Имя пользователя",
@@ -14,47 +26,65 @@
     "passwordMismatch": "Пароли должны совпадать",
     "userExistsError": "Такой пользователь уже существует"
   }, 
+
+  "chatPage": {
+    "channels": "Каналы",
+    "messages": "Сообщения",
+    "plusSign": "+",
+    "addChannel": "Добавить канал",
+    "channelName": "Имя канала",
+
+
+    "chatNameLengthError": "От 3 до 20 символов",
+    "required": "Обязательное поле"
+  },
+
+  "notFoundPage": {
+    "notFound": "Ой-яй-яй! Страница не найдена."
+  },
+
+  "status": {
+    "loading": "Загрузка данных..." 
+  },
+
+  "toast": {
+    "channelCreated": "Канал создан",
+
+    "loadError": "Ошибка загрузки данных. Попробуйте позже.",
+    "networkError": "Ошибка соединения",
+    "channelEmptyNameError": "Название канала не может быть пустым"
+  },
+
+  "errors": {
+    "authError": "Неверные имя пользователя или пароль",
+    "networkErrorToast": "Ошибка соединения"
+  },
+
+  "profanity": {
+    "error": "Нельзя создавать матерные названия!"
+  },
   
-  "addChannel": "Добавить канал",
-  "authError": "Неверные имя пользователя или пароль",
+  
+  
   "brand": "Hexlet Chat",
-  "cancel": "Отмена",
-  "channelCreated": "Канал создан",
   "channelDeleted": "Канал удалён",
-  "channelName": "Имя канала",
   "channelRenamed": "Канал переименован",
-  "channel.emptyNameError": "Название канала не может быть пустым",
   "channelManagement": "Управление каналом",
-  "channels": "Каналы",
-  "confirm": "Подтвердить",
   "enterMessage": "Введите сообщение",
   "error": "Ошибка: {{error}}",
-  "goHome": "На главную",
-  "loadError": "Ошибка загрузки данных. Попробуйте позже.",
-  "loading": "Загрузка данных...",
-  "login": "Войти",
-  "loginTitle": "Вход в чат",
   "logout": "Выйти",
   "max20Chars": "От 3 до 20 символов",
   "message.emptyError": "Сообщение не может быть пустым",
-  "messages": "Сообщения",
   "min6Chars": "Не менее 6 символов",
-  "networkError": "Ошибка соединения",
-  "networkErrorToast": "Ошибка соединения",
-  "notFound": "Ой-яй-яй! Страница не найдена.",
-  "passwordsMustMatch": "Пароли должны совпадать",
-  "plusSign": "+",
+ "passwordsMustMatch": "Пароли должны совпадать",
   "profanityAlert": "Использование ненормативной лексики запрещено",
-  "profanityError": "Нельзя создавать матерные названия!",
   "profanityWarning": "Ай-яй-яй! Плохое слово!",
   "remove": "Удалить",
   "removeChannel": "Удалить канал",
   "removeConfirmation": "Вы уверены, что хотите удалить канал?",
   "rename": "Переименовать",
   "renameChannel": "Переименовать канал",
-  "required": "Обязательное поле",
   "send": "Отправить",
-  "signup": "Регистрация",
   "signupError": "Ошибка регистрации",
   "userExistsError": "Такой пользователь уже существует"
 }

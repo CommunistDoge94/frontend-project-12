@@ -17,14 +17,14 @@ const AddChannelModal = () => {
 
   const Schema = Yup.object().shape({
     name: Yup.string()
-      .min(3, t('min3Chars'))
-      .max(20, t('max20Chars'))
+      .min(3, t('chatPage.chatNameLengthError'))
+      .max(20, t('chatPage.chatNameLengthError'))
       .test(
         'profanity-check',
-        t('profanityError'),
+        t('profanity.error'),
         value => filterProfanity(value) === value
       )
-      .required(t('required')),
+      .required(t('chatPage.required')),
   });
 
   return (
@@ -36,7 +36,7 @@ const AddChannelModal = () => {
           try {
             const filteredName = filterProfanity(values.name.trim());
             if (!filteredName) {
-              toast.error(t('channel.emptyNameError'));
+              toast.error(t('toast.channelEmptyNameError'));
               return;
             }
 
@@ -46,11 +46,11 @@ const AddChannelModal = () => {
               { headers: { Authorization: `Bearer ${token}` } }
             );
             
-            toast.success(t('channelCreated'));
+            toast.success(t('toast.channelCreated'));
             dispatch(closeModal());
             resetForm();
           } catch (err) {
-            toast.error(t('networkErrorToast'));
+            toast.error(t('toast.networkError'));
           } finally {
             setSubmitting(false);
           }
@@ -59,11 +59,11 @@ const AddChannelModal = () => {
         {({ handleSubmit, isSubmitting }) => (
           <Form onSubmit={handleSubmit} noValidate>
             <Modal.Header closeButton>
-              <Modal.Title>{t('addChannel')}</Modal.Title>
+              <Modal.Title>{t('chatPage.addChannel')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form.Group>
-                <Form.Label>{t('channelName')}</Form.Label>
+                <Form.Label>{t('chatPage.channelName')}</Form.Label>
                 <Field name="name">
                   {({ field, meta }) => (
                     <>
@@ -72,7 +72,7 @@ const AddChannelModal = () => {
                         type="text"
                         isInvalid={meta.touched && !!meta.error}
                         autoFocus
-                        aria-label={t('channelName')}
+                        aria-label={t('chatPage.channelName')}
                       />
                       <ErrorMessage
                         name="name"
@@ -89,17 +89,17 @@ const AddChannelModal = () => {
               <Button
                 variant="secondary"
                 onClick={() => dispatch(closeModal())}
-                aria-label={t('cancel')}
+                aria-label={t('buttons.cancel')}
               >
-                {t('cancel')}
+                {t('buttons.cancel')}
               </Button>
               <Button
                 type="submit"
                 variant="primary"
                 disabled={isSubmitting}
-                aria-label={t('confirm')}
+                aria-label={t('buttons.confirm')}
               >
-                {t('confirm')}
+                {t('buttons.confirm')}
               </Button>
             </Modal.Footer>
           </Form>
