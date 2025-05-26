@@ -14,7 +14,7 @@ const ChannelsList = () => {
           key={channel.id}
           channel={channel}
           isActive={channel.id === activeChannelId}
-          onClick={() => dispatch(setActiveChannel(channel.id))} // Исправлено: передача обработчика
+          onClick={() => dispatch(setActiveChannel(channel.id))}
         />
       ))}
     </ul>
