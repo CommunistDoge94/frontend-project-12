@@ -6,7 +6,7 @@ const username = localStorage.getItem('username');
 const initialState = {
   username: username || null,
   token: token || null,
-  isLoggedIn: !!token,
+  isLoggedIn: !!token && validateToken(token),
 };
 
 const authSlice = createSlice({
