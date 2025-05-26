@@ -82,19 +82,20 @@ const chatSlice = createSlice({
       })
       .addCase(fetchChatData.fulfilled, (state, action) => {
         state.loading = false;
-        
-        const serverChannels = action.payload.channels.map(ch => ({
+        state.error = null;
+
+        const channels = action.payload.channels.map(ch => ({
           id: Number(ch.id),
           name: ch.name.toLowerCase(),
           removable: ch.removable
         }));
 
-        state.channels = serverChannels;
-
-        if (!state.channels.some(ch => ch.id === state.activeChannelId)) {
-          state.activeChannelId = state.channels[0]?.id || 1;
+        if (!channels.some(ch => ch.name === 'general')) {
+          channels.unshift({ id: 1, name: 'general', removable: false });
         }
 
+        state.channels = channels;
+        state.activeChannelId = state.activeChannelId === 1 ? 1 : channels[0]?.id;
         state.messages = action.payload.messages.map(msg => ({
           ...msg,
           channelId: Number(msg.channelId),

@@ -20,16 +20,14 @@ const ChatPage = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        await dispatch(fetchChatData()).unwrap();
+        await dispatch(fetchChatData());
+        await new Promise(resolve => setTimeout(resolve, 500));
       } catch (err) {
-        toast.error(t('loadError'));
-        setTimeout(() => dispatch(fetchChatData()), 3000);
+        console.error('Ошибка загрузки каналов:', err);
       }
     };
-    
-    const timer = setTimeout(loadData, 500);
-    return () => clearTimeout(timer);
-  }, [dispatch, t]);
+    loadData();
+  }, [dispatch]);
 
   useEffect(() => {
     if (error) toast.error(t('loadError'));

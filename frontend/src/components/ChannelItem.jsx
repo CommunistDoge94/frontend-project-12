@@ -22,7 +22,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
   const handleRemove = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(openModal({ type: 'removeChannel', extra: { channelId: channel.id } }));
+    dispatch(openModal({ type: 'removeChannel', extra: { channelId: channel.id }}));
   };
 
   return (
@@ -32,9 +32,12 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
       }`}
       role="button"
       onClick={onClick}
-      style={{ cursor: 'pointer' }}
+      aria-label={`Channel ${channel.name}`}
+      data-testid="channel-item"
     >
-      <span className="flex-grow-1"># {channel.name}</span>
+      <span className="flex-grow-1">
+        # <span data-testid={`channel-name-${channel.id}`}>{channel.name}</span>
+      </span>
       {channel.removable && (
         <Dropdown onClick={(e) => e.stopPropagation()}>
           <Dropdown.Toggle variant="link" size="sm" className="p-0 text-decoration-none">
