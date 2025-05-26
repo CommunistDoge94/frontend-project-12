@@ -32,13 +32,12 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
       }`}
       role="button"
       onClick={onClick}
-      aria-label={`Channel ${channel.name}`}
       data-testid={`channel-${channel.name}`}
     >
       <button 
         type="button"
         className="btn btn-link p-0 border-0 text-start w-100"
-        style={{ fontWeight: isActive ? 'bold' : 'normal' }}
+        aria-label={`Канал ${channel.name}`}
       >
         # {channel.name}
       </button>
