@@ -12,15 +12,15 @@ const SignupPage = () => {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, t('usernameMinError'))
-      .max(20, t('usernameMaxError'))
-      .required(t('requiredField')),
+      .min(3, t('signupForm.usernameMinError'))
+      .max(20, t('signupForm.usernameMaxError'))
+      .required(t('signupForm.requiredField')),
     password: Yup.string()
-      .min(6, t('passwordMinError'))
-      .required(t('requiredField')),
+      .min(6, t('signupForm.passwordMinError'))
+      .required(t('signupForm.requiredField')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], t('passwordMismatch'))
-      .required(t('requiredField'))
+      .oneOf([Yup.ref('password'), null], t('signupForm.passwordMismatch'))
+      .required(t('signupForm.requiredField'))
   });
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
@@ -35,7 +35,7 @@ const SignupPage = () => {
       
     } catch (error) {
       if (error.response?.status === 409) {
-        setErrors({ username: t('userExistsError') });
+        setErrors({ username: t('signupForm.userExistsError') });
       } else {
         toast.error(t('registrationFailed'));
       }
@@ -46,7 +46,7 @@ const SignupPage = () => {
 
   return (
     <div className="container mt-4">
-      <h2>{t('registration')}</h2>
+      <h2>{t('signupForm.registration')}</h2>
       <Formik
         initialValues={{ username: '', password: '', confirmPassword: '' }}
         validationSchema={validationSchema}
@@ -56,7 +56,7 @@ const SignupPage = () => {
           <Form>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
-                {t('username')}
+                {t('signupForm.username')}
               </label>
               <Field
                 type="text"
@@ -75,7 +75,7 @@ const SignupPage = () => {
 
             <div className="mb-3">
               <label htmlFor="password" className="form-label">
-                {t('password')}
+                {t('signupForm.password')}
               </label>
               <Field
                 type="password"
@@ -94,7 +94,7 @@ const SignupPage = () => {
 
             <div className="mb-3">
               <label htmlFor="confirmPassword" className="form-label">
-                {t('confirmPassword')}
+                {t('signupForm.confirmPassword')}
               </label>
               <Field
                 type="password"
