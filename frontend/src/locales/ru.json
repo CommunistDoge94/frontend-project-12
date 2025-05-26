@@ -17,7 +17,7 @@
   "brand": "Hexlet Chat",
   "logout": "Выйти",
   "loginTitle": "Вход в чат",
-  "username": "Ваш ник",
+  "username": "Имя пользователя",
   "password": "Пароль",
   "login": "Войти",
   "signup": "Регистрация",
