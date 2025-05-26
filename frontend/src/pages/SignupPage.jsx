@@ -33,17 +33,18 @@ function SignupPage() {
         validationSchema={SignupSchema}
         onSubmit={async (values, actions) => {
           try {
+            actions.setStatus(null);
             const { username, password } = values;
             const response = await axios.post('/api/v1/signup', { username, password });
             const { token, username: name } = response.data;
             localStorage.setItem('token', token);
             localStorage.setItem('username', name);
             dispatch(loginSuccess({ username: name, token }));
-            navigate('/channels/1');
+            navigate('/');
           } catch (error) {
               actions.setSubmitting(false);
               if (error.response?.status === 409) {
-                actions.setStatus(t('userExists'));
+                actions.setFieldError('username', t('userExists'));
               } else {
                 actions.setStatus(t('networkErrorToast'));
               }
@@ -55,17 +56,17 @@ function SignupPage() {
             {status && <div className="alert alert-danger">{status}</div>}
             <div className="mb-3">
               <label htmlFor="username">{t('username')}</label>
-              <Field name="username" type="text" className="form-control" />
+              <Field name="username" type="text" className="form-control" data-testid="username-input" />
               <ErrorMessage name="username" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
               <label htmlFor="password">{t('password')}</label>
-              <Field name="password" type="password" className="form-control" />
+              <Field name="password" type="password" className="form-control" data-testid="password-input" />
               <ErrorMessage name="password" component="div" className="text-danger" />
             </div>
             <div className="mb-3">
               <label htmlFor="confirmPassword">{t('confirmPassword')}</label>
-              <Field name="confirmPassword" type="password" className="form-control" />
+              <Field name="confirmPassword" type="password" className="form-control" data-testid="confirm-password-input" />
               <ErrorMessage name="confirmPassword" component="div" className="text-danger" />
             </div>
             <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
