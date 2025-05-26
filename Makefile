@@ -5,4 +5,4 @@ start:
 	npx start-server -s ./frontend/dist
 
 install:
-	cd frontend && npm install
+	npm install && cd frontend && npm install
