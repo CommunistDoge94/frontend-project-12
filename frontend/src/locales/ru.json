@@ -4,7 +4,8 @@
     "signup": "Регистрация",
     "goHome": "На главную",
     "confirm": "Подтвердить",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "send": "Отправить"
   },
 
   "loginForm": {
@@ -33,6 +34,7 @@
     "plusSign": "+",
     "addChannel": "Добавить канал",
     "channelName": "Имя канала",
+    "enterMessage": "Введите сообщение",
 
 
     "chatNameLengthError": "От 3 до 20 символов",
@@ -70,7 +72,7 @@
   "channelDeleted": "Канал удалён",
   "channelRenamed": "Канал переименован",
   "channelManagement": "Управление каналом",
-  "enterMessage": "Введите сообщение",
+  
   "error": "Ошибка: {{error}}",
   "logout": "Выйти",
   "max20Chars": "От 3 до 20 символов",
@@ -84,7 +86,7 @@
   "removeConfirmation": "Вы уверены, что хотите удалить канал?",
   "rename": "Переименовать",
   "renameChannel": "Переименовать канал",
-  "send": "Отправить",
+  
   "signupError": "Ошибка регистрации",
   "userExistsError": "Такой пользователь уже существует"
 }
