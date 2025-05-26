@@ -33,11 +33,15 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
       role="button"
       onClick={onClick}
       aria-label={`Channel ${channel.name}`}
-      data-testid="channel-item"
+      data-testid={`channel-${channel.name}`}
     >
-      <span className="flex-grow-1">
-        # <span data-testid={`channel-name-${channel.id}`}>{channel.name}</span>
-      </span>
+      <button 
+        type="button"
+        className="btn btn-link p-0 border-0 text-start w-100"
+        style={{ fontWeight: isActive ? 'bold' : 'normal' }}
+      >
+        # {channel.name}
+      </button>
       {channel.removable && (
         <Dropdown onClick={(e) => e.stopPropagation()}>
           <Dropdown.Toggle variant="link" size="sm" className="p-0 text-decoration-none">
