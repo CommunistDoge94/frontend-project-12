@@ -41,13 +41,13 @@ function SignupPage() {
             dispatch(loginSuccess({ username: name, token }));
             navigate('/channels/1');
           } catch (error) {
-            actions.setSubmitting(false);
-            if (error.response && error.response.status === 409) {
-              actions.setStatus(t('userExists'));
-            } else {
-              actions.setStatus(t('signupError'));
+              actions.setSubmitting(false);
+              if (error.response?.status === 409) {
+                actions.setStatus(t('userExists'));
+              } else {
+                actions.setStatus(t('networkErrorToast'));
+              }
             }
-          }
         }}
       >
         {({ status, isSubmitting }) => (

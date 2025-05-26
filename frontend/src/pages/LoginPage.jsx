@@ -34,7 +34,7 @@ const LoginPage = () => {
               if (err.response?.status === 401) {
                 setAuthError(t('authError'));
               } else {
-                setAuthError(t('networkError'));
+                setAuthError(t('networkErrorToast'));
               }
             } finally {
               setSubmitting(false);
