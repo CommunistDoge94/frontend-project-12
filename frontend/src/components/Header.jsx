@@ -22,7 +22,7 @@ function Header() {
         <Navbar.Brand as={NavLink} to="/">Hexlet Chat</Navbar.Brand>
         {isLoggedIn && (
           <Button variant="outline-danger" onClick={handleLogout}>
-            Выйти
+            {t('logout')}
           </Button>
         )}
       </Container>
