@@ -18,8 +18,18 @@ const ChatPage = () => {
   useSocket();
 
   useEffect(() => {
-    dispatch(fetchChatData());
-  }, [dispatch]);
+    const loadData = async () => {
+      try {
+        await dispatch(fetchChatData()).unwrap();
+      } catch (err) {
+        toast.error(t('loadError'));
+        setTimeout(() => dispatch(fetchChatData()), 3000);
+      }
+    };
+    
+    const timer = setTimeout(loadData, 500);
+    return () => clearTimeout(timer);
+  }, [dispatch, t]);
 
   useEffect(() => {
     if (error) toast.error(t('loadError'));
@@ -41,7 +51,7 @@ const ChatPage = () => {
               className="btn btn-sm btn-outline-primary"
               onClick={handleAddChannel}
             >
-              +
+              {t('plusSign')}
             </button>
           </div>
           <ChannelsList />

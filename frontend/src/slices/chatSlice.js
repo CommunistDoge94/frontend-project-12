@@ -6,10 +6,20 @@ export const fetchChatData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/api/v1/data', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return response.data;
+
+      const [channelsRes, messagesRes] = await Promise.all([
+        axios.get('/api/v1/channels', {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
+        axios.get('/api/v1/messages', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+      ]);
+
+      return {
+        channels: channelsRes.data,
+        messages: messagesRes.data
+      };
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -30,12 +40,16 @@ const chatSlice = createSlice({
       state.messages.push(action.payload);
     },
     addChannel: (state, action) => {
-      const channel = action.payload;
-      if (!state.channels.some(c => c.id === channel.id)) {
-        state.channels.push(channel);
-      }
-      state.activeChannelId = channel.id;
-    },
+    const channel = {
+      ...action.payload,
+      name: action.payload.name.toLowerCase()
+    };
+    
+    if (!state.channels.some(c => c.name === channel.name)) {
+      state.channels.push(channel);
+    }
+    state.activeChannelId = channel.id;
+  },
     setActiveChannel: (state, action) => {
       state.activeChannelId = Number(action.payload);
     },
@@ -68,34 +82,24 @@ const chatSlice = createSlice({
       })
       .addCase(fetchChatData.fulfilled, (state, action) => {
         state.loading = false;
-        const serverChannels = Array.isArray(action.payload.channels)
-          ? action.payload.channels.map(ch => ({
-              id: Number(ch.id),
-              name: ch.name,
-              removable: ch.removable !== undefined ? ch.removable : true
-            }))
-          : [];
+        
+        const serverChannels = action.payload.channels.map(ch => ({
+          id: Number(ch.id),
+          name: ch.name.toLowerCase(),
+          removable: ch.removable
+        }));
 
-        const hasGeneral = serverChannels.some(ch => ch.name === 'General');
-        let channels = serverChannels;
-        if (!hasGeneral) {
-          channels = [{ id: 1, name: 'General', removable: false }, ...serverChannels];
+        state.channels = serverChannels;
+
+        if (!state.channels.some(ch => ch.id === state.activeChannelId)) {
+          state.activeChannelId = state.channels[0]?.id || 1;
         }
 
-        let activeChannelId = state.activeChannelId;
-        if (!channels.some(ch => ch.id === activeChannelId)) {
-          activeChannelId = channels[0]?.id || 1;
-        }
-
-        state.channels = channels;
-        state.activeChannelId = activeChannelId;
-        state.messages = Array.isArray(action.payload.messages)
-          ? action.payload.messages.map(msg => ({
-              ...msg,
-              channelId: Number(msg.channelId),
-              id: Number(msg.id)
-            }))
-          : [];
+        state.messages = action.payload.messages.map(msg => ({
+          ...msg,
+          channelId: Number(msg.channelId),
+          id: Number(msg.id)
+        }));
       });
   },
 });

@@ -1,15 +1,30 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import axios from 'axios';
 
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = !!localStorage.getItem('token');
+  const [isValid, setIsValid] = useState(null);
+  const token = localStorage.getItem('token');
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        await axios.get('/api/v1/channels', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setIsValid(true);
+      } catch (err) {
+        localStorage.removeItem('token');
+        setIsValid(false);
+      }
+    };
 
-  return children;
+    if (token) verifyToken();
+    else setIsValid(false);
+  }, [token]);
+
+  if (isValid === null) return <div>Loading...</div>;
+  return isValid ? children : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;

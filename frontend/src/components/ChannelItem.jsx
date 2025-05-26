@@ -41,7 +41,6 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
             ⋮
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Header>{t('channelManagement')}</Dropdown.Header>
             <Dropdown.Item onClick={handleRename}>{t('rename')}</Dropdown.Item>
             <Dropdown.Item onClick={handleRemove}>{t('remove')}</Dropdown.Item>
           </Dropdown.Menu>
