@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { loginSuccess, logout } from '../slices/authSlice';
 
-export const useAuth = () => {
+const useAuth = () => {
   const dispatch = useDispatch();
 
   const checkAuth = async () => {
@@ -30,3 +29,5 @@ export const useAuth = () => {
 
   return { checkAuth, handleLogin };
 };
+
+export default useAuth;

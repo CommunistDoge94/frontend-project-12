@@ -24,7 +24,10 @@
     "react-redux": "^9.2.0",
     "react-toastify": "^11.0.5",
     "rollbar": "^2.26.4",
+    "react-router-dom": "^7.6.1",
+    "vite": "^6.3.5",
     "socket.io-client": "^4.8.1",
+    "@vitejs/plugin-react": "^4.4.1",
     "yup": "^1.6.1"
   },
   "devDependencies": {
@@ -32,7 +35,6 @@
     "@hexlet/chat-server": "^2.0.4",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "@vitejs/plugin-react": "^4.4.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.31.0",
@@ -40,8 +42,6 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
-    "react-router-dom": "^7.6.1",
-    "vite": "^6.3.5"
+    "globals": "^16.0.0"
   }
 }

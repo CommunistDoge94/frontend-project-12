@@ -8,8 +8,8 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { renameChannel } from '../../slices/channelsSlice';
-import { filterProfanity } from '../../utils/profanityFilter';
-import { useModal } from '../../hooks/useModal';
+import filterProfanity from '../../utils/profanityFilter';
+import useModal from '../../hooks/useModal';
 
 const RenameChannelModal = ({ channelId, currentName }) => {
   const { t } = useTranslation();

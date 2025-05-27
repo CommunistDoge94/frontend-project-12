@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { removeChannel } from '../../slices/channelsSlice';
 import { removeMessagesByChannelId } from '../../slices/messagesSlice';
 import socket from '../../socket';
-import { useModal } from '../../hooks/useModal';
+import useModal from '../../hooks/useModal';
 
 const RemoveChannelModal = () => {
   const { t } = useTranslation();

@@ -3,7 +3,7 @@ import {
   addChannel, removeChannel, renameChannel, setActiveChannel,
 } from '../slices/channelsSlice';
 
-export const useChannels = () => {
+const useChannels = () => {
   const dispatch = useDispatch();
 
   return {
@@ -13,3 +13,5 @@ export const useChannels = () => {
     setActiveChannel: (id) => dispatch(setActiveChannel(id)),
   };
 };
+
+export default useChannels;

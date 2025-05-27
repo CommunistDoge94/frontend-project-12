@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { openModal, closeModal } from '../slices/modalSlice';
 
-export const useModal = () => {
+const useModal = () => {
   const dispatch = useDispatch();
 
   return {
@@ -9,3 +9,5 @@ export const useModal = () => {
     closeModal: () => dispatch(closeModal()),
   };
 };
+
+export default useModal;

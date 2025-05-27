@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
 
 const LoginPage = () => {
   const { t } = useTranslation();

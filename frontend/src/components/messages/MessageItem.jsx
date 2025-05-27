@@ -1,5 +1,5 @@
 import React from 'react';
-import { filterProfanity } from '../../utils/profanityFilter';
+import filterProfanity from '../../utils/profanityFilter';
 
 const MessageItem = ({ message }) => {
   const safeBody = filterProfanity(String(message.body || message.text || ''));

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import ChannelItem from './ChannelItem';
 import { selectChannels, selectActiveChannelId } from '../../slices/channelsSlice';
-import { useChannels } from '../../hooks/useChannels';
+import useChannels from '../../hooks/useChannels';
 
 const ChannelsList = () => {
   const channels = useSelector(selectChannels);
@@ -12,7 +12,6 @@ const ChannelsList = () => {
   return (
     <ul
       className="list-group flex-grow-1 overflow-auto"
-      role="list"
       aria-label="Список каналов"
     >
       {channels.map((channel) => (

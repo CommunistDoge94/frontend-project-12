@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { filterProfanity } from '../../utils/profanityFilter';
+import filterProfanity from '../../utils/profanityFilter';
 
 const MessageForm = () => {
   const { t } = useTranslation();

@@ -6,8 +6,8 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useModal } from '../../hooks/useModal';
-import { filterProfanity } from '../../utils/profanityFilter';
+import useModal from '../../hooks/useModal';
+import filterProfanity from '../../utils/profanityFilter';
 import { addChannel } from '../../slices/channelsSlice';
 
 const AddChannelModal = () => {
@@ -95,7 +95,10 @@ const AddChannelModal = () => {
                   {({ field, meta }) => (
                     <>
                       <Form.Control
-                        {...field}
+                        name={field.name}
+                        value={field.value}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
                         type="text"
                         isInvalid={meta.touched && !!meta.error}
                         autoFocus
