@@ -64,6 +64,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
               onChange={(e) => setName(e.target.value)}
               isInvalid={!!error}
               autoFocus
+              aria-label="Имя канала"
             />
             {error && <Alert variant="danger" className="mt-2">{error}</Alert>}
           </Form.Group>
