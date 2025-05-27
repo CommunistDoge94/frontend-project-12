@@ -1,17 +1,17 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'
 import {
   addChannel, removeChannel, renameChannel, setActiveChannel,
-} from '../slices/channelsSlice';
+} from '../slices/channelsSlice'
 
 const useChannels = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return {
-    addChannel: (channel) => dispatch(addChannel(channel)),
-    removeChannel: (id) => dispatch(removeChannel(id)),
+    addChannel: channel => dispatch(addChannel(channel)),
+    removeChannel: id => dispatch(removeChannel(id)),
     renameChannel: (id, name) => dispatch(renameChannel({ id, name })),
-    setActiveChannel: (id) => dispatch(setActiveChannel(id)),
-  };
-};
+    setActiveChannel: id => dispatch(setActiveChannel(id)),
+  }
+}
 
-export default useChannels;
+export default useChannels

@@ -1,23 +1,23 @@
-import React from 'react';
-import { Dropdown } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import useModal from '../../hooks/useModal';
+import React from 'react'
+import { Dropdown } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
+import useModal from '../../hooks/useModal'
 
 const ChannelItem = ({ channel, isActive, onClick }) => {
-  const { t } = useTranslation();
-  const { openModal } = useModal();
+  const { t } = useTranslation()
+  const { openModal } = useModal()
 
-  const handleRename = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    openModal('renameChannel', { channelId: channel.id, channelName: channel.name });
-  };
+  const handleRename = e => {
+    e.preventDefault()
+    e.stopPropagation()
+    openModal('renameChannel', { channelId: channel.id, channelName: channel.name })
+  }
 
-  const handleRemove = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    openModal('removeChannel', { channelId: channel.id });
-  };
+  const handleRemove = e => {
+    e.preventDefault()
+    e.stopPropagation()
+    openModal('removeChannel', { channelId: channel.id })
+  }
 
   return (
     <li className="list-group-item p-0">
@@ -28,10 +28,10 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
           aria-label={`Канал ${channel.name}`}
           style={{ lineHeight: '1.5', height: '38px' }}
           onClick={onClick}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              onClick();
+              e.preventDefault()
+              onClick()
             }
           }}
         >
@@ -40,7 +40,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
           {channel.name}
         </button>
         {channel.removable && (
-          <Dropdown onClick={(e) => e.stopPropagation()}>
+          <Dropdown onClick={e => e.stopPropagation()}>
             <Dropdown.Toggle
               variant="secondary"
               size="sm"
@@ -58,7 +58,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
         )}
       </div>
     </li>
-  );
-};
+  )
+}
 
-export default ChannelItem;
+export default ChannelItem

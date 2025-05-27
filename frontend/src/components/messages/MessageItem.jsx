@@ -1,8 +1,8 @@
-import React from 'react';
-import filterProfanity from '../../utils/profanityFilter';
+import React from 'react'
+import filterProfanity from '../../utils/profanityFilter'
 
 const MessageItem = ({ message }) => {
-  const safeBody = filterProfanity(String(message.body || message.text || ''));
+  const safeBody = filterProfanity(String(message.body || message.text || ''))
 
   return (
     <div className="mb-2">
@@ -13,7 +13,7 @@ const MessageItem = ({ message }) => {
       </b>
       <span>{safeBody}</span>
     </div>
-  );
-};
+  )
+}
 
-export default MessageItem;
+export default MessageItem

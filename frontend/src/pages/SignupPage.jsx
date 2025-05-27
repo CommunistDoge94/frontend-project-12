@@ -1,18 +1,18 @@
-import React from 'react';
+import React from 'react'
 import {
   Formik, Field, Form, ErrorMessage,
-} from 'formik';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import * as Yup from 'yup';
-import useAuth from '../hooks/useAuth';
+} from 'formik'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import * as Yup from 'yup'
+import useAuth from '../hooks/useAuth'
 
 const SignupPage = () => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { handleLogin } = useAuth();
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const { handleLogin } = useAuth()
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -25,27 +25,27 @@ const SignupPage = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], t('signupForm.passwordMismatch'))
       .required(t('signupForm.requiredField')),
-  });
+  })
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const { data } = await axios.post('/api/v1/signup', {
         username: values.username,
         password: values.password,
-      });
+      })
 
-      handleLogin(data.token, values.username);
-      navigate('/', { replace: true });
+      handleLogin(data.token, values.username)
+      navigate('/', { replace: true })
     } catch (error) {
       if (error.response?.status === 409) {
-        setErrors({ username: t('signupForm.userExistsError') });
+        setErrors({ username: t('signupForm.userExistsError') })
       } else {
-        toast.error(t('registrationFailed'));
+        toast.error(t('registrationFailed'))
       }
     } finally {
-      setSubmitting(false);
+      setSubmitting(false)
     }
-  };
+  }
 
   return (
     <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
@@ -84,7 +84,7 @@ const SignupPage = () => {
         </Formik>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignupPage;
+export default SignupPage

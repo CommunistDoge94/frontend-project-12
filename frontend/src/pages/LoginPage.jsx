@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
-import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
-import { useTranslation } from 'react-i18next';
-import useAuth from '../hooks/useAuth';
+import React, { useState } from 'react'
+import { Formik, Form, Field } from 'formik'
+import { useNavigate, Link } from 'react-router-dom'
+import axios from 'axios'
+import { useTranslation } from 'react-i18next'
+import useAuth from '../hooks/useAuth'
 
 const LoginPage = () => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [authError, setAuthError] = useState(null);
-  const { handleLogin } = useAuth();
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const [authError, setAuthError] = useState(null)
+  const { handleLogin } = useAuth()
 
   return (
     <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
@@ -19,20 +19,20 @@ const LoginPage = () => {
           initialValues={{ username: '', password: '' }}
           onSubmit={async (values, { setSubmitting }) => {
             try {
-              setAuthError(null);
-              const response = await axios.post('/api/v1/login', values);
-              const { token, username } = response.data;
+              setAuthError(null)
+              const response = await axios.post('/api/v1/login', values)
+              const { token, username } = response.data
 
-              handleLogin(token, username);
-              navigate('/');
+              handleLogin(token, username)
+              navigate('/')
             } catch (err) {
               if (err.response?.status === 401) {
-                setAuthError(t('errors.authError'));
+                setAuthError(t('errors.authError'))
               } else {
-                setAuthError(t('errors.networkErrorToast'));
+                setAuthError(t('errors.networkErrorToast'))
               }
             } finally {
-              setSubmitting(false);
+              setSubmitting(false)
             }
           }}
         >
@@ -58,7 +58,7 @@ const LoginPage = () => {
         </Formik>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

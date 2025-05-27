@@ -1,29 +1,29 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import filterProfanity from '../../utils/profanityFilter';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { Formik, Form, Field } from 'formik'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import filterProfanity from '../../utils/profanityFilter'
 
 const MessageForm = () => {
-  const { t } = useTranslation();
-  const activeChannelId = useSelector((state) => state.channels.activeChannelId);
-  const token = localStorage.getItem('token');
+  const { t } = useTranslation()
+  const activeChannelId = useSelector(state => state.channels.activeChannelId)
+  const token = localStorage.getItem('token')
 
   return (
     <Formik
       initialValues={{ messageText: '' }}
       onSubmit={async (values, { resetForm, setSubmitting }) => {
-        const rawText = values.messageText.trim();
+        const rawText = values.messageText.trim()
 
         if (!rawText) {
-          toast.error(t('toast.emptyMessage'));
-          setSubmitting(false);
-          return;
+          toast.error(t('toast.emptyMessage'))
+          setSubmitting(false)
+          return
         }
 
-        const filteredText = filterProfanity(rawText);
+        const filteredText = filterProfanity(rawText)
 
         try {
           await axios.post(
@@ -35,16 +35,16 @@ const MessageForm = () => {
             },
             {
               headers: {
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
               },
             },
-          );
-          resetForm();
+          )
+          resetForm()
         } catch (err) {
-          toast.error(t('toast.networkError'));
+          toast.error(t('toast.networkError'))
         } finally {
-          setSubmitting(false);
+          setSubmitting(false)
         }
       }}
     >
@@ -68,7 +68,7 @@ const MessageForm = () => {
         </Form>
       )}
     </Formik>
-  );
-};
+  )
+}
 
-export default MessageForm;
+export default MessageForm

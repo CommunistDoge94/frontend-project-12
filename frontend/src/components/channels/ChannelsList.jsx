@@ -1,20 +1,20 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import ChannelItem from './ChannelItem';
-import { selectChannels, selectActiveChannelId } from '../../slices/channelsSlice';
-import useChannels from '../../hooks/useChannels';
+import React from 'react'
+import { useSelector } from 'react-redux'
+import ChannelItem from './ChannelItem'
+import { selectChannels, selectActiveChannelId } from '../../slices/channelsSlice'
+import useChannels from '../../hooks/useChannels'
 
 const ChannelsList = () => {
-  const channels = useSelector(selectChannels);
-  const activeChannelId = useSelector(selectActiveChannelId);
-  const { setActiveChannel } = useChannels();
+  const channels = useSelector(selectChannels)
+  const activeChannelId = useSelector(selectActiveChannelId)
+  const { setActiveChannel } = useChannels()
 
   return (
     <ul
       className="list-group flex-grow-1 overflow-auto"
       aria-label="Список каналов"
     >
-      {channels.map((channel) => (
+      {channels.map(channel => (
         <ChannelItem
           key={channel.id}
           channel={channel}
@@ -23,7 +23,7 @@ const ChannelsList = () => {
         />
       ))}
     </ul>
-  );
-};
+  )
+}
 
-export default ChannelsList;
+export default ChannelsList

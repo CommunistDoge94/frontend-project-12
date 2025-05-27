@@ -1,29 +1,29 @@
-import React from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { Formik, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import useModal from '../../hooks/useModal';
-import filterProfanity from '../../utils/profanityFilter';
-import { addChannel } from '../../slices/channelsSlice';
+import React from 'react'
+import { Modal, Button, Form } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { Formik, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import useModal from '../../hooks/useModal'
+import filterProfanity from '../../utils/profanityFilter'
+import { addChannel } from '../../slices/channelsSlice'
 
 const AddChannelModal = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { closeModal } = useModal();
-  const show = useSelector((state) => state.modal.type === 'addChannel');
-  const channels = useSelector((state) => state.channels.items);
-  const token = localStorage.getItem('token');
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const { closeModal } = useModal()
+  const show = useSelector(state => state.modal.type === 'addChannel')
+  const channels = useSelector(state => state.channels.items)
+  const token = localStorage.getItem('token')
 
   const Schema = Yup.object().shape({
     name: Yup.string()
       .min(3, t('chatPage.chatNameLengthError'))
       .max(20, t('chatPage.chatNameLengthError'))
       .required(t('chatPage.required')),
-  });
+  })
 
   return (
     <Modal show={show} onHide={closeModal} centered>
@@ -32,20 +32,20 @@ const AddChannelModal = () => {
         validationSchema={Schema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           try {
-            const rawName = values.name.trim();
+            const rawName = values.name.trim()
             if (!rawName) {
-              toast.error(t('toast.channelEmptyNameError'));
-              return;
+              toast.error(t('toast.channelEmptyNameError'))
+              return
             }
 
-            const filteredName = filterProfanity(rawName);
+            const filteredName = filterProfanity(rawName)
             const exists = channels.some(
-              (ch) => ch.name.toLowerCase() === filteredName.toLowerCase(),
-            );
+              ch => ch.name.toLowerCase() === filteredName.toLowerCase(),
+            )
 
             if (exists) {
-              toast.error(t('toast.channelExists'));
-              return;
+              toast.error(t('toast.channelExists'))
+              return
             }
 
             const response = await axios.post(
@@ -53,11 +53,11 @@ const AddChannelModal = () => {
               { name: filteredName },
               {
                 headers: {
-                  Authorization: `Bearer ${token}`,
+                  'Authorization': `Bearer ${token}`,
                   'Content-Type': 'application/json',
                 },
               },
-            );
+            )
 
             dispatch(
               addChannel({
@@ -66,20 +66,20 @@ const AddChannelModal = () => {
                 removable: true,
                 isOwned: true,
               }),
-            );
+            )
 
-            toast.success(t('toast.channelCreated'));
-            closeModal();
-            resetForm();
+            toast.success(t('toast.channelCreated'))
+            closeModal()
+            resetForm()
           } catch (err) {
-            console.error('Channel creation error:', err);
+            console.error('Channel creation error:', err)
             if (err.response?.status === 409) {
-              toast.error(t('toast.channelExists'));
+              toast.error(t('toast.channelExists'))
             } else {
-              toast.error(t('toast.networkError'));
+              toast.error(t('toast.networkError'))
             }
           } finally {
-            setSubmitting(false);
+            setSubmitting(false)
           }
         }}
       >
@@ -136,7 +136,7 @@ const AddChannelModal = () => {
         )}
       </Formik>
     </Modal>
-  );
-};
+  )
+}
 
-export default AddChannelModal;
+export default AddChannelModal

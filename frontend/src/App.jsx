@@ -1,14 +1,14 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import { ErrorBoundary as RollbarErrorBoundary } from '@rollbar/react';
+import React from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import { ErrorBoundary as RollbarErrorBoundary } from '@rollbar/react'
 
-import Header from './components/Header.jsx';
-import SignupPage from './pages/SignupPage.jsx';
-import LoginPage from './pages/LoginPage.jsx';
-import ChatPage from './pages/ChatPage.jsx';
-import PrivateRoute from './components/PrivateRoute.jsx';
-import NotFoundPage from './pages/NotFoundPage.jsx';
+import Header from './components/Header.jsx'
+import SignupPage from './pages/SignupPage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
+import ChatPage from './pages/ChatPage.jsx'
+import PrivateRoute from './components/PrivateRoute.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
 
 const App = () => (
   <RollbarErrorBoundary>
@@ -43,6 +43,6 @@ const App = () => (
       />
     </div>
   </RollbarErrorBoundary>
-);
+)
 
-export default App;
+export default App

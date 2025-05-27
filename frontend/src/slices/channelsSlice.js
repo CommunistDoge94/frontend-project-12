@@ -1,20 +1,20 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token')
       const response = await axios.get('/api/v1/channels', {
         headers: { Authorization: `Bearer ${token}` },
-      });
-      return response.data;
+      })
+      return response.data
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.message)
     }
   },
-);
+)
 
 const channelsSlice = createSlice({
   name: 'channels',
@@ -26,69 +26,70 @@ const channelsSlice = createSlice({
   },
   reducers: {
     addChannel: (state, action) => {
-      const newChannel = action.payload;
-      const existsById = state.items.some((c) => c.id === newChannel.id);
-      const existsByName = state.items.some((c) => c.name.toLowerCase() === newChannel.name.toLowerCase());
-
+      const newChannel = action.payload
+      const existsById = state.items.some(c => c.id === newChannel.id)
+      const existsByName = state.items.some(
+        c => c.name.toLowerCase() === newChannel.name.toLowerCase(),
+      )
       if (!existsById && !existsByName) {
-        state.items.push(newChannel);
+        state.items.push(newChannel)
       }
 
       if (newChannel.isOwned) {
-        state.activeChannelId = newChannel.id;
+        state.activeChannelId = newChannel.id
       }
     },
     setActiveChannel: (state, action) => {
-      state.activeChannelId = Number(action.payload);
+      state.activeChannelId = Number(action.payload)
     },
     removeChannel: (state, action) => {
-      const id = Number(action.payload);
-      state.items = state.items.filter((ch) => ch.id !== id);
+      const id = Number(action.payload)
+      state.items = state.items.filter(ch => ch.id !== id)
       if (state.activeChannelId === id) {
-        const general = state.items.find((ch) => ch.name === 'General');
-        state.activeChannelId = general ? general.id : 1;
+        const general = state.items.find(ch => ch.name === 'General')
+        state.activeChannelId = general ? general.id : 1
       }
     },
     renameChannel: (state, action) => {
-      const { id, name } = action.payload;
-      const channel = state.items.find((c) => c.id === Number(id));
+      const { id, name } = action.payload
+      const channel = state.items.find(c => c.id === Number(id))
       if (channel) {
-        channel.name = name;
+        channel.name = name
       }
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchChannels.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+      .addCase(fetchChannels.pending, state => {
+        state.loading = true
+        state.error = null
       })
       .addCase(fetchChannels.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+        state.loading = false
+        state.error = action.payload
       })
       .addCase(fetchChannels.fulfilled, (state, action) => {
-        state.loading = false;
-        state.items = action.payload.map((ch) => ({
+        state.loading = false
+        state.items = action.payload.map(ch => ({
           id: Number(ch.id),
           name: ch.name,
           removable: ch.removable,
-        }));
+        }))
 
-        if (!state.items.some((ch) => ch.name === 'general')) {
+        if (!state.items.some(ch => ch.name === 'general')) {
           state.items.unshift({
             id: 1,
             name: 'general',
             removable: false,
-          });
+          })
         }
-      });
+      })
   },
-});
+})
 
-export const selectChannels = (state) => state.channels.items;
-export const selectActiveChannelId = (state) => state.channels.activeChannelId;
+export const selectChannels = state => state.channels.items
+export const selectActiveChannelId = state => state.channels.activeChannelId
 export const {
   addChannel, setActiveChannel, removeChannel, renameChannel,
-} = channelsSlice.actions;
-export default channelsSlice.reducer;
+} = channelsSlice.actions
+export default channelsSlice.reducer

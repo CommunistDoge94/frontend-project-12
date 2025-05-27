@@ -1,32 +1,32 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { fetchChannels } from '../slices/channelsSlice';
-import { fetchMessages } from '../slices/messagesSlice';
-import useSocket from '../hooks/useSocket';
-import ModalManager from '../components/modals/ModalManager';
-import ChannelsList from '../components/channels/ChannelsList';
-import MessagesList from '../components/messages/MessagesList';
-import MessageForm from '../components/messages/MessageForm';
-import { openModal } from '../slices/modalSlice';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { fetchChannels } from '../slices/channelsSlice'
+import { fetchMessages } from '../slices/messagesSlice'
+import useSocket from '../hooks/useSocket'
+import ModalManager from '../components/modals/ModalManager'
+import ChannelsList from '../components/channels/ChannelsList'
+import MessagesList from '../components/messages/MessagesList'
+import MessageForm from '../components/messages/MessageForm'
+import { openModal } from '../slices/modalSlice'
 
 const ChatPage = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { loading: channelsLoading, error: channelsError } = useSelector((state) => state.channels);
-  const { loading: messagesLoading, error: messagesError } = useSelector((state) => state.messages);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const { loading: channelsLoading, error: channelsError } = useSelector(state => state.channels)
+  const { loading: messagesLoading, error: messagesError } = useSelector(state => state.messages)
 
-  useSocket();
+  useSocket()
 
   useEffect(() => {
-    dispatch(fetchChannels());
-    dispatch(fetchMessages());
-  }, [dispatch]);
+    dispatch(fetchChannels())
+    dispatch(fetchMessages())
+  }, [dispatch])
 
-  const handleAddChannel = () => dispatch(openModal({ type: 'addChannel' }));
+  const handleAddChannel = () => dispatch(openModal({ type: 'addChannel' }))
 
-  if (channelsLoading || messagesLoading) return <p>{t('status.loading')}</p>;
-  if (channelsError || messagesError) return null;
+  if (channelsLoading || messagesLoading) return <p>{t('status.loading')}</p>
+  if (channelsError || messagesError) return null
 
   return (
     <div className="container-fluid bg-secondary-subtle h-100 pt-5">
@@ -66,7 +66,7 @@ const ChatPage = () => {
       </div>
       <ModalManager />
     </div>
-  );
-};
+  )
+}
 
-export default ChatPage;
+export default ChatPage
