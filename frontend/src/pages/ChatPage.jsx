@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchChatData } from '../slices/chatSlice';
 import { openModal } from '../slices/modalSlice';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import useSocket from '../hooks/useSocket';
 import ModalManager from '../components/ModalManager';
-import ChannelsList from '../components/ChannelsList';
-import MessagesList from '../components/MessagesList';
-import MessageForm from '../components/MessageForm';
+import ChannelsList from '../components/ChannelsList'
+import MessagesList from '../components/MessagesList'
+import MessageForm from '../components/MessageForm'
 
 const ChatPage = () => {
   const { t } = useTranslation();
@@ -21,7 +20,6 @@ const ChatPage = () => {
     const loadData = async () => {
       try {
         await dispatch(fetchChatData());
-        await new Promise(resolve => setTimeout(resolve, 500));
       } catch (err) {
         console.error('Ошибка загрузки каналов:', err);
       }

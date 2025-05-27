@@ -16,14 +16,14 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route
-          path="/channels/:id"
+          path="/"
           element={
             <PrivateRoute>
               <ChannelsPage />
             </PrivateRoute>
           }
         />
-        <Route path="/" element={<Navigate to="/channels/1" />} />
+        <Route path="/" element={<Navigate to="/" />} />
       </Routes>
       <ToastContainer
         position="top-right"
