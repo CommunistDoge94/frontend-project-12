@@ -21,12 +21,11 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
 
   return (
     <li className="list-group-item p-0">
-      <div className={`d-flex justify-content-between align-items-center ${isActive ? 'bg-primary-subtle' : ''}`} style={{ minHeight: '38px' }}>
+      <div className={`d-flex justify-content-between align-items-center ${isActive ? 'bg-primary-subtle' : ''} py-2`}>
         <button
           type="button"
-          className="btn p-0 border-0 text-start w-100 text-body fw-bold text-decoration-none"
+          className="btn p-0 border-0 text-start w-100 text-body fw-bold text-decoration-none text-truncate"
           aria-label={`Канал ${channel.name}`}
-          style={{ lineHeight: '1.5', height: '38px' }}
           onClick={onClick}
           onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -46,7 +45,6 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
               size="sm"
               className="p-1 d-flex align-items-center justify-content-center"
               aria-label={t('chatPage.channelSettings')}
-              style={{ height: '38px', lineHeight: '1' }}
             >
               <span className="visually-hidden">{t('chatPage.channelSettings')}</span>
             </Dropdown.Toggle>
