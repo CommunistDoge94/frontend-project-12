@@ -18,9 +18,9 @@ const RenameChannelModal = ({ channelId, currentName }) => {
 
   const schema = Yup.object().shape({
     name: Yup.string()
-      .min(3, t('min3Chars'))
-      .max(20, t('max20Chars'))
-      .required(t('required')),
+      .min(3, t('chatPage.chatNameLengthError'))
+      .max(20, t('chatPage.chatNameLengthError'))
+      .required(t('chatPage.required')),
   });
 
   const handleSubmit = async (e) => {
@@ -39,7 +39,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
-      toast.success(t('channelRenamed'));
+      toast.success(t('toast.channelRenamed'));
       dispatch(renameChannel({ id: channelId, name: filteredName }));
       dispatch(closeModal());
     } catch (err) {
@@ -56,7 +56,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
   return (
     <Modal show={!!channelId} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>{t('renameChannel')}</Modal.Title>
+        <Modal.Title>{t('chatPage.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
@@ -73,10 +73,10 @@ const RenameChannelModal = ({ channelId, currentName }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            {t('cancel')}
+            {t('buttons.cancel')}
           </Button>
           <Button variant="primary" type="submit">
-            {t('rename')}
+            {t('buttons.rename')}
           </Button>
         </Modal.Footer>
       </Form>

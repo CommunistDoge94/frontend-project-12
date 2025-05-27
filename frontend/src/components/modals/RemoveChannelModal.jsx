@@ -30,10 +30,10 @@ const RemoveChannelModal = () => {
       <Modal.Body>{t('chatPage.removeConfirmation')}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          {t('button.cancel')}
+          {t('buttons.cancel')}
         </Button>
         <Button variant="danger" onClick={handleRemove}>
-          {t('button.remove')}
+          {t('buttons.remove')}
         </Button>
       </Modal.Footer>
     </Modal>

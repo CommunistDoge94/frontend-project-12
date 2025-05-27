@@ -6,7 +6,8 @@
     "confirm": "Подтвердить",
     "cancel": "Отмена",
     "send": "Отправить",
-    "remove": "Удалить"
+    "remove": "Удалить",
+    "rename": "Переименовать"
   },
 
   "loginForm": {
@@ -42,7 +43,8 @@
     "removeChannel": "Удалить канал",
     "removeConfirmation": "Вы уверены, что хотите удалить канал?",
     "chatNameLengthError": "От 3 до 20 символов",
-    "required": "Обязательное поле"
+    "required": "Обязательное поле",
+     "renameChannel": "Переименовать канал"
   },
 
   "notFoundPage": {
@@ -59,7 +61,8 @@
     "loadError": "Ошибка загрузки данных. Попробуйте позже.",
     "networkError": "Ошибка соединения",
     "channelEmptyNameError": "Название канала не может быть пустым",
-    "channelDeleted": "Канал удалён"
+    "channelDeleted": "Канал удалён",
+    "channelRenamed": "Канал переименован"
   },
 
   "errors": {
@@ -75,7 +78,7 @@
   
   "brand": "Hexlet Chat",
   
-  "channelRenamed": "Канал переименован",
+  
   "channelManagement": "Управление каналом",
   
   "error": "Ошибка: {{error}}",
@@ -89,7 +92,7 @@
   
 
  
-  "renameChannel": "Переименовать канал",
+ 
   
   "signupError": "Ошибка регистрации",
   "userExistsError": "Такой пользователь уже существует"

@@ -5,9 +5,9 @@ import { fetchMessages } from '../slices/messagesSlice';
 import { useTranslation } from 'react-i18next';
 import useSocket from '../hooks/useSocket';
 import ModalManager from '../components/modals/ModalManager';
-import ChannelsList from '../components/ChannelsList';
-import MessagesList from '../components/MessagesList';
-import MessageForm from '../components/MessageForm';
+import ChannelsList from '../components/channels/ChannelsList';
+import MessagesList from '../components/messages/MessagesList';
+import MessageForm from '../components/messages/MessageForm';
 import { openModal } from '../slices/modalSlice';
 
 const ChatPage = () => {
