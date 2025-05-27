@@ -13,7 +13,8 @@ const useSocket = () => {
     const handleNewChannel = (channel) => dispatch(addChannel({
       id: Number(channel.id),
       name: channel.name,
-      removable: channel.removable
+      removable: channel.removable,
+      isOwned: false
     }));
     const handleRemoveChannel = ({ id }) => dispatch(removeChannel(Number(id)));
     const handleRenameChannel = (channel) => dispatch(renameChannel({

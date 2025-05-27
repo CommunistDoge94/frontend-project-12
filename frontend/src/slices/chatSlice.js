@@ -49,7 +49,10 @@ const chatSlice = createSlice({
       if (!existsById && !existsByName) {
         state.channels.push(newChannel);
       }
-
+      
+      if (newChannel.isOwned) {
+        state.activeChannelId = newChannel.id;
+      }
     },
     setActiveChannel: (state, action) => {
       state.activeChannelId = Number(action.payload);

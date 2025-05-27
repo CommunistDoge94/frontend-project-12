@@ -63,7 +63,8 @@ const AddChannelModal = () => {
             dispatch(addChannel({
               id: response.data.id,
               name: filteredName,
-              removable: true
+              removable: true,
+              isOwned: true
             }));
 
             toast.success(t('toast.channelCreated'));
