@@ -1,9 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ChannelItem from './ChannelItem';
+import { setActiveChannel } from '../slices/chatSlice'; // Убедись, что импортируешь экшен
 
 const ChannelsList = () => {
-  const { channels } = useSelector((state) => state.chat);
+  const dispatch = useDispatch();
+  const { channels, activeChannelId } = useSelector((state) => state.chat);
 
   return (
     <ul 
