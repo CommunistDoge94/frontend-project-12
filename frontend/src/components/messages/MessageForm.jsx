@@ -18,7 +18,7 @@ const MessageForm = () => {
         const rawText = values.messageText.trim();
         
         if (!rawText) {
-          toast.error(t('message.emptyError'));
+          toast.error(t('toast.emptyMessage'));
           setSubmitting(false);
           return;
         }

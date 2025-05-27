@@ -66,7 +66,8 @@
     "networkError": "Ошибка соединения",
     "channelEmptyNameError": "Название канала не может быть пустым",
     "channelDeleted": "Канал удалён",
-    "channelRenamed": "Канал переименован"
+    "channelRenamed": "Канал переименован",
+    "emptyMessage": "Сообщение не должно быть пустым"
   },
 
   "errors": {
