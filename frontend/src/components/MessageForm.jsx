@@ -8,7 +8,7 @@ import { filterProfanity } from '../utils/profanityFilter';
 
 const MessageForm = () => {
   const { t } = useTranslation();
-  const activeChannelId = useSelector((state) => state.chat.activeChannelId);
+  const activeChannelId = useSelector((state) => state.channels.activeChannelId);
   const token = localStorage.getItem('token');
 
   return (

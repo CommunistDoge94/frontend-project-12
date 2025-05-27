@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import socket, { connectSocket } from '../socket';
-import { addMessage, addChannel, removeChannel, renameChannel } from '../slices/chatSlice';
+import { addChannel, removeChannel, renameChannel } from '../slices/channelsSlice';
+import { addMessage, removeMessagesByChannelId } from '../slices/messagesSlice';
 
 const useSocket = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,10 @@ const useSocket = () => {
       removable: channel.removable,
       isOwned: false
     }));
-    const handleRemoveChannel = ({ id }) => dispatch(removeChannel(Number(id)));
+    const handleRemoveChannel = ({ id }) => {
+      dispatch(removeChannel(id));
+      dispatch(removeMessagesByChannelId(id));
+    };
     const handleRenameChannel = (channel) => dispatch(renameChannel({
       id: Number(channel.id),
       name: channel.name

@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import MessageItem from './MessageItem';
+import { selectMessages } from '../slices/messagesSlice';
+import { selectActiveChannelId } from '../slices/channelsSlice';
 
 const MessagesList = () => {
-  const { messages, activeChannelId } = useSelector((state) => state.chat);
+  const messages = useSelector(selectMessages);
+  const activeChannelId = useSelector(selectActiveChannelId);
   const filteredMessages = messages.filter((msg) => msg.channelId === activeChannelId);
 
   return (

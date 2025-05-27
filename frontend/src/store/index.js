@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../slices/authSlice';
-import chatReducer from '../slices/chatSlice';
+import channelsReducer from '../slices/channelsSlice';
+import messagesReducer from '../slices/messagesSlice';
 import modalReducer from '../slices/modalSlice';
+import authReducer from '../slices/authSlice';
 
-const store = configureStore({
+export default configureStore({
   reducer: {
-    auth: authReducer,
-    chat: chatReducer,
+    channels: channelsReducer,
+    messages: messagesReducer,
     modal: modalReducer,
+    auth: authReducer,
   },
 });
-
-export default store;

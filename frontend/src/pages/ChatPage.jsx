@@ -1,40 +1,42 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchChatData } from '../slices/chatSlice';
-import { openModal } from '../slices/modalSlice';
+import { fetchChannels } from '../slices/channelsSlice';
+import { fetchMessages } from '../slices/messagesSlice';
 import { useTranslation } from 'react-i18next';
 import useSocket from '../hooks/useSocket';
-import ModalManager from '../components/ModalManager';
-import ChannelsList from '../components/ChannelsList'
-import MessagesList from '../components/MessagesList'
-import MessageForm from '../components/MessageForm'
+import ModalManager from '../components/modals/ModalManager';
+import ChannelsList from '../components/ChannelsList';
+import MessagesList from '../components/MessagesList';
+import MessageForm from '../components/MessageForm';
+import { openModal } from '../slices/modalSlice';
 
 const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.chat);
+  
+  const { loading: channelsLoading, error: channelsError } = useSelector((state) => state.channels);
+  const { loading: messagesLoading, error: messagesError } = useSelector((state) => state.messages);
 
   useSocket();
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        await dispatch(fetchChatData());
+        await Promise.all([
+          dispatch(fetchChannels()),
+          dispatch(fetchMessages())
+        ]);
       } catch (err) {
-        console.error('Ошибка загрузки каналов:', err);
+        console.error('Ошибка загрузки данных:', err);
       }
     };
     loadData();
   }, [dispatch]);
 
-  useEffect(() => {
-    if (error) toast.error(t('toast.loadError'));
-  }, [error, t]);
-
   const handleAddChannel = () => dispatch(openModal({ type: 'addChannel' }));
 
-  if (loading) return <p>{t('status.loading')}</p>;
-  if (error) return null;
+  if (channelsLoading || messagesLoading) return <p>{t('status.loading')}</p>;
+  if (channelsError || messagesError) return null;
 
   return (
     <div className="container-fluid vh-100 p-3">

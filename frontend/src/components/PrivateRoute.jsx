@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { fetchChatData } from '../slices/chatSlice';
+import { fetchChannels } from '../slices/channelsSlice';
+import { fetchMessages } from '../slices/messagesSlice';
 
 const PrivateRoute = ({ children }) => {
   const [isValid, setIsValid] = useState(null);
@@ -21,7 +22,10 @@ const PrivateRoute = ({ children }) => {
           headers: { Authorization: `Bearer ${token}` }
         });
 
-        await dispatch(fetchChatData()).unwrap();
+        await Promise.all([
+          dispatch(fetchChannels()),
+          dispatch(fetchMessages())
+        ]);
         
         setIsValid(true);
       } catch (err) {

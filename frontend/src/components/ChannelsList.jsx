@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ChannelItem from './ChannelItem';
-import { setActiveChannel } from '../slices/chatSlice';
+import { selectChannels, selectActiveChannelId } from '../slices/channelsSlice';
+import { setActiveChannel } from '../slices/channelsSlice';
 
 const ChannelsList = () => {
   const dispatch = useDispatch();
-  const { channels, activeChannelId } = useSelector((state) => state.chat);
+  const channels = useSelector(selectChannels);
+  const activeChannelId = useSelector(selectActiveChannelId);
 
   return (
     <ul 
