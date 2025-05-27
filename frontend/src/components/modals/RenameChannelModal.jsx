@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { closeModal } from '../../slices/modalSlice';
+import { renameChannel } from '../../slices/channelsSlice'; 
 import * as Yup from 'yup';
 import { filterProfanity } from '../../utils/profanityFilter';
 
@@ -39,6 +40,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
       );
       
       toast.success(t('channelRenamed'));
+      dispatch(renameChannel({ id: channelId, name: filteredName }));
       dispatch(closeModal());
     } catch (err) {
       setError(err.response?.data?.message || err.message);

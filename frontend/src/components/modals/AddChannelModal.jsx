@@ -8,13 +8,13 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { closeModal } from '../../slices/modalSlice';
 import { filterProfanity } from '../../utils/profanityFilter';
-import { addChannel } from '../../slices/chatSlice';
+import { addChannel } from '../../slices/channelsSlice';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const show = useSelector((state) => state.modal.type === 'addChannel');
-  const channels = useSelector((state) => state.chat.channels);
+  const channels = useSelector((state) => state.channels.items);
   const token = localStorage.getItem('token');
 
   const Schema = Yup.object().shape({
