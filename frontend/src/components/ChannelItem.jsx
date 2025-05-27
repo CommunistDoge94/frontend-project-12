@@ -43,7 +43,12 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
       </button>
       {channel.removable && (
         <Dropdown onClick={(e) => e.stopPropagation()}>
-          <Dropdown.Toggle variant="link" size="sm" className="p-0 text-decoration-none">
+          <Dropdown.Toggle 
+            variant="link" 
+            size="sm" 
+            className="p-0 text-decoration-none"
+            aria-label="Управление каналом"
+          >
             ⋮
           </Dropdown.Toggle>
           <Dropdown.Menu>
