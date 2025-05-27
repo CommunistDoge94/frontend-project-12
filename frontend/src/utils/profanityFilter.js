@@ -1,12 +1,14 @@
 import LeoProfanity from 'leo-profanity';
 
+const filter = LeoProfanity;
+
+filter.loadDictionary();
+
 const russianDictionary = [
   'бля', 'пизда', 'хуй', 'ебать', 'хер', 'мудак', 'шлюха', 
   'гандон', 'еблан', 'залупа', 'педик', 'сука', 'ебать',
 ];
 
-const filter = LeoProfanity;
-filter.clearList();
 filter.add(russianDictionary);
 
 export const filterProfanity = (text) => {
