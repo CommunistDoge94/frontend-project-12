@@ -33,7 +33,9 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
         aria-label={`Канал ${channel.name}`}
         style={{ lineHeight: '1.5', height: '38px' }}
       >
-        # {channel.name}
+        #
+        {' '}
+        {channel.name}
       </button>
       {channel.removable && (
         <Dropdown onClick={(e) => e.stopPropagation()}>

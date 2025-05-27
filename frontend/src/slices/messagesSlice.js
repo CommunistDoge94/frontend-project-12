@@ -7,13 +7,13 @@ export const fetchMessages = createAsyncThunk(
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get('/api/v1/messages', {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const messagesSlice = createSlice({
@@ -29,8 +29,8 @@ const messagesSlice = createSlice({
     },
     removeMessagesByChannelId: (state, action) => {
       const channelId = Number(action.payload);
-      state.items = state.items.filter(msg => msg.channelId !== channelId);
-    }
+      state.items = state.items.filter((msg) => msg.channelId !== channelId);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -46,7 +46,7 @@ const messagesSlice = createSlice({
         state.loading = false;
         state.items = action.payload;
       });
-  }
+  },
 });
 
 export const { addMessage, removeMessagesByChannelId } = messagesSlice.actions;

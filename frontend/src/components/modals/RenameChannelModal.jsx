@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, Alert } from 'react-bootstrap';
+import {
+  Modal, Button, Form, Alert,
+} from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { renameChannel } from '../../slices/channelsSlice';
 import * as Yup from 'yup';
+import { renameChannel } from '../../slices/channelsSlice';
 import { filterProfanity } from '../../utils/profanityFilter';
 import { useModal } from '../../hooks/useModal';
 
@@ -38,7 +40,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
       await axios.patch(
         `/api/v1/channels/${channelId}`,
         { name: filteredName },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       toast.success(t('toast.channelRenamed'));

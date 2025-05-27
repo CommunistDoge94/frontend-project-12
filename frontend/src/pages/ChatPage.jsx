@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { fetchChannels } from '../slices/channelsSlice';
 import { fetchMessages } from '../slices/messagesSlice';
-import { useTranslation } from 'react-i18next';
 import useSocket from '../hooks/useSocket';
 import ModalManager from '../components/modals/ModalManager';
 import ChannelsList from '../components/channels/ChannelsList';
@@ -68,6 +68,5 @@ const ChatPage = () => {
     </div>
   );
 };
-
 
 export default ChatPage;

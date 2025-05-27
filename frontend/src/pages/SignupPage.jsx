@@ -1,5 +1,7 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import {
+  Formik, Field, Form, ErrorMessage,
+} from 'formik';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -22,14 +24,14 @@ const SignupPage = () => {
       .required(t('signupForm.requiredField')),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], t('signupForm.passwordMismatch'))
-      .required(t('signupForm.requiredField'))
+      .required(t('signupForm.requiredField')),
   });
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const { data } = await axios.post('/api/v1/signup', {
         username: values.username,
-        password: values.password
+        password: values.password,
       });
 
       handleLogin(data.token, values.username);

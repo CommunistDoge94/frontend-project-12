@@ -28,5 +28,5 @@ root.render(
         </Provider>
       </I18nextProvider>
     </RollbarProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

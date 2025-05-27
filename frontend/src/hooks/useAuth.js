@@ -9,10 +9,10 @@ export const useAuth = () => {
   const checkAuth = async () => {
     const token = localStorage.getItem('token');
     if (!token) return false;
-    
+
     try {
       await axios.get('/api/v1/channels', {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       return true;
     } catch (error) {

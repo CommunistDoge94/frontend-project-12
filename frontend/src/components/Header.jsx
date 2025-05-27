@@ -2,10 +2,10 @@ import React from 'react';
 import { Navbar, Container, Button } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout as logoutAction } from '../slices/authSlice.js';
 import { useTranslation } from 'react-i18next';
+import { logout as logoutAction } from '../slices/authSlice.js';
 
-function Header() {
+const Header = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function Header() {
     navigate('/login');
   };
 
-   return (
+  return (
     <Navbar bg="light" fixed="top" className="py-1 shadow-sm">
       <Container>
         <Navbar.Brand as={NavLink} to="/">{t('buttons.brand')}</Navbar.Brand>
@@ -30,6 +30,6 @@ function Header() {
       </Container>
     </Navbar>
   );
-}
+};
 
 export default Header;

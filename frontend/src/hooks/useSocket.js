@@ -15,7 +15,7 @@ const useSocket = () => {
       id: Number(channel.id),
       name: channel.name,
       removable: channel.removable,
-      isOwned: false
+      isOwned: false,
     }));
     const handleRemoveChannel = ({ id }) => {
       dispatch(removeChannel(id));
@@ -23,7 +23,7 @@ const useSocket = () => {
     };
     const handleRenameChannel = (channel) => dispatch(renameChannel({
       id: Number(channel.id),
-      name: channel.name
+      name: channel.name,
     }));
 
     socket.on('newMessage', handleNewMessage);

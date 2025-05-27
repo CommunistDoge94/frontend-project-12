@@ -16,7 +16,7 @@ const MessageForm = () => {
       initialValues={{ messageText: '' }}
       onSubmit={async (values, { resetForm, setSubmitting }) => {
         const rawText = values.messageText.trim();
-        
+
         if (!rawText) {
           toast.error(t('toast.emptyMessage'));
           setSubmitting(false);
@@ -24,21 +24,21 @@ const MessageForm = () => {
         }
 
         const filteredText = filterProfanity(rawText);
-        
+
         try {
           await axios.post(
             '/api/v1/messages',
-            { 
+            {
               body: filteredText,
               channelId: activeChannelId,
-              username: localStorage.getItem('username')
+              username: localStorage.getItem('username'),
             },
             {
-              headers: { 
+              headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json'
-              }
-            }
+                'Content-Type': 'application/json',
+              },
+            },
           );
           resetForm();
         } catch (err) {

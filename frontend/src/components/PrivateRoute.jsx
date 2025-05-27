@@ -19,14 +19,14 @@ const PrivateRoute = ({ children }) => {
 
       try {
         await axios.get('/api/v1/channels', {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         await Promise.all([
           dispatch(fetchChannels()),
-          dispatch(fetchMessages())
+          dispatch(fetchMessages()),
         ]);
-        
+
         setIsValid(true);
       } catch (err) {
         localStorage.removeItem('token');

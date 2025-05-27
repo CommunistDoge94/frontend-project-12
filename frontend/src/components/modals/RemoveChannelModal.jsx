@@ -2,10 +2,10 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { removeChannel } from '../../slices/channelsSlice';
 import { removeMessagesByChannelId } from '../../slices/messagesSlice';
 import socket from '../../socket';
-import { toast } from 'react-toastify';
 import { useModal } from '../../hooks/useModal';
 
 const RemoveChannelModal = () => {

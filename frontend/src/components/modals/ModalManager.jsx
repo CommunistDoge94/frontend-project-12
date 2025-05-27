@@ -6,15 +6,17 @@ import RenameChannelModal from './RenameChannelModal';
 
 const ModalManager = () => {
   const { type, extra } = useSelector((state) => state.modal);
-  
+
   if (type === 'addChannel') return <AddChannelModal />;
   if (type === 'removeChannel') return <RemoveChannelModal />;
-  if (type === 'renameChannel') return (
-    <RenameChannelModal 
-      channelId={extra.channelId}
-      currentName={extra.channelName}
-    />
-  );
+  if (type === 'renameChannel') {
+    return (
+      <RenameChannelModal
+        channelId={extra.channelId}
+        currentName={extra.channelName}
+      />
+    );
+  }
   return null;
 };
 

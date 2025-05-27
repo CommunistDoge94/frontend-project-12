@@ -40,7 +40,7 @@ const AddChannelModal = () => {
 
             const filteredName = filterProfanity(rawName);
             const exists = channels.some(
-              (ch) => ch.name.toLowerCase() === filteredName.toLowerCase()
+              (ch) => ch.name.toLowerCase() === filteredName.toLowerCase(),
             );
 
             if (exists) {
@@ -56,7 +56,7 @@ const AddChannelModal = () => {
                   Authorization: `Bearer ${token}`,
                   'Content-Type': 'application/json',
                 },
-              }
+              },
             );
 
             dispatch(
@@ -65,7 +65,7 @@ const AddChannelModal = () => {
                 name: filteredName,
                 removable: true,
                 isOwned: true,
-              })
+              }),
             );
 
             toast.success(t('toast.channelCreated'));
