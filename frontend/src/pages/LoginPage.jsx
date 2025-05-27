@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { loginSuccess } from '../slices/authSlice';
+import { useAuth } from '../hooks/useAuth';
 
 const LoginPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [authError, setAuthError] = useState(null);
+  const { handleLogin } = useAuth();
 
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
@@ -24,11 +23,7 @@ const LoginPage = () => {
               const response = await axios.post('/api/v1/login', values);
               const { token, username } = response.data;
 
-              localStorage.setItem('token', token);
-              localStorage.setItem('username', username);
-
-              dispatch(loginSuccess({ username, token }));
-
+              handleLogin(token, username);
               navigate('/');
             } catch (err) {
               if (err.response?.status === 401) {

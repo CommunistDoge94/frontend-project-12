@@ -5,10 +5,12 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import { useAuth } from '../hooks/useAuth';
 
 const SignupPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { handleLogin } = useAuth();
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -30,9 +32,8 @@ const SignupPage = () => {
         password: values.password
       });
 
-      localStorage.setItem('token', data.token);
+      handleLogin(data.token, values.username);
       navigate('/', { replace: true });
-      
     } catch (error) {
       if (error.response?.status === 409) {
         setErrors({ username: t('signupForm.userExistsError') });
