@@ -2,9 +2,9 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { closeModal } from '../slices/modalSlice';
-import { removeChannel } from '../slices/chatSlice';
-import socket from '../socket';
+import { closeModal } from '../../slices/modalSlice';
+import { removeChannel } from '../../slices/chatSlice';
+import socket from '../../socket';
 import { toast } from 'react-toastify';
 
 const RemoveChannelModal = () => {

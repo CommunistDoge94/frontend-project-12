@@ -6,9 +6,9 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { closeModal } from '../slices/modalSlice';
-import { filterProfanity } from '../utils/profanityFilter';
-import { addChannel } from '../slices/chatSlice';
+import { closeModal } from '../../slices/modalSlice';
+import { filterProfanity } from '../../utils/profanityFilter';
+import { addChannel } from '../../slices/chatSlice';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();

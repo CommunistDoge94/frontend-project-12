@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { closeModal } from '../slices/modalSlice';
+import { closeModal } from '../../slices/modalSlice';
 import * as Yup from 'yup';
-import { filterProfanity } from '../utils/profanityFilter';
+import { filterProfanity } from '../../utils/profanityFilter';
 
 const RenameChannelModal = ({ channelId, currentName }) => {
   const { t } = useTranslation();
