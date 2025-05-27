@@ -1,14 +1,16 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setActiveChannel } from '../slices/chatSlice';
+import { useSelector } from 'react-redux';
 import ChannelItem from './ChannelItem';
 
 const ChannelsList = () => {
-  const dispatch = useDispatch();
-  const { channels, activeChannelId } = useSelector((state) => state.chat);
+  const { channels } = useSelector((state) => state.chat);
 
   return (
-    <ul className="list-group flex-grow-1 overflow-auto" data-testid="channel-general" role="list" aria-label="general">
+    <ul 
+      className="list-group flex-grow-1 overflow-auto" 
+      role="list" 
+      aria-label="Список каналов"
+    >
       {channels.map((channel) => (
         <ChannelItem
           key={channel.id}

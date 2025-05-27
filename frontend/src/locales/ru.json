@@ -19,7 +19,7 @@
     "username": "Имя пользователя",
     "password": "Пароль",
     "confirmPassword": "Подтвердите пароль",
-
+    
     "usernameMinError": "От 3 до 20 символов",
     "usernameMaxError": "От 3 до 20 символов",
     "requiredField": "Не должно быть пустым",
@@ -35,7 +35,8 @@
     "addChannel": "Добавить канал",
     "channelName": "Имя канала",
     "enterMessage": "Введите сообщение",
-
+    "remove": "Удалить",
+    "rename": "Переименовать",
 
     "chatNameLengthError": "От 3 до 20 символов",
     "required": "Обязательное поле"
@@ -81,10 +82,10 @@
  "passwordsMustMatch": "Пароли должны совпадать",
   "profanityAlert": "Использование ненормативной лексики запрещено",
   "profanityWarning": "Ай-яй-яй! Плохое слово!",
-  "remove": "Удалить",
+  
   "removeChannel": "Удалить канал",
   "removeConfirmation": "Вы уверены, что хотите удалить канал?",
-  "rename": "Переименовать",
+ 
   "renameChannel": "Переименовать канал",
   
   "signupError": "Ошибка регистрации",

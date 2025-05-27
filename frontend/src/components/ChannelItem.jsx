@@ -48,17 +48,26 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
             size="sm" 
             className="p-0 text-decoration-none"
             aria-label="Управление каналом"
+            data-testid={`channel-menu-${channel.id}`} // Добавляем явный тестовый идентификатор
           >
-            ⋮
+            <span aria-hidden="true">⋮</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={handleRename}>{t('rename')}</Dropdown.Item>
-            <Dropdown.Item onClick={handleRemove}>{t('remove')}</Dropdown.Item>
+            <Dropdown.Item 
+              onClick={handleRename}
+              data-testid="rename-channel"
+            >
+              {t('chatPage.rename')}
+            </Dropdown.Item>
+            <Dropdown.Item 
+              onClick={handleRemove}
+              data-testid="remove-channel"
+            >
+              {t('chatPage.remove')}
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       )}
     </li>
   );
 };
-
-export default ChannelItem;
