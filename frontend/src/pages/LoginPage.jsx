@@ -12,7 +12,7 @@ const LoginPage = () => {
   const { handleLogin } = useAuth();
 
   return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100">
+    <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
       <div className="card p-4 shadow-sm" style={{ maxWidth: '400px', width: '100%' }}>
         <h2 className="text-center mb-4">{t('loginForm.loginTitle')}</h2>
         <Formik

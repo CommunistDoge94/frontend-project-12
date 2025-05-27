@@ -18,12 +18,12 @@ function Header() {
     navigate('/login');
   };
 
-  return (
-    <Navbar bg="light">
+   return (
+    <Navbar bg="light" fixed="top" className="py-1 shadow-sm">
       <Container>
         <Navbar.Brand as={NavLink} to="/">{t('buttons.brand')}</Navbar.Brand>
         {isLoggedIn && (
-          <Button variant="outline-danger" onClick={handleLogout}>
+          <Button variant="outline-danger" size="sm" onClick={handleLogout}>
             {t('buttons.logout')}
           </Button>
         )}
