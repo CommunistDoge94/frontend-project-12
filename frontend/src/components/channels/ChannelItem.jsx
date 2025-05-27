@@ -21,26 +21,28 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
 
   return (
     <li
-      className={`list-group-item d-flex justify-content-between align-items-center ${isActive ? 'active' : ''}`}
+      className={`list-group-item d-flex justify-content-between align-items-center ${isActive ? 'list-group-item-primary' : ''}`}
       role="button"
       onClick={onClick}
       data-testid={`channel-${channel.name}`}
+      style={{ minHeight: '38px' }}
     >
       <button
         type="button"
-        className="btn p-0 w-100 text-start fw-bold"
+        className="btn p-0 border-0 text-start w-100 text-body fw-bold text-decoration-none"
         aria-label={`Канал ${channel.name}`}
+        style={{ lineHeight: '1.5', height: '38px' }}
       >
         # {channel.name}
       </button>
-
       {channel.removable && (
         <Dropdown onClick={(e) => e.stopPropagation()}>
           <Dropdown.Toggle
             variant="secondary"
             size="sm"
-            className="p-1"
+            className="p-1 d-flex align-items-center justify-content-center"
             aria-label={t('chatPage.channelSettings')}
+            style={{ height: '38px', lineHeight: '1' }}
           >
           </Dropdown.Toggle>
           <Dropdown.Menu>
