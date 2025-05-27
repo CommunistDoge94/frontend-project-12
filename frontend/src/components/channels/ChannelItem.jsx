@@ -44,6 +44,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
             aria-label={t('chatPage.channelSettings')}
             style={{ height: '38px', lineHeight: '1' }}
           >
+            <span className="visually-hidden">{t('chatPage.channelSettings')}</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item onClick={handleRename}>{t('chatPage.rename')}</Dropdown.Item>
