@@ -16,22 +16,22 @@ const RemoveChannelModal = () => {
   const handleRemove = () => {
     dispatch(removeChannel(channelId));
     socket.emit('removeChannel', { id: channelId });
-    toast.success(t('channelDeleted'));
+    toast.success(t('toast.channelDeleted'));
     dispatch(closeModal());
   };
 
   return (
     <Modal show centered onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{t('removeChannel')}</Modal.Title>
+        <Modal.Title>{t('chatPage.removeChannel')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{t('removeConfirmation')}</Modal.Body>
+      <Modal.Body>{t('chatPage.removeConfirmation')}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          {t('cancel')}
+          {t('button.cancel')}
         </Button>
         <Button variant="danger" onClick={handleRemove}>
-          {t('remove')}
+          {t('button.remove')}
         </Button>
       </Modal.Footer>
     </Modal>

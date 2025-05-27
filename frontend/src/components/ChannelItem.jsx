@@ -50,7 +50,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
             size="sm" 
             className="p-0 text-decoration-none position-relative"
           >
-            <span className="visually-hidden">Управление каналом</span>
+            <span className="visually-hidden">{t('chatPage.channelSettings')}</span>
             <span 
               aria-hidden="true" 
               style={{ fontSize: '1.2rem', lineHeight: 1 }}
@@ -59,8 +59,8 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
             </span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={handleRename}>{t('rename')}</Dropdown.Item>
-            <Dropdown.Item onClick={handleRemove}>{t('remove')}</Dropdown.Item>
+            <Dropdown.Item onClick={handleRename}>{t('chatPage.rename')}</Dropdown.Item>
+            <Dropdown.Item onClick={handleRemove}>{t('chatPage.remove')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       )}

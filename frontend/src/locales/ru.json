@@ -5,7 +5,8 @@
     "goHome": "На главную",
     "confirm": "Подтвердить",
     "cancel": "Отмена",
-    "send": "Отправить"
+    "send": "Отправить",
+    "remove": "Удалить"
   },
 
   "loginForm": {
@@ -31,13 +32,15 @@
   "chatPage": {
     "channels": "Каналы",
     "messages": "Сообщения",
+    "channelSettings": "Управление каналом",
     "plusSign": "+",
     "addChannel": "Добавить канал",
     "channelName": "Имя канала",
     "enterMessage": "Введите сообщение",
     "remove": "Удалить",
     "rename": "Переименовать",
-
+    "removeChannel": "Удалить канал",
+    "removeConfirmation": "Вы уверены, что хотите удалить канал?",
     "chatNameLengthError": "От 3 до 20 символов",
     "required": "Обязательное поле"
   },
@@ -55,7 +58,8 @@
     "channelExists": "Канал с таким именем уже существует",
     "loadError": "Ошибка загрузки данных. Попробуйте позже.",
     "networkError": "Ошибка соединения",
-    "channelEmptyNameError": "Название канала не может быть пустым"
+    "channelEmptyNameError": "Название канала не может быть пустым",
+    "channelDeleted": "Канал удалён"
   },
 
   "errors": {
@@ -70,7 +74,7 @@
   
   
   "brand": "Hexlet Chat",
-  "channelDeleted": "Канал удалён",
+  
   "channelRenamed": "Канал переименован",
   "channelManagement": "Управление каналом",
   
@@ -83,8 +87,7 @@
   "profanityAlert": "Использование ненормативной лексики запрещено",
   "profanityWarning": "Ай-яй-яй! Плохое слово!",
   
-  "removeChannel": "Удалить канал",
-  "removeConfirmation": "Вы уверены, что хотите удалить канал?",
+
  
   "renameChannel": "Переименовать канал",
   

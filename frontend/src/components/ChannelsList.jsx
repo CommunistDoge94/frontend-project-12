@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ChannelItem from './ChannelItem';
-import { setActiveChannel } from '../slices/chatSlice'; // Убедись, что импортируешь экшен
+import { setActiveChannel } from '../slices/chatSlice';
 
 const ChannelsList = () => {
   const dispatch = useDispatch();
