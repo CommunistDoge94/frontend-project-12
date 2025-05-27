@@ -71,3 +71,5 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
     </li>
   );
 };
+
+export default ChannelItem;
