@@ -46,8 +46,9 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>{t('signupForm.registration')}</h2>
+    <div className="container d-flex justify-content-center align-items-center min-vh-100">
+      <div className="card p-4 shadow-sm" style={{ maxWidth: '400px', width: '100%' }}>
+        <h2 className="text-center mb-4">{t('signupForm.registration')}</h2>
       <Formik
         initialValues={{ username: '', password: '', confirmPassword: '' }}
         validationSchema={validationSchema}
@@ -114,16 +115,26 @@ const SignupPage = () => {
 
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-success w-100 mb-3"
               disabled={isSubmitting}
               data-testid="signup-button"
             >
               {isSubmitting ? t('buttons.registering') : t('buttons.register')}
             </button>
+
+            <button
+              type="button"
+              className="btn btn-secondary w-100"
+              onClick={() => navigate('/login')}
+              data-testid="cancel-button"
+            >
+              {t('buttons.cancel')}
+            </button>
           </Form>
         )}
       </Formik>
     </div>
+  </div>
   );
 };
 
