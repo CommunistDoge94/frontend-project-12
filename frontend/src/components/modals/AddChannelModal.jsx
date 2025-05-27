@@ -61,7 +61,7 @@ const AddChannelModal = () => {
 
             dispatch(
               addChannel({
-                id: response.data.id,
+                id: Number(response.data.id),
                 name: filteredName,
                 removable: true,
                 isOwned: true,
