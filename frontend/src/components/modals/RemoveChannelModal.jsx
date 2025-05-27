@@ -2,24 +2,27 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { closeModal } from '../../slices/modalSlice';
 import { removeChannel } from '../../slices/channelsSlice';
 import { removeMessagesByChannelId } from '../../slices/messagesSlice';
 import socket from '../../socket';
 import { toast } from 'react-toastify';
+import { useModal } from '../../hooks/useModal';
 
 const RemoveChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { closeModal } = useModal();
+
   const { channelId } = useSelector((state) => state.modal.extra);
 
-  const handleClose = () => dispatch(closeModal());
+  const handleClose = () => closeModal();
+
   const handleRemove = () => {
     dispatch(removeChannel(channelId));
     dispatch(removeMessagesByChannelId(channelId));
     socket.emit('removeChannel', { id: channelId });
     toast.success(t('toast.channelDeleted'));
-    dispatch(closeModal());
+    closeModal();
   };
 
   return (

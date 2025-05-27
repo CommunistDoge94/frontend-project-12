@@ -6,13 +6,14 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { closeModal } from '../../slices/modalSlice';
+import { useModal } from '../../hooks/useModal';
 import { filterProfanity } from '../../utils/profanityFilter';
 import { addChannel } from '../../slices/channelsSlice';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { closeModal } = useModal();
   const show = useSelector((state) => state.modal.type === 'addChannel');
   const channels = useSelector((state) => state.channels.items);
   const token = localStorage.getItem('token');
@@ -25,7 +26,7 @@ const AddChannelModal = () => {
   });
 
   return (
-    <Modal show={show} onHide={() => dispatch(closeModal())} centered>
+    <Modal show={show} onHide={closeModal} centered>
       <Formik
         initialValues={{ name: '' }}
         validationSchema={Schema}
@@ -38,12 +39,10 @@ const AddChannelModal = () => {
             }
 
             const filteredName = filterProfanity(rawName);
-            
-
-            const exists = channels.some(ch => 
-              ch.name.toLowerCase() === filteredName.toLowerCase()
+            const exists = channels.some(
+              (ch) => ch.name.toLowerCase() === filteredName.toLowerCase()
             );
-            
+
             if (exists) {
               toast.error(t('toast.channelExists'));
               return;
@@ -52,23 +51,25 @@ const AddChannelModal = () => {
             const response = await axios.post(
               '/api/v1/channels',
               { name: filteredName },
-              { 
-                headers: { 
-                  Authorization: `Bearer ${token}`, 
-                  'Content-Type': 'application/json' 
-                } 
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+                },
               }
             );
 
-            dispatch(addChannel({
-              id: response.data.id,
-              name: filteredName,
-              removable: true,
-              isOwned: true
-            }));
+            dispatch(
+              addChannel({
+                id: response.data.id,
+                name: filteredName,
+                removable: true,
+                isOwned: true,
+              })
+            );
 
             toast.success(t('toast.channelCreated'));
-            dispatch(closeModal());
+            closeModal();
             resetForm();
           } catch (err) {
             console.error('Channel creation error:', err);
@@ -114,7 +115,7 @@ const AddChannelModal = () => {
             <Modal.Footer>
               <Button
                 variant="secondary"
-                onClick={() => dispatch(closeModal())}
+                onClick={closeModal}
                 aria-label={t('buttons.cancel')}
               >
                 {t('buttons.cancel')}

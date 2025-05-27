@@ -4,14 +4,16 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { closeModal } from '../../slices/modalSlice';
-import { renameChannel } from '../../slices/channelsSlice'; 
+import { renameChannel } from '../../slices/channelsSlice';
 import * as Yup from 'yup';
 import { filterProfanity } from '../../utils/profanityFilter';
+import { useModal } from '../../hooks/useModal';
 
 const RenameChannelModal = ({ channelId, currentName }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { closeModal } = useModal();
+
   const [name, setName] = useState(currentName);
   const [error, setError] = useState('');
   const token = localStorage.getItem('token');
@@ -27,7 +29,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
     e.preventDefault();
     try {
       await schema.validate({ name });
-      
+
       const filteredName = filterProfanity(name.trim());
       if (!filteredName) {
         throw new Error(t('channel.emptyNameError'));
@@ -38,17 +40,17 @@ const RenameChannelModal = ({ channelId, currentName }) => {
         { name: filteredName },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      
+
       toast.success(t('toast.channelRenamed'));
       dispatch(renameChannel({ id: channelId, name: filteredName }));
-      dispatch(closeModal());
+      closeModal();
     } catch (err) {
       setError(err.response?.data?.message || err.message);
     }
   };
 
   const handleClose = () => {
-    dispatch(closeModal());
+    closeModal();
     setName(currentName);
     setError('');
   };
@@ -68,7 +70,11 @@ const RenameChannelModal = ({ channelId, currentName }) => {
               autoFocus
               aria-label="Имя канала"
             />
-            {error && <Alert variant="danger" className="mt-2">{error}</Alert>}
+            {error && (
+              <Alert variant="danger" className="mt-2">
+                {error}
+              </Alert>
+            )}
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
