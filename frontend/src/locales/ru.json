@@ -1,5 +1,6 @@
 {
   "buttons": {
+    "brand": "Hexlet Chat",
     "login": "Войти",
     "signup": "Регистрация",
     "goHome": "На главную",
@@ -7,7 +8,10 @@
     "cancel": "Отмена",
     "send": "Отправить",
     "remove": "Удалить",
-    "rename": "Переименовать"
+    "rename": "Переименовать",
+    "logout": "Выйти",
+    "registering": "Зарегистрироваться",
+    "register": "Регистрация"
   },
 
   "loginForm": {
@@ -72,28 +76,6 @@
 
   "profanity": {
     "error": "Нельзя создавать матерные названия!"
-  },
-  
-  
-  
-  "brand": "Hexlet Chat",
-  
-  
-  "channelManagement": "Управление каналом",
-  
-  "error": "Ошибка: {{error}}",
-  "logout": "Выйти",
-  "max20Chars": "От 3 до 20 символов",
-  "message.emptyError": "Сообщение не может быть пустым",
-  "min6Chars": "Не менее 6 символов",
- "passwordsMustMatch": "Пароли должны совпадать",
-  "profanityAlert": "Использование ненормативной лексики запрещено",
-  "profanityWarning": "Ай-яй-яй! Плохое слово!",
-  
+  }  
 
- 
- 
-  
-  "signupError": "Ошибка регистрации",
-  "userExistsError": "Такой пользователь уже существует"
 }

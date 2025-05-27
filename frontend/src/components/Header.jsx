@@ -21,10 +21,10 @@ function Header() {
   return (
     <Navbar bg="light">
       <Container>
-        <Navbar.Brand as={NavLink} to="/">{t('brand')}</Navbar.Brand>
+        <Navbar.Brand as={NavLink} to="/">{t('buttons.brand')}</Navbar.Brand>
         {isLoggedIn && (
           <Button variant="outline-danger" onClick={handleLogout}>
-            {t('logout')}
+            {t('buttons.logout')}
           </Button>
         )}
       </Container>

@@ -118,7 +118,7 @@ const SignupPage = () => {
               disabled={isSubmitting}
               data-testid="signup-button"
             >
-              {isSubmitting ? t('registering') : t('register')}
+              {isSubmitting ? t('buttons.registering') : t('buttons.register')}
             </button>
           </Form>
         )}
