@@ -5,11 +5,12 @@ import {
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import axios from 'axios'
 import * as Yup from 'yup'
-import { renameChannel } from '../../slices/channelsSlice'
+import axios from 'axios'
+import { renameChannel as renameChannelAction } from '../../slices/channelsSlice'
 import filterProfanity from '../../utils/profanityFilter'
 import useModal from '../../hooks/useModal'
+import { apiRoutes } from '../../api'
 
 const RenameChannelModal = ({ channelId, currentName }) => {
   const { t } = useTranslation()
@@ -18,7 +19,6 @@ const RenameChannelModal = ({ channelId, currentName }) => {
 
   const [name, setName] = useState(currentName)
   const [error, setError] = useState('')
-  const token = localStorage.getItem('token')
 
   const schema = Yup.object().shape({
     name: Yup.string()
@@ -29,22 +29,25 @@ const RenameChannelModal = ({ channelId, currentName }) => {
 
   const handleSubmit = async e => {
     e.preventDefault()
+    const token = localStorage.getItem('token')
+
     try {
       await schema.validate({ name })
-
       const filteredName = filterProfanity(name.trim())
       if (!filteredName) {
         throw new Error(t('channel.emptyNameError'))
       }
-
       await axios.patch(
-        `/api/v1/channels/${channelId}`,
+        apiRoutes.editChannel(channelId),
         { name: filteredName },
-        { headers: { Authorization: `Bearer ${token}` } },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       )
-
       toast.success(t('toast.channelRenamed'))
-      dispatch(renameChannel({ id: channelId, name: filteredName }))
+      dispatch(renameChannelAction({ id: channelId, name: filteredName }))
       closeModal()
     } catch (err) {
       setError(err.response?.data?.message || err.message)

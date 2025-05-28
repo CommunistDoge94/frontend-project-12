@@ -5,6 +5,7 @@ import { Formik, Form, Field } from 'formik'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import filterProfanity from '../../utils/profanityFilter'
+import { apiRoutes } from '../../api'
 
 const MessageForm = () => {
   const { t } = useTranslation()
@@ -27,7 +28,7 @@ const MessageForm = () => {
 
         try {
           await axios.post(
-            '/api/v1/messages',
+            apiRoutes.createMessage(),
             {
               body: filteredText,
               channelId: activeChannelId,

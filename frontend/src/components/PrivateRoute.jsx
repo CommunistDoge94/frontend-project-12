@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
+import { apiRoutes } from '../api'
 import { fetchChannels } from '../slices/channelsSlice'
 import { fetchMessages } from '../slices/messagesSlice'
 
@@ -18,7 +19,7 @@ const PrivateRoute = ({ children }) => {
       }
 
       try {
-        await axios.get('/api/v1/channels', {
+        await axios.get(apiRoutes.getChannels(), {
           headers: { Authorization: `Bearer ${token}` },
         })
 

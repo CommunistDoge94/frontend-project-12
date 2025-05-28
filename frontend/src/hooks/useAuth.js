@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
+import { apiRoutes } from '../api'
 import { loginSuccess, logout } from '../slices/authSlice'
 
 const useAuth = () => {
@@ -10,7 +11,7 @@ const useAuth = () => {
     if (!token) return false
 
     try {
-      await axios.get('/api/v1/channels', {
+      await axios.get(apiRoutes.getChannels(), {
         headers: { Authorization: `Bearer ${token}` },
       })
       return true

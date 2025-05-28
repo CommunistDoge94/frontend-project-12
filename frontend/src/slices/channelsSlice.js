@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { apiRoutes } from '../api'
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get('/api/v1/channels', {
+      const response = await axios.get(apiRoutes.getChannels(), {
         headers: { Authorization: `Bearer ${token}` },
       })
       return response.data
