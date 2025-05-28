@@ -47,7 +47,7 @@ const AddChannelModal = () => {
         apiRoutes.createChannel(),
         { name: filteredName },
         {
-          headers: getAuthHeader,
+          headers: getAuthHeader(token),
         },
       )
 

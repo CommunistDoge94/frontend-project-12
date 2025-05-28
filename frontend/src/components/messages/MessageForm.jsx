@@ -40,7 +40,7 @@ const MessageForm = () => {
           username,
         },
         {
-          headers: getAuthHeader(),
+          headers: getAuthHeader(token),
         }
       )
       resetForm()

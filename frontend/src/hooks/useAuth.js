@@ -1,10 +1,11 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { apiRoutes } from '../api'
 import { loginSuccess, logout } from '../slices/authSlice'
 
 const useAuth = () => {
   const dispatch = useDispatch()
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   const checkAuth = async () => {
     const token = localStorage.getItem('token')
@@ -15,8 +16,7 @@ const useAuth = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       return true
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err)
       localStorage.removeItem('token')
       dispatch(logout())
@@ -30,7 +30,13 @@ const useAuth = () => {
     dispatch(loginSuccess({ username, token }))
   }
 
-  return { checkAuth, handleLogin }
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('username')
+    dispatch(logout())
+  }
+
+  return { checkAuth, handleLogin, handleLogout, isLoggedIn }
 }
 
 export default useAuth

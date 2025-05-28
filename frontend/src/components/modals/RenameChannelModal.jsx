@@ -38,7 +38,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
         apiRoutes.editChannel(channelId),
         { name: filteredName },
         {
-          headers: getAuthHeader(),
+          headers: getAuthHeader(token),
         },
       )
 

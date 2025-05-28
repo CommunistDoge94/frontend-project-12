@@ -5,10 +5,11 @@ import { useDispatch } from 'react-redux'
 import { apiRoutes } from '../api'
 import { fetchChannels } from '../slices/channelsSlice'
 import { fetchMessages } from '../slices/messagesSlice'
+import { getAuthHeader, getToken } from '../utils/auth'
 
 const PrivateRoute = ({ children }) => {
   const [isValid, setIsValid] = useState(null)
-  const token = localStorage.getItem('token')
+  const token = getToken()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const PrivateRoute = ({ children }) => {
 
       try {
         await axios.get(apiRoutes.getChannels(), {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: getAuthHeader(token),
         })
 
         await Promise.all([

@@ -25,7 +25,7 @@ const RemoveChannelModal = () => {
 
     try {
       await axios.delete(apiRoutes.deleteChannel(channelId), {
-        headers: getAuthHeader(),
+        headers: getAuthHeader(token),
       })
 
       dispatch(removeChannel(channelId))

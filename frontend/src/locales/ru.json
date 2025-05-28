@@ -1,4 +1,9 @@
-{
+{ 
+  "header": {
+    "brand": "Hexlet Chat",
+    "logout": "Выйти"
+  },
+
   "modal": {
     "addChannel": "Добавить канал",
     "channelName": "Имя канала",

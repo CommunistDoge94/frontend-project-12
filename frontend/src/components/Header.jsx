@@ -1,29 +1,27 @@
 import { Navbar, Container, Button } from 'react-bootstrap'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { logout as logoutAction } from '../slices/authSlice.js'
+import useAuth from '../hooks/useAuth.js'
 
 const Header = () => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+  const { handleLogout, isLoggedIn } = useAuth()
 
-  const handleLogout = () => {
-    dispatch(logoutAction())
-    localStorage.removeItem('token')
-    localStorage.removeItem('username')
+  const onLogout = () => {
+    handleLogout();
     navigate('/login')
   }
 
   return (
     <Navbar bg="light" fixed="top" className="py-1 shadow-sm">
       <Container>
-        <Navbar.Brand as={NavLink} to="/">{t('buttons.brand')}</Navbar.Brand>
+        <Navbar.Brand as={NavLink} to="/">
+          {t('header.brand')}
+        </Navbar.Brand>
         {isLoggedIn && (
-          <Button variant="outline-danger" size="sm" onClick={handleLogout}>
-            {t('buttons.logout')}
+          <Button variant="outline-danger" size="sm" onClick={onLogout}>
+            {t('header.logout')}
           </Button>
         )}
       </Container>
