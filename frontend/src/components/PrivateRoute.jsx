@@ -34,7 +34,7 @@ const PrivateRoute = ({ children }) => {
     verifyAndLoad()
   }, [dispatch])
 
-  if (isValid === null) return <div>Loading...</div>
+  if (isValid === null) return <div>{t('inStatus.loading')}</div>
   return isValid ? children : <Navigate to="/login" replace />
 }
 
