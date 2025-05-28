@@ -6,12 +6,13 @@ import { toast } from 'react-toastify'
 
 import filterProfanity from '../../utils/profanityFilter'
 import { apiRoutes } from '../../api'
+import { getToken, getAuthHeader } from '../../utils/auth'
 
 const MessageForm = () => {
   const { t } = useTranslation()
   const activeChannelId = useSelector(state => state.channels.activeChannelId)
   const username = localStorage.getItem('username')
-  const token = localStorage.getItem('token')
+  const token = getToken()
 
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     const rawText = values.messageText.trim()
@@ -24,6 +25,12 @@ const MessageForm = () => {
 
     const filteredText = filterProfanity(rawText)
 
+    if (!filteredText) {
+      toast.error(t('toast.emptyMessage'))
+      setSubmitting(false)
+      return
+    }
+
     try {
       await axios.post(
         apiRoutes.createMessage(),
@@ -33,10 +40,7 @@ const MessageForm = () => {
           username,
         },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
+          headers: getAuthHeader(),
         }
       )
       resetForm()

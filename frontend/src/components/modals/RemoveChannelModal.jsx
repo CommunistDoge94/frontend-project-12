@@ -8,6 +8,7 @@ import { removeChannel } from '../../slices/channelsSlice'
 import { removeMessagesByChannelId } from '../../slices/messagesSlice'
 import useModal from '../../hooks/useModal'
 import { apiRoutes } from '../../api'
+import { getToken, getAuthHeader } from '../../utils/auth'
 
 const RemoveChannelModal = () => {
   const { t } = useTranslation()
@@ -20,13 +21,11 @@ const RemoveChannelModal = () => {
   }
 
   const handleRemove = async () => {
-    const token = localStorage.getItem('token')
+    const token = getToken()
 
     try {
       await axios.delete(apiRoutes.deleteChannel(channelId), {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: getAuthHeader(),
       })
 
       dispatch(removeChannel(channelId))

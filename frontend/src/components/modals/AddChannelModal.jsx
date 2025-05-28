@@ -10,6 +10,7 @@ import { apiRoutes } from '../../api'
 import useModal from '../../hooks/useModal'
 import filterProfanity from '../../utils/profanityFilter'
 import { addChannel } from '../../slices/channelsSlice'
+import { getToken, getAuthHeader } from '../../utils/auth'
 
 const AddChannelModal = () => {
   const { t } = useTranslation()
@@ -18,7 +19,7 @@ const AddChannelModal = () => {
 
   const show = useSelector((state) => state.modal.type === 'addChannel')
   const channels = useSelector((state) => state.channels.items)
-  const token = localStorage.getItem('token')
+  const token = getToken()
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -46,10 +47,7 @@ const AddChannelModal = () => {
         apiRoutes.createChannel(),
         { name: filteredName },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
+          headers: getAuthHeader,
         },
       )
 

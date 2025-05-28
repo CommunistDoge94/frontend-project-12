@@ -10,6 +10,7 @@ import { renameChannel as renameChannelAction } from '../../slices/channelsSlice
 import filterProfanity from '../../utils/profanityFilter'
 import useModal from '../../hooks/useModal'
 import { apiRoutes } from '../../api'
+import { getAuthHeader, getToken } from '../../utils/auth'
 
 const RenameChannelModal = ({ channelId, currentName }) => {
   const { t } = useTranslation()
@@ -24,7 +25,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
   })
 
   const handleSubmit = async ({ name }, { setSubmitting, setFieldError }) => {
-    const token = localStorage.getItem('token')
+    const token = getToken()
     try {
       const filteredName = filterProfanity(name.trim())
       
@@ -37,9 +38,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
         apiRoutes.editChannel(channelId),
         { name: filteredName },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: getAuthHeader(),
         },
       )
 
