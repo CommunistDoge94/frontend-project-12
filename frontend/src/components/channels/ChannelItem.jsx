@@ -1,5 +1,6 @@
 import { Dropdown } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
+
 import useModal from '../../hooks/useModal'
 
 const ChannelItem = ({ channel, isActive, onClick }) => {
@@ -45,13 +46,13 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
               variant="secondary"
               size="sm"
               className="px-1 me-2"
-              aria-label={t('chatPage.channelSettings')}
+              aria-label={t('channel.settings')}
             >
-              <span className="visually-hidden">{t('chatPage.channelSettings')}</span>
+              <span className="visually-hidden">{t('channel.settings')}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={handleRename}>{t('chatPage.rename')}</Dropdown.Item>
-              <Dropdown.Item onClick={handleRemove}>{t('chatPage.remove')}</Dropdown.Item>
+              <Dropdown.Item onClick={handleRename}>{t('channel.rename')}</Dropdown.Item>
+              <Dropdown.Item onClick={handleRemove}>{t('channel.remove')}</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         )}

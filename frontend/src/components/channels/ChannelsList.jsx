@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+
 import ChannelItem from './ChannelItem'
 import { selectChannels, selectActiveChannelId } from '../../slices/channelsSlice'
 import useChannels from '../../hooks/useChannels'

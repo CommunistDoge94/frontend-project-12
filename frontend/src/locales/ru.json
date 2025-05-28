@@ -29,6 +29,12 @@
     }
   },
 
+  "channel": {
+    "remove": "Удалить",
+    "rename": "Переименовать",
+    "settings": "Управление каналом"
+  },
+
   "toast": {
     "channelCreated": "Канал создан",
     "channelDeleted": "Канал удалён",
