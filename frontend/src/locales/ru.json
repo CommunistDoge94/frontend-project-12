@@ -35,6 +35,8 @@
   },
   "errors": {
     "authError": "Неверные имя пользователя или пароль",
+    "emptyChannelName": "Название канала не может быть пустым",
+    "renameChannel": "Ошибка переименования канала:",
     "networkErrorToast": "Ошибка соединения"
   },
   "loginForm": {
@@ -66,7 +68,7 @@
   "toast": {
     "channelCreated": "Канал создан",
     "channelDeleted": "Канал удалён",
-    "channelEmptyNameError": "Название канала не может быть пустым",
+    "channelEmptyNameError": "",
     "channelExists": "Канал с таким именем уже существует",
     "channelRenamed": "Канал переименован",
     "emptyMessage": "Сообщение не должно быть пустым",

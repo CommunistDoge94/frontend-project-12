@@ -1,12 +1,11 @@
-import { useState } from 'react'
-import {
-  Modal, Button, Form, Alert,
-} from 'react-bootstrap'
+import { Modal, Button, Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import axios from 'axios'
+import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik'
+
 import { renameChannel as renameChannelAction } from '../../slices/channelsSlice'
 import filterProfanity from '../../utils/profanityFilter'
 import useModal from '../../hooks/useModal'
@@ -17,9 +16,6 @@ const RenameChannelModal = ({ channelId, currentName }) => {
   const dispatch = useDispatch()
   const { closeModal } = useModal()
 
-  const [name, setName] = useState(currentName)
-  const [error, setError] = useState('')
-
   const schema = Yup.object().shape({
     name: Yup.string()
       .min(3, t('chatPage.chatNameLengthError'))
@@ -27,15 +23,14 @@ const RenameChannelModal = ({ channelId, currentName }) => {
       .required(t('chatPage.required')),
   })
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleSubmit = async ({ name }, { setSubmitting, setFieldError }) => {
     const token = localStorage.getItem('token')
-
     try {
-      await schema.validate({ name })
       const filteredName = filterProfanity(name.trim())
+      
       if (!filteredName) {
-        throw new Error(t('channel.emptyNameError'))
+        setFieldError('name', t('errors.emptyChannelName'))
+        return
       }
 
       await axios.patch(
@@ -47,19 +42,23 @@ const RenameChannelModal = ({ channelId, currentName }) => {
           },
         },
       )
+
       toast.success(t('toast.channelRenamed'))
       dispatch(renameChannelAction({ id: channelId, name: filteredName }))
       closeModal()
     }
     catch (err) {
-      setError(err.response?.data?.message || err.message)
+      console.error(t('errors.renameChannel'), err)
+      toast.error(t('toast.networkError'))
+    } 
+    finally
+    {
+      setSubmitting(false)
     }
   }
 
   const handleClose = () => {
     closeModal()
-    setName(currentName)
-    setError('')
   }
 
   return (
@@ -67,32 +66,38 @@ const RenameChannelModal = ({ channelId, currentName }) => {
       <Modal.Header closeButton>
         <Modal.Title>{t('chatPage.renameChannel')}</Modal.Title>
       </Modal.Header>
-      <Form onSubmit={handleSubmit}>
-        <Modal.Body>
-          <Form.Group controlId="channelName">
-            <Form.Control
-              value={name}
-              onChange={e => setName(e.target.value)}
-              isInvalid={!!error}
-              autoFocus
-              aria-label="Имя канала"
-            />
-            {error && (
-              <Alert variant="danger" className="mt-2">
-                {error}
-              </Alert>
-            )}
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            {t('buttons.cancel')}
-          </Button>
-          <Button variant="primary" type="submit">
-            {t('buttons.rename')}
-          </Button>
-        </Modal.Footer>
-      </Form>
+      <Formik
+        initialValues={{ name: currentName }}
+        onSubmit={handleSubmit}
+        validationSchema={schema}
+      >
+        {({ isSubmitting, touched, errors }) => (
+          <FormikForm>
+            <Modal.Body>
+              <Form.Group controlId="channelName">
+                <Field
+                  name="name"
+                  as={Form.Control}
+                  aria-label="Имя канала"
+                  autoFocus
+                  isInvalid={touched.name && !!errors.name}
+                />
+                <Form.Control.Feedback type="invalid" className="mt-2">
+                  <ErrorMessage name="name" />
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose} disabled={isSubmitting}>
+                {t('buttons.cancel')}
+              </Button>
+              <Button variant="primary" type="submit" disabled={isSubmitting}>
+                {t('buttons.rename')}
+              </Button>
+            </Modal.Footer>
+          </FormikForm>
+        )}
+      </Formik>
     </Modal>
   )
 }
