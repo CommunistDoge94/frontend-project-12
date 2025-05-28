@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+
 import MessageItem from './MessageItem'
 import { selectMessages } from '../../slices/messagesSlice'
 import { selectActiveChannelId } from '../../slices/channelsSlice'
