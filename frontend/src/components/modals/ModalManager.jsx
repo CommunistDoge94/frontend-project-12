@@ -4,7 +4,7 @@ import RemoveChannelModal from './RemoveChannelModal'
 import RenameChannelModal from './RenameChannelModal'
 
 const ModalManager = () => {
-  const { type, extra } = useSelector((state) => state.modal)
+  const { type, extra } = useSelector(state => state.modal)
 
   if (type === 'addChannel') return <AddChannelModal />
   if (type === 'removeChannel') return <RemoveChannelModal />

@@ -10,8 +10,8 @@ const useSocket = () => {
   useEffect(() => {
     connectSocket()
 
-    const handleNewMessage = (message) => dispatch(addMessage(message))
-    const handleNewChannel = (channel) => dispatch(addChannel({
+    const handleNewMessage = message => dispatch(addMessage(message))
+    const handleNewChannel = channel => dispatch(addChannel({
       id: Number(channel.id),
       name: channel.name,
       removable: channel.removable,
@@ -22,7 +22,7 @@ const useSocket = () => {
       dispatch(removeMessagesByChannelId(id))
     }
 
-    const handleRenameChannel = (channel) => dispatch(renameChannel({
+    const handleRenameChannel = channel => dispatch(renameChannel({
       id: Number(channel.id),
       name: channel.name,
     }))

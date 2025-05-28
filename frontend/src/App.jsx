@@ -23,7 +23,7 @@ const App = () => (
               <PrivateRoute>
                 <ChatPage />
               </PrivateRoute>
-              )}
+            )}
           />
           <Route path="/404" element={<NotFoundPage />} />
           <Route path="*" element={<Navigate to="/404" replace />} />

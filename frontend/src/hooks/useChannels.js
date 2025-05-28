@@ -16,21 +16,23 @@ const useChannels = () => {
   }
 
   return {
-    addChannel: async (name) => {
+    addChannel: async name => {
       try {
         const newChannel = await axios.post(apiRoutes.createChannel(), { name })
         return { success: true, newChannel }
-      } catch (error) {
+      }
+      catch (error) {
         handleError(error, t('toast.networkError'))
         return { success: false }
       }
     },
 
-    removeChannel: async (id) => {
+    removeChannel: async id => {
       try {
         await axios.delete(apiRoutes.deleteChannel(id))
         return { success: true }
-      } catch (error) {
+      }
+      catch (error) {
         handleError(error, t('toast.channelRemoveError'))
         return { success: false }
       }
@@ -40,12 +42,12 @@ const useChannels = () => {
       try {
         await axios.patch(apiRoutes.editChannel(id), { name })
         return { success: true }
-      } catch (error) {
+      }
+      catch (error) {
         handleError(error, t('toast.channelRenameError'))
         return { success: false }
       }
     },
-
     setActiveChannel: (id) => dispatch(setActiveChannel(id)),
   }
 }

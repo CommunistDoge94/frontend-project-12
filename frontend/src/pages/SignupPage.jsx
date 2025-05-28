@@ -36,13 +36,16 @@ const SignupPage = () => {
 
       handleLogin(data.token, values.username)
       navigate('/', { replace: true })
-    } catch (error) {
+    }
+    catch (error) {
       if (error.response?.status === 409) {
         setErrors({ username: t('signupForm.userExistsError') })
-      } else {
+      }
+      else {
         toast.error(t('registrationFailed'))
       }
-    } finally {
+    }
+    finally {
       setSubmitting(false)
     }
   }

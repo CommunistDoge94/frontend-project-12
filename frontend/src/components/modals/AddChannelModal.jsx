@@ -14,8 +14,8 @@ const AddChannelModal = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const { closeModal } = useModal()
-  const show = useSelector((state) => state.modal.type === 'addChannel')
-  const channels = useSelector((state) => state.channels.items)
+  const show = useSelector(state => state.modal.type === 'addChannel')
+  const channels = useSelector(state => state.channels.items)
   const token = localStorage.getItem('token')
 
   const Schema = Yup.object().shape({
@@ -40,7 +40,7 @@ const AddChannelModal = () => {
 
             const filteredName = filterProfanity(rawName)
             const exists = channels.some(
-              (ch) => ch.name.toLowerCase() === filteredName.toLowerCase(),
+              ch => ch.name.toLowerCase() === filteredName.toLowerCase(),
             )
 
             if (exists) {
@@ -53,7 +53,7 @@ const AddChannelModal = () => {
               { name: filteredName },
               {
                 headers: {
-                  Authorization: `Bearer ${token}`,
+                  'Authorization': `Bearer ${token}`,
                   'Content-Type': 'application/json',
                 },
               },
@@ -71,14 +71,17 @@ const AddChannelModal = () => {
             toast.success(t('toast.channelCreated'))
             closeModal()
             resetForm()
-          } catch (err) {
+          }
+          catch (err) {
             console.error('Channel creation error:', err)
             if (err.response?.status === 409) {
               toast.error(t('toast.channelExists'))
-            } else {
+            } 
+            else {
               toast.error(t('toast.networkError'))
             }
-          } finally {
+          }
+          finally {
             setSubmitting(false)
           }
         }}

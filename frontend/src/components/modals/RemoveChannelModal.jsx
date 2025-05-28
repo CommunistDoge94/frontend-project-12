@@ -14,7 +14,7 @@ const RemoveChannelModal = () => {
   const dispatch = useDispatch()
   const { closeModal } = useModal()
 
-  const { channelId } = useSelector((state) => state.modal.extra || {})
+  const { channelId } = useSelector(state => state.modal.extra || {})
 
   const [error, setError] = useState('')
 
@@ -37,7 +37,8 @@ const RemoveChannelModal = () => {
       dispatch(removeMessagesByChannelId(channelId))
       toast.success(t('toast.channelDeleted'))
       closeModal()
-    } catch (err) {
+    } 
+    catch (err) {
       const message = err.response?.data?.message || error || t('toast.networkError')
       setError(message)
       toast.error(message)

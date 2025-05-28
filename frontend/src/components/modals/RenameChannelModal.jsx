@@ -50,7 +50,8 @@ const RenameChannelModal = ({ channelId, currentName }) => {
       toast.success(t('toast.channelRenamed'))
       dispatch(renameChannelAction({ id: channelId, name: filteredName }))
       closeModal()
-    } catch (err) {
+    }
+    catch (err) {
       setError(err.response?.data?.message || err.message)
     }
   }
@@ -71,7 +72,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
           <Form.Group controlId="channelName">
             <Form.Control
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
               isInvalid={!!error}
               autoFocus
               aria-label="Имя канала"

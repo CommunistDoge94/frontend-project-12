@@ -13,7 +13,7 @@ const ChannelsList = () => {
       className="list-group flex-grow-1 overflow-auto"
       aria-label="Список каналов"
     >
-      {channels.map((channel) => (
+      {channels.map(channel => (
         <ChannelItem
           key={channel.id}
           channel={channel}

@@ -11,7 +11,8 @@ export const fetchMessages = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       })
       return response.data
-    } catch (error) {
+    }
+    catch (error) {
       return rejectWithValue(error.message)
     }
   },
@@ -30,7 +31,7 @@ const messagesSlice = createSlice({
     },
     removeMessagesByChannelId: (state, action) => {
       const channelId = Number(action.payload)
-      state.items = state.items.filter((msg) => msg.channelId !== channelId)
+      state.items = state.items.filter(msg => msg.channelId !== channelId)
     },
   },
   extraReducers: (builder) => {
@@ -51,5 +52,5 @@ const messagesSlice = createSlice({
 })
 
 export const { addMessage, removeMessagesByChannelId } = messagesSlice.actions
-export const selectMessages = (state) => state.messages.items
+export const selectMessages = state => state.messages.items
 export default messagesSlice.reducer

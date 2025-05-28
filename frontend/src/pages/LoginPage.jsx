@@ -28,13 +28,16 @@ const LoginPage = () => {
 
                 handleLogin(token, username)
                 navigate('/')
-              } catch (err) {
+              }
+              catch (err) {
                 if (err.response?.status === 401) {
                   setAuthError(t('errors.authError'))
-                } else {
+                }
+                else {
                   setAuthError(t('errors.networkErrorToast'))
                 }
-              } finally {
+              }
+              finally {
                 setSubmitting(false)
               }
             }}

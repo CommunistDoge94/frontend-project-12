@@ -8,7 +8,7 @@ import { apiRoutes } from '../../api'
 
 const MessageForm = () => {
   const { t } = useTranslation()
-  const activeChannelId = useSelector((state) => state.channels.activeChannelId)
+  const activeChannelId = useSelector(state => state.channels.activeChannelId)
   const token = localStorage.getItem('token')
 
   return (
@@ -35,15 +35,18 @@ const MessageForm = () => {
             },
             {
               headers: {
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
               },
             },
           )
           resetForm()
-        } catch (_) {
+        } 
+        catch (err) {
           toast.error(t('toast.networkError'))
-        } finally {
+          console.error(err)
+        } 
+        finally {
           setSubmitting(false)
         }
       }}

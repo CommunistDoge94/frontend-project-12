@@ -13,19 +13,19 @@ import { openModal } from '../slices/modalSlice'
 const ChatPage = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const { loading: channelsLoading, error: channelsError } = useSelector((state) => state.channels)
-  const { loading: messagesLoading, error: messagesError } = useSelector((state) => state.messages)
+  const { loading: channelsLoading, error: channelsError } = useSelector(state => state.channels)
+  const { loading: messagesLoading, error: messagesError } = useSelector(state => state.messages)
   const channels = useSelector(selectChannels)
   const activeChannelId = useSelector(selectActiveChannelId)
   const messages = useSelector(selectMessages)
 
   const activeChannel = useMemo(
-    () => channels.find((ch) => ch.id === activeChannelId),
+    () => channels.find(ch => ch.id === activeChannelId),
     [channels, activeChannelId],
   )
 
   const messagesCount = useMemo(
-    () => messages.filter((msg) => msg.channelId === activeChannelId).length,
+    () => messages.filter(msg => msg.channelId === activeChannelId).length,
     [messages, activeChannelId],
   )
 
