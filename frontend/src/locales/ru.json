@@ -15,19 +15,23 @@
   },
   "chatPage": {
     "addChannel": "Добавить канал",
+    "channels": "Каналы",
     "channelName": "Имя канала",
     "channelSettings": "Управление каналом",
     "chatNameLengthError": "От 3 до 20 символов",
     "enterMessage": "Введите сообщение",
     "messages": "Сообщения",
+    "messagesCount_one": "{{count}} сообщение",
+    "messagesCount_few": "{{count}} сообщения",
+    "messagesCount_many": "{{count}} сообщений",
+    "messagesCount_other": "{{count}} сообщений",
     "plusSign": "+",
     "remove": "Удалить",
     "removeChannel": "Удалить канал",
     "removeConfirmation": "Вы уверены, что хотите удалить канал?",
     "rename": "Переименовать",
     "renameChannel": "Переименовать канал",
-    "required": "Обязательное поле",
-    "channels": "Каналы"
+    "required": "Обязательное поле"
   },
   "errors": {
     "authError": "Неверные имя пользователя или пароль",

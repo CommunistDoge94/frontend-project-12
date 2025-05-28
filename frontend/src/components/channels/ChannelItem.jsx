@@ -24,7 +24,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
       <div className={`d-flex justify-content-between align-items-center ${isActive ? 'bg-primary-subtle' : ''} py-2`}>
         <button
           type="button"
-          className="btn p-0 border-0 text-start w-100 text-body fw-bold text-decoration-none text-truncate"
+          className="btn p-0 border-0 text-start w-100 text-body fw-normal text-decoration-none text-truncate"
           aria-label={`Канал ${channel.name}`}
           onClick={onClick}
           onKeyDown={e => {
@@ -34,16 +34,18 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
             }
           }}
         >
-          #
           {' '}
-          {channel.name}
+          <span className="ms-2">
+            #
+            {channel.name}
+          </span>
         </button>
         {channel.removable && (
           <Dropdown onClick={e => e.stopPropagation()}>
             <Dropdown.Toggle
               variant="secondary"
               size="sm"
-              className="p-1 d-flex align-items-center justify-content-center"
+              className="px-1 me-2"
               aria-label={t('chatPage.channelSettings')}
             >
               <span className="visually-hidden">{t('chatPage.channelSettings')}</span>

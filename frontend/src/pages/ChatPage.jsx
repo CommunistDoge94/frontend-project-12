@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { fetchChannels } from '../slices/channelsSlice'
-import { fetchMessages } from '../slices/messagesSlice'
+import { fetchMessages, selectMessages } from '../slices/messagesSlice'
+import { fetchChannels, selectChannels, selectActiveChannelId } from '../slices/channelsSlice'
 import useSocket from '../hooks/useSocket'
 import ModalManager from '../components/modals/ModalManager'
 import ChannelsList from '../components/channels/ChannelsList'
@@ -15,6 +15,19 @@ const ChatPage = () => {
   const dispatch = useDispatch()
   const { loading: channelsLoading, error: channelsError } = useSelector(state => state.channels)
   const { loading: messagesLoading, error: messagesError } = useSelector(state => state.messages)
+  const channels = useSelector(selectChannels)
+  const activeChannelId = useSelector(selectActiveChannelId)
+  const messages = useSelector(selectMessages)
+
+  const activeChannel = useMemo(
+    () => channels.find(ch => ch.id === activeChannelId),
+    [channels, activeChannelId],
+  )
+
+  const messagesCount = useMemo(
+    () => messages.filter(msg => msg.channelId === activeChannelId).length,
+    [messages, activeChannelId],
+  )
 
   useSocket()
 
@@ -45,13 +58,19 @@ const ChatPage = () => {
                     {t('chatPage.plusSign')}
                   </button>
                 </div>
-                <div className="flex-grow-1 overflow-auto px-2">
+                <div className="flex-grow-1 overflow-auto bg-light px-2">
                   <ChannelsList />
                 </div>
               </div>
               <div className="col-8 d-flex flex-column h-100">
-                <div className="border-bottom px-3 py-2">
-                  <h5 className="mb-0">{t('chatPage.messages')}</h5>
+                <div className="border-bottom bg-light px-3 py-2">
+                  <h5 className="mb-0">
+                    #
+                    {activeChannel?.name}
+                  </h5>
+                  <span className="text-muted small">
+                    {t('chatPage.messagesCount', { count: messagesCount })}
+                  </span>
                 </div>
                 <div className="flex-grow-1 overflow-auto px-3 py-2">
                   <MessagesList />
