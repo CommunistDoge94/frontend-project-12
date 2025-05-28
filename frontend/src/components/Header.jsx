@@ -1,12 +1,15 @@
 import { Navbar, Container, Button } from 'react-bootstrap'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+
 import useAuth from '../hooks/useAuth.js'
 
 const Header = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { handleLogout, isLoggedIn } = useAuth()
+  const { handleLogout } = useAuth()
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   const onLogout = () => {
     handleLogout();

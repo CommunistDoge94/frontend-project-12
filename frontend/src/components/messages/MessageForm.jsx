@@ -62,7 +62,7 @@ const MessageForm = () => {
         className="form-control me-2"
         placeholder={t('message.input')}
         autoComplete="off"
-        aria-label="Новое сообщение"
+        aria-label={t('message.new')}
       />
       <button
         type="submit"

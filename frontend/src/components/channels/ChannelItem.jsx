@@ -25,7 +25,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
         <button
           type="button"
           className="btn p-0 border-0 text-start w-100 text-body fw-normal text-decoration-none text-truncate"
-          aria-label={`Канал ${channel.name}`}
+          aria-label={`${t('channel.channel')} ${channel.name}`}
           onClick={onClick}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -51,8 +51,8 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
               <span className="visually-hidden">{t('channel.settings')}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={handleRename}>{t('channel.rename')}</Dropdown.Item>
-              <Dropdown.Item onClick={handleRemove}>{t('channel.remove')}</Dropdown.Item>
+              <Dropdown.Item onClick={handleRename}>{t('channel.dropdown.rename')}</Dropdown.Item>
+              <Dropdown.Item onClick={handleRemove}>{t('channel.dropdown.remove')}</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         )}

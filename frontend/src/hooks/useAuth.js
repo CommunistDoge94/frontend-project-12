@@ -5,7 +5,6 @@ import { loginSuccess, logout } from '../slices/authSlice'
 
 const useAuth = () => {
   const dispatch = useDispatch()
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   const checkAuth = async () => {
     const token = localStorage.getItem('token')
@@ -36,7 +35,7 @@ const useAuth = () => {
     dispatch(logout())
   }
 
-  return { checkAuth, handleLogin, handleLogout, isLoggedIn }
+  return { checkAuth, handleLogin, handleLogout }
 }
 
 export default useAuth
