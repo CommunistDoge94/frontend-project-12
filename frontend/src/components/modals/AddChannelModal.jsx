@@ -76,7 +76,7 @@ const AddChannelModal = () => {
             console.error('Channel creation error:', err)
             if (err.response?.status === 409) {
               toast.error(t('toast.channelExists'))
-            } 
+            }
             else {
               toast.error(t('toast.networkError'))
             }

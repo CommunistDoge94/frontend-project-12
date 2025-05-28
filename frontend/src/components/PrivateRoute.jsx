@@ -29,7 +29,7 @@ const PrivateRoute = ({ children }) => {
         ])
 
         setIsValid(true)
-      } 
+      }
       catch (err) {
         console.error('Token verification failed:', err)
         localStorage.removeItem('token')

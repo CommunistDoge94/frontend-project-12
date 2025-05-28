@@ -41,11 +41,11 @@ const MessageForm = () => {
             },
           )
           resetForm()
-        } 
+        }
         catch (err) {
           toast.error(t('toast.networkError'))
           console.error(err)
-        } 
+        }
         finally {
           setSubmitting(false)
         }

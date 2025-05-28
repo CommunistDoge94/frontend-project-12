@@ -37,7 +37,7 @@ const RemoveChannelModal = () => {
       dispatch(removeMessagesByChannelId(channelId))
       toast.success(t('toast.channelDeleted'))
       closeModal()
-    } 
+    }
     catch (err) {
       const message = err.response?.data?.message || error || t('toast.networkError')
       setError(message)
