@@ -18,9 +18,9 @@ const RenameChannelModal = ({ channelId, currentName }) => {
 
   const schema = Yup.object().shape({
     name: Yup.string()
-      .min(3, t('chatPage.chatNameLengthError'))
-      .max(20, t('chatPage.chatNameLengthError'))
-      .required(t('chatPage.required')),
+      .min(3, t('modal.error.channelNameLength'))
+      .max(20, t('modal.error.channelNameLength'))
+      .required(t('modal.error.required')),
   })
 
   const handleSubmit = async ({ name }, { setSubmitting, setFieldError }) => {
@@ -29,7 +29,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
       const filteredName = filterProfanity(name.trim())
       
       if (!filteredName) {
-        setFieldError('name', t('errors.emptyChannelName'))
+        setFieldError('name', t('modal.error.emptyChannelName'))
         return
       }
 
@@ -64,7 +64,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
   return (
     <Modal show={!!channelId} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>{t('chatPage.renameChannel')}</Modal.Title>
+        <Modal.Title>{t('modal.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Formik
         initialValues={{ name: currentName }}
@@ -89,10 +89,10 @@ const RenameChannelModal = ({ channelId, currentName }) => {
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose} disabled={isSubmitting}>
-                {t('buttons.cancel')}
+                {t('modal.button.cancel')}
               </Button>
               <Button variant="primary" type="submit" disabled={isSubmitting}>
-                {t('buttons.rename')}
+                {t('modal.button.rename')}
               </Button>
             </Modal.Footer>
           </FormikForm>

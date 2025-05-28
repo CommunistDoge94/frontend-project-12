@@ -43,15 +43,15 @@ const RemoveChannelModal = () => {
   return (
     <Modal show centered onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{t('chatPage.removeChannel')}</Modal.Title>
+        <Modal.Title>{t('modal.removeChannel')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{t('chatPage.removeConfirmation')}</Modal.Body>
+      <Modal.Body>{t('modal.removeConfirmation')}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          {t('buttons.cancel')}
+          {t('modal.button.cancel')}
         </Button>
         <Button variant="danger" onClick={handleRemove}>
-          {t('buttons.remove')}
+          {t('modal.button.remove')}
         </Button>
       </Modal.Footer>
     </Modal>

@@ -1,4 +1,45 @@
 {
+  "modal": {
+    "removeChannel": "Удалить канал",
+    "removeConfirmation": "Вы уверены, что хотите удалить канал?",
+    "renameChannel": "Переименовать канал",
+
+    "button":{
+      "cancel": "Отмена",
+      "remove": "Удалить",
+      "rename": "Переименовать"
+    },
+    "error": {
+      "channelNameLength": "От 3 до 20 символов",
+      "emptyChannelName": "Название канала не может быть пустым",
+      "required": "Обязательное поле"
+    }
+  },
+  
+
+  
+
+  "toast": {
+    "channelCreated": "Канал создан",
+    "channelDeleted": "Канал удалён",
+    "channelEmptyNameError": "",
+    "channelExists": "Канал с таким именем уже существует",
+    "channelRenamed": "Канал переименован",
+    "emptyMessage": "Сообщение не должно быть пустым",
+    "loadError": "Ошибка загрузки данных. Попробуйте позже.",
+    "networkError": "Ошибка соединения"
+  },
+   
+   "errors": {
+    "authError": "Неверные имя пользователя или пароль",
+    "emptyChannelName": "Название канала не может быть пустым",
+    "renameChannel": "Ошибка переименования канала:",
+    "removeChannel": "Ошибка удаления канала:"
+  },
+
+
+
+
   "buttons": {
     "brand": "Hexlet Chat",
     "cancel": "Отмена",
@@ -28,18 +69,12 @@
     "plusSign": "+",
     "remove": "Удалить",
     "removeChannel": "Удалить канал",
-    "removeConfirmation": "Вы уверены, что хотите удалить канал?",
+    
     "rename": "Переименовать",
     "renameChannel": "Переименовать канал",
     "required": "Обязательное поле"
   },
-  "errors": {
-    "authError": "Неверные имя пользователя или пароль",
-    "emptyChannelName": "Название канала не может быть пустым",
-    "renameChannel": "Ошибка переименования канала:",
-    "removeChannel": "Ошибка удаления канала:",
-    "networkErrorToast": "Ошибка соединения"
-  },
+ 
   "loginForm": {
     "loginTitle": "Вход в чат",
     "password": "Пароль",
@@ -65,15 +100,6 @@
   },
   "status": {
     "loading": "Загрузка данных..."
-  },
-  "toast": {
-    "channelCreated": "Канал создан",
-    "channelDeleted": "Канал удалён",
-    "channelEmptyNameError": "",
-    "channelExists": "Канал с таким именем уже существует",
-    "channelRenamed": "Канал переименован",
-    "emptyMessage": "Сообщение не должно быть пустым",
-    "loadError": "Ошибка загрузки данных. Попробуйте позже.",
-    "networkError": "Ошибка соединения"
   }
+
 }
