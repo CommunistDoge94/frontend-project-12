@@ -1,15 +1,19 @@
 {
   "modal": {
+    "addChannel": "Добавить канал",
+    "channelName": "Имя канала",
     "removeChannel": "Удалить канал",
     "removeConfirmation": "Вы уверены, что хотите удалить канал?",
     "renameChannel": "Переименовать канал",
 
     "button":{
       "cancel": "Отмена",
+      "confirm": "Подтвердить",
       "remove": "Удалить",
       "rename": "Переименовать"
     },
     "error": {
+      "channelCreation": "",
       "channelNameLength": "От 3 до 20 символов",
       "emptyChannelName": "Название канала не может быть пустым",
       "required": "Обязательное поле"
@@ -22,7 +26,7 @@
   "toast": {
     "channelCreated": "Канал создан",
     "channelDeleted": "Канал удалён",
-    "channelEmptyNameError": "",
+    "channelEmptyNameError": "Название канала не может быть пустым",
     "channelExists": "Канал с таким именем уже существует",
     "channelRenamed": "Канал переименован",
     "emptyMessage": "Сообщение не должно быть пустым",
@@ -32,6 +36,7 @@
    
    "errors": {
     "authError": "Неверные имя пользователя или пароль",
+    "channelCreation": "Ошибка создания канала:",
     "emptyChannelName": "Название канала не может быть пустым",
     "renameChannel": "Ошибка переименования канала:",
     "removeChannel": "Ошибка удаления канала:"
