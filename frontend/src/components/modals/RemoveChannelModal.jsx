@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +14,7 @@ const RemoveChannelModal = () => {
   const dispatch = useDispatch()
   const { closeModal } = useModal()
 
-  const { channelId } = useSelector(state => state.modal.extra || {})
+  const { channelId } = useSelector((state) => state.modal.extra || {})
 
   const [error, setError] = useState('')
 

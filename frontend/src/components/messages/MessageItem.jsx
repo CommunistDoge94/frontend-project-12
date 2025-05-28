@@ -1,4 +1,3 @@
-import React from 'react'
 import filterProfanity from '../../utils/profanityFilter'
 
 const MessageItem = ({ message }) => {

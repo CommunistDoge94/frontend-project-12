@@ -17,6 +17,7 @@ parserOptions:
 plugins:
   - react
   - react-hooks
+  - '@stylistic'
 
 rules:
   semi: ['error', 'never']
@@ -25,12 +26,21 @@ rules:
   'react/prop-types': 0
   'no-console': 0
   'react/react-in-jsx-scope': 0
-  'no-underscore-dangle': [2, { "allow": ["__filename", "__dirname"] }]
-  'react/function-component-definition': [2, { "namedComponents": "arrow-function" }]
-  'react/jsx-filename-extension': [1, { "extensions": [".js", ".jsx"] }]
-  
+  'no-underscore-dangle': [2, { allow: ['__filename', '__dirname'] }]
+  'react/function-component-definition': [2, { namedComponents: 'arrow-function' }]
+  'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }]
   'no-param-reassign': 0
   'no-unused-vars': 1
-  'arrow-parens': ['error', 'as-needed']
-  'brace-style': ['error', '1tbs', { "allowSingleLine": false }]
-  'quote-props': ['error', 'consistent-as-needed']
+
+  '@stylistic/arrow-parens': ['error', 'always']
+  '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }]
+  '@stylistic/quote-props': 'off'
+
+  padding-line-between-statements:
+    - 'error'
+    - blankLine: 'always'
+      prev: 'block'
+      next: '*'
+    - blankLine: 'always'
+      prev: 'block-like'
+      next: '*'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
@@ -30,6 +30,7 @@ const PrivateRoute = ({ children }) => {
 
         setIsValid(true)
       } catch (err) {
+        console.error('Token verification failed:', err)
         localStorage.removeItem('token')
         setIsValid(false)
       }

@@ -16,7 +16,7 @@ const useChannels = () => {
   }
 
   return {
-    addChannel: async name => {
+    addChannel: async (name) => {
       try {
         const newChannel = await axios.post(apiRoutes.createChannel(), { name })
         return { success: true, newChannel }
@@ -26,7 +26,7 @@ const useChannels = () => {
       }
     },
 
-    removeChannel: async id => {
+    removeChannel: async (id) => {
       try {
         await axios.delete(apiRoutes.deleteChannel(id))
         return { success: true }
@@ -46,7 +46,7 @@ const useChannels = () => {
       }
     },
 
-    setActiveChannel: id => dispatch(setActiveChannel(id)),
+    setActiveChannel: (id) => dispatch(setActiveChannel(id)),
   }
 }
 

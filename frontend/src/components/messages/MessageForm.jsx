@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
@@ -9,7 +8,7 @@ import { apiRoutes } from '../../api'
 
 const MessageForm = () => {
   const { t } = useTranslation()
-  const activeChannelId = useSelector(state => state.channels.activeChannelId)
+  const activeChannelId = useSelector((state) => state.channels.activeChannelId)
   const token = localStorage.getItem('token')
 
   return (
@@ -36,13 +35,13 @@ const MessageForm = () => {
             },
             {
               headers: {
-                'Authorization': `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
               },
             },
           )
           resetForm()
-        } catch (err) {
+        } catch (_) {
           toast.error(t('toast.networkError'))
         } finally {
           setSubmitting(false)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   Modal, Button, Form, Alert,
 } from 'react-bootstrap'
@@ -27,7 +27,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
       .required(t('chatPage.required')),
   })
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const token = localStorage.getItem('token')
 
@@ -37,6 +37,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
       if (!filteredName) {
         throw new Error(t('channel.emptyNameError'))
       }
+
       await axios.patch(
         apiRoutes.editChannel(channelId),
         { name: filteredName },
@@ -70,7 +71,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
           <Form.Group controlId="channelName">
             <Form.Control
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               isInvalid={!!error}
               autoFocus
               aria-label="Имя канала"

@@ -11,7 +11,7 @@ const russianDictionary = [
 
 filter.add(russianDictionary)
 
-const filterProfanity = text => {
+const filterProfanity = (text) => {
   if (typeof text !== 'string') return text
   return filter.clean(text, '*')
 }

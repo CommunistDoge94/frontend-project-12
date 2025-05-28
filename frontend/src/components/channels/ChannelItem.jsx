@@ -1,4 +1,3 @@
-import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import useModal from '../../hooks/useModal'
@@ -7,13 +6,13 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
   const { t } = useTranslation()
   const { openModal } = useModal()
 
-  const handleRename = e => {
+  const handleRename = (e) => {
     e.preventDefault()
     e.stopPropagation()
     openModal('renameChannel', { channelId: channel.id, channelName: channel.name })
   }
 
-  const handleRemove = e => {
+  const handleRemove = (e) => {
     e.preventDefault()
     e.stopPropagation()
     openModal('removeChannel', { channelId: channel.id })
@@ -27,7 +26,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
           className="btn p-0 border-0 text-start w-100 text-body fw-normal text-decoration-none text-truncate"
           aria-label={`Канал ${channel.name}`}
           onClick={onClick}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault()
               onClick()
@@ -41,7 +40,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
           </span>
         </button>
         {channel.removable && (
-          <Dropdown onClick={e => e.stopPropagation()}>
+          <Dropdown onClick={(e) => e.stopPropagation()}>
             <Dropdown.Toggle
               variant="secondary"
               size="sm"

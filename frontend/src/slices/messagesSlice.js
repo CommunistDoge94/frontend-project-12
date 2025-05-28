@@ -30,12 +30,12 @@ const messagesSlice = createSlice({
     },
     removeMessagesByChannelId: (state, action) => {
       const channelId = Number(action.payload)
-      state.items = state.items.filter(msg => msg.channelId !== channelId)
+      state.items = state.items.filter((msg) => msg.channelId !== channelId)
     },
   },
-  extraReducers: builder => {
-    builder
-      .addCase(fetchMessages.pending, state => {
+  extraReducers: (builder) => {
+    (builder)
+      .addCase(fetchMessages.pending, (state) => {
         state.loading = true
         state.error = null
       })
@@ -51,5 +51,5 @@ const messagesSlice = createSlice({
 })
 
 export const { addMessage, removeMessagesByChannelId } = messagesSlice.actions
-export const selectMessages = state => state.messages.items
+export const selectMessages = (state) => state.messages.items
 export default messagesSlice.reducer

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -15,8 +14,8 @@ const AddChannelModal = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const { closeModal } = useModal()
-  const show = useSelector(state => state.modal.type === 'addChannel')
-  const channels = useSelector(state => state.channels.items)
+  const show = useSelector((state) => state.modal.type === 'addChannel')
+  const channels = useSelector((state) => state.channels.items)
   const token = localStorage.getItem('token')
 
   const Schema = Yup.object().shape({
@@ -41,7 +40,7 @@ const AddChannelModal = () => {
 
             const filteredName = filterProfanity(rawName)
             const exists = channels.some(
-              ch => ch.name.toLowerCase() === filteredName.toLowerCase(),
+              (ch) => ch.name.toLowerCase() === filteredName.toLowerCase(),
             )
 
             if (exists) {
@@ -54,7 +53,7 @@ const AddChannelModal = () => {
               { name: filteredName },
               {
                 headers: {
-                  'Authorization': `Bearer ${token}`,
+                  Authorization: `Bearer ${token}`,
                   'Content-Type': 'application/json',
                 },
               },

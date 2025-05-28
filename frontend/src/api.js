@@ -6,13 +6,13 @@ export const apiRoutes = {
 
   getChannels: () => `${API_BASE}/channels`,
   createChannel: () => `${API_BASE}/channels`,
-  editChannel: id => `${API_BASE}/channels/${id}`,
-  deleteChannel: id => `${API_BASE}/channels/${id}`,
+  editChannel: (id) => `${API_BASE}/channels/${id}`,
+  deleteChannel: (id) => `${API_BASE}/channels/${id}`,
 
   getMessages: () => `${API_BASE}/messages`,
   createMessage: () => `${API_BASE}/messages`,
-  editMessage: id => `${API_BASE}/messages/${id}`,
-  deleteMessage: id => `${API_BASE}/messages/${id}`,
+  editMessage: (id) => `${API_BASE}/messages/${id}`,
+  deleteMessage: (id) => `${API_BASE}/messages/${id}`,
 
   getCurrentUser: () => `${API_BASE}/users/me`,
 }

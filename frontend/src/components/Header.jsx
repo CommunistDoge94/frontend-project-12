@@ -1,4 +1,3 @@
-import React from 'react'
 import { Navbar, Container, Button } from 'react-bootstrap'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,7 +8,7 @@ const Header = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   const handleLogout = () => {
     dispatch(logoutAction())

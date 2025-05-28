@@ -9,7 +9,7 @@ const modalSlice = createSlice({
       state.type = type
       state.extra = extra
     },
-    closeModal: state => {
+    closeModal: (state) => {
       state.type = null
       state.extra = {}
     },
