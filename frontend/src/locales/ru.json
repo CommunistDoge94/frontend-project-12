@@ -37,6 +37,7 @@
     "authError": "Неверные имя пользователя или пароль",
     "emptyChannelName": "Название канала не может быть пустым",
     "renameChannel": "Ошибка переименования канала:",
+    "removeChannel": "Ошибка удаления канала:",
     "networkErrorToast": "Ошибка соединения"
   },
   "loginForm": {
