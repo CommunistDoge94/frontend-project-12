@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { ErrorBoundary as RollbarErrorBoundary } from '@rollbar/react'
@@ -8,40 +9,63 @@ import LoginPage from './pages/LoginPage.jsx'
 import ChatPage from './pages/ChatPage.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
+import useAuth from './hooks/useAuth.js'
 
-const App = () => (
-  <RollbarErrorBoundary>
-    <div className="d-flex flex-column vh-100">
-      <Header />
-      <div className="flex-grow-1 overflow-hidden">
-        <Routes>
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/"
-            element={(
-              <PrivateRoute>
-                <ChatPage />
-              </PrivateRoute>
-            )}
-          />
-          <Route path="/404" element={<NotFoundPage />} />
-          <Route path="*" element={<Navigate to="/404" replace />} />
-        </Routes>
+const App = () => {
+  const { checkAuth } = useAuth()
+  const [authChecked, setAuthChecked] = useState(false)
+
+  useEffect(() => {
+    const validateAuth = async () => {
+      await checkAuth()
+      setAuthChecked(true)
+    }
+    validateAuth()
+  }, [checkAuth])
+
+  if (!authChecked) {
+    return (
+      <div className="d-flex vh-100 justify-content-center align-items-center">
+        <div className="spinner-border text-primary" role="status" aria-hidden="true"></div>
+        <span className="ms-2">Loading...</span>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </div>
-  </RollbarErrorBoundary>
-)
+    )
+  }
+
+  return (
+    <RollbarErrorBoundary>
+      <div className="d-flex flex-column vh-100">
+        <Header />
+        <div className="flex-grow-1 overflow-hidden">
+          <Routes>
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/"
+              element={(
+                <PrivateRoute>
+                  <ChatPage />
+                </PrivateRoute>
+              )}
+            />
+            <Route path="/404" element={<NotFoundPage />} />
+            <Route path="*" element={<Navigate to="/404" replace />} />
+          </Routes>
+        </div>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </div>
+    </RollbarErrorBoundary>
+  )
+}
 
 export default App
