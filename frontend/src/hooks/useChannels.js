@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
+
 import { apiRoutes } from '../api'
 import { setActiveChannel } from '../slices/channelsSlice'
 
@@ -12,7 +13,7 @@ const useChannels = () => {
   const handleError = (error, defaultMessage) => {
     const message = error.response?.data?.message || defaultMessage
     toast.error(message)
-    console.error('API Error:', error)
+    console.error(t('errors.api'), error)
   }
 
   return {
@@ -22,6 +23,7 @@ const useChannels = () => {
         return { success: true, newChannel }
       }
       catch (error) {
+        console.error(t('errors.addChannel'))
         handleError(error, t('toast.networkError'))
         return { success: false }
       }
@@ -33,6 +35,7 @@ const useChannels = () => {
         return { success: true }
       }
       catch (error) {
+        console.error(t('errors.removeChannel'))
         handleError(error, t('toast.channelRemoveError'))
         return { success: false }
       }
@@ -44,6 +47,7 @@ const useChannels = () => {
         return { success: true }
       }
       catch (error) {
+        console.log(t('errors.renameChannel'))
         handleError(error, t('toast.channelRenameError'))
         return { success: false }
       }

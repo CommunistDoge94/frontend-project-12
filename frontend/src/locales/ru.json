@@ -57,6 +57,7 @@
   },
    
    "errors": {
+    "addChannel": "Ошибка addChannel:",
     "api": "Ошибка API:",
     "authError": "Неверные имя пользователя или пароль",
     "channelCreation": "Ошибка создания канала:",
