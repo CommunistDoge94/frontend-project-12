@@ -3,8 +3,8 @@ env:
   es2021: true
 
 extends:
+  - eslint:recommended
   - plugin:react/recommended
-  - plugin:react-hooks/recommended
 
 parserOptions:
   ecmaFeatures:
@@ -14,21 +14,22 @@ parserOptions:
 
 plugins:
   - react
-  - react-hooks
   - '@stylistic'
+
+settings:
+  react:
+    version: 'detect'
 
 rules:
   semi: ['error', 'never']
-  'import/extensions': 0
-  'import/no-unresolved': 0
-  'react/prop-types': 0
   'no-console': 0
-  'react/react-in-jsx-scope': 0
-  'no-underscore-dangle': [2, { allow: ['__filename', '__dirname'] }]
-  'react/function-component-definition': [2, { namedComponents: 'arrow-function' }]
-  'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }]
   'no-param-reassign': 0
   'no-unused-vars': 1
+  'no-underscore-dangle': [2, { allow: ['__filename', '__dirname'] }]
+  'react/prop-types': 0
+  'react/react-in-jsx-scope': 0
+  'react/function-component-definition': [2, { namedComponents: 'arrow-function' }]
+  'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }]
 
   '@stylistic/arrow-parens': ['error', 'always']
   '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }]
