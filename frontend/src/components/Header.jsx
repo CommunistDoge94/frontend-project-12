@@ -7,13 +7,11 @@ import useAuth from '../hooks/useAuth.js'
 
 const Header = () => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
   const { handleLogout } = useAuth()
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
   const onLogout = () => {
-    handleLogout()
-    navigate('/login')
+    handleLogout()    
   }
 
   return (
