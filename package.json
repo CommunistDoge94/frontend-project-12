@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "start": "start-server -s ./frontend/dist",
-    "install": "npm install"
+    "install": "npm install --force"
   },
   "dependencies": {
     "@hexlet/chat-server": "^2.0.4"
   },
   "engines": {
-    "node": "22"
+    "node": "23"
   }
 }
