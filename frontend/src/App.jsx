@@ -10,6 +10,7 @@ import PrivateRoute from './components/PrivateRoute.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 
 const App = () => {
+
   return (
     <RollbarErrorBoundary>
       <div className="d-flex flex-column vh-100">
@@ -20,11 +21,11 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route
               path="/"
-              element={(
+              element={
                 <PrivateRoute>
                   <ChatPage />
                 </PrivateRoute>
-              )}
+              }
             />
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/404" replace />} />
