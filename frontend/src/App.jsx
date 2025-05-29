@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { ErrorBoundary as RollbarErrorBoundary } from '@rollbar/react'
@@ -9,15 +8,8 @@ import LoginPage from './pages/LoginPage.jsx'
 import ChatPage from './pages/ChatPage.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
-import useAuth from './hooks/useAuth.js'
 
 const App = () => {
-  const { checkAuth } = useAuth()
-
-  useEffect(() => {
-    checkAuth()
-  }, [checkAuth])
-  
   return (
     <RollbarErrorBoundary>
       <div className="d-flex flex-column vh-100">
