@@ -46,7 +46,7 @@ const AddChannelModal = () => {
       const data = await postApi(
         apiRoutes.createChannel(),
         { name: filteredName },
-        getAuthHeader(token)
+        getAuthHeader(token),
       )
 
       dispatch(

@@ -11,7 +11,7 @@ const Header = () => {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
   const onLogout = () => {
-    handleLogout()    
+    handleLogout()
   }
 
   return (

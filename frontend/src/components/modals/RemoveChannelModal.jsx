@@ -21,21 +21,21 @@ const RemoveChannelModal = () => {
   }
 
   const handleRemove = async () => {
-  const token = getToken()
+    const token = getToken()
 
-  try {
-    await deleteApi(apiRoutes.deleteChannel(channelId), getAuthHeader(token))
+    try {
+      await deleteApi(apiRoutes.deleteChannel(channelId), getAuthHeader(token))
 
-    dispatch(removeChannel(channelId))
-    dispatch(removeMessagesByChannelId(channelId))
-    toast.success(t('toast.channelDeleted'))
-    closeModal()
+      dispatch(removeChannel(channelId))
+      dispatch(removeMessagesByChannelId(channelId))
+      toast.success(t('toast.channelDeleted'))
+      closeModal()
+    }
+    catch (err) {
+      console.error(t('errors.removeChannel'), err)
+      toast.error(t('toast.networkError'))
+    }
   }
-  catch (err) {
-    console.error(t('errors.removeChannel'), err)
-    toast.error(t('toast.networkError'))
-  }
-}
 
   return (
     <Modal show centered onHide={handleClose}>

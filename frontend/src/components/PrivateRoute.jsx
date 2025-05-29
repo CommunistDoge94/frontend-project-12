@@ -26,7 +26,8 @@ const PrivateRoute = ({ children }) => {
         await dispatch(fetchChannels()).unwrap()
         await dispatch(fetchMessages()).unwrap()
         setIsValid(true)
-      } catch (err) {
+      }
+      catch (err) {
         console.error(t('errors.verify'), err)
         setIsValid(false)
       }
