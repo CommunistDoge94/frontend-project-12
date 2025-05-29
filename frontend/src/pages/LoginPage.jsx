@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import { useNavigate, Link } from 'react-router-dom'
-import axios from 'axios'
 import { useTranslation } from 'react-i18next'
 
 import useAuth from '../hooks/useAuth'
 import { apiRoutes } from '../api/api'
+import { postApi } from '../api/createApi'
 
 const LoginPage = () => {
   const { t } = useTranslation()

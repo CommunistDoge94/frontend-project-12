@@ -1,12 +1,12 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 
 import useAuth from '../hooks/useAuth'
 import { apiRoutes } from '../api/api'
+import { postApi } from '../api/createApi'
 
 const SignupPage = () => {
   const { t } = useTranslation()
