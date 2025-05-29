@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
+
 import useAuth from '../hooks/useAuth'
 import { apiRoutes } from '../api'
 
@@ -34,7 +35,7 @@ const LoginPage = () => {
                   setAuthError(t('errors.authError'))
                 }
                 else {
-                  setAuthError(t('errors.networkErrorToast'))
+                  setAuthError(t('toast.networkError'))
                 }
               }
               finally {
@@ -54,10 +55,10 @@ const LoginPage = () => {
                 </div>
                 {authError && <div className="alert alert-danger">{authError}</div>}
                 <button type="submit" disabled={isSubmitting} className="btn btn-primary w-100 mb-3">
-                  {t('buttons.login')}
+                  {t('loginForm.button.login')}
                 </button>
                 <div className="text-center">
-                  <Link to="/signup">{t('buttons.signup')}</Link>
+                  <Link to="/signup">{t('loginForm.button.signup')}</Link>
                 </div>
               </Form>
             )}

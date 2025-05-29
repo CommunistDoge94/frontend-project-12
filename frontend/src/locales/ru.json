@@ -53,7 +53,8 @@
     "channelRenamed": "Канал переименован",
     "emptyMessage": "Сообщение не должно быть пустым",
     "loadError": "Ошибка загрузки данных. Попробуйте позже.",
-    "networkError": "Ошибка соединения"
+    "networkError": "Ошибка соединения",
+    "registrationFailed": "Регистрация не удалась"
   },
    
    "errors": {
@@ -68,77 +69,59 @@
     "verify": "Ошибка верификации или загрузки:"
   },
 
-    "inStatus": {
-      "loading": "Загрузка..."
-    },
-
-
-
-  
-
-
-
-
-  "buttons": {
-    "brand": "Hexlet Chat",
-    "cancel": "Отмена",
-    "confirm": "Подтвердить",
-    "goHome": "На главную",
-    "login": "Войти",
-    "logout": "Выйти",
-    "register": "Регистрация",
-    "registering": "Зарегистрироваться",
-    "remove": "Удалить",
-    "rename": "Переименовать",
-    "send": "Отправить",
-    "signup": "Регистрация"
+  "inStatus": {
+    "loading": "Загрузка...",
+    "loadingData": "Загрузка данных..."
   },
+
   "chatPage": {
-    "addChannel": "Добавить канал",
     "channels": "Каналы",
-    "channelName": "Имя канала",
-    "channelSettings": "Управление каналом",
-    "chatNameLengthError": "От 3 до 20 символов",
-    "enterMessage": "Введите сообщение",
-    "messages": "Сообщения",
     "messagesCount_one": "{{count}} сообщение",
     "messagesCount_few": "{{count}} сообщения",
     "messagesCount_many": "{{count}} сообщений",
     "messagesCount_other": "{{count}} сообщений",
-    "plusSign": "+",
-    "remove": "Удалить",
-    "removeChannel": "Удалить канал",
-    
-    "rename": "Переименовать",
-    "renameChannel": "Переименовать канал",
-    "required": "Обязательное поле"
+    "plusSign": "+"
   },
- 
+  
   "loginForm": {
     "loginTitle": "Вход в чат",
     "password": "Пароль",
-    "username": "Ваш ник"
+    "username": "Ваш ник",
+
+    "button": {
+      "login": "Войти",
+      "signup": "Регистрация"
+    }
   },
+
   "notFoundPage": {
-    "notFound": "Ой-яй-яй! Страница не найдена."
+    "notFound": "Ой-яй-яй! Страница не найдена.",
+    "goHome": "На главную"   
   },
-  "profanity": {
-    "error": "Нельзя создавать матерные названия!"
-  },
-  "signupForm": {
+
+  "signUpForm": {
     "confirmPassword": "Подтвердите пароль",
     "password": "Пароль",
-    "passwordMinError": "Не менее 6 символов",
-    "passwordMismatch": "Пароли должны совпадать",
     "registration": "Регистрация",
-    "requiredField": "Не должно быть пустым",
-    "userExistsError": "Такой пользователь уже существует",
     "username": "Имя пользователя",
-    "usernameMaxError": "От 3 до 20 символов",
-    "usernameMinError": "От 3 до 20 символов"
-  },
-  "status": {
-    "loading": "Загрузка данных..."
-  }
 
+    "button": {
+      "cancel": "Отмена",
+      "register": "Регистрация",
+      "registering": "Зарегистрироваться"
+    },
+
+    "error": {
+      "passwordMinLength": "Не менее 6 символов",
+      "passwordMismatch": "Пароли должны совпадать",
+      "required": "Не должно быть пустым",
+      "userExists": "Такой пользователь уже существует",
+      "usernameMaxLength": "От 3 до 20 символов",
+      "usernameMinLength": "От 3 до 20 символов"
+    }
+  },
+  
+    "profanity": {
+      "error": "Нельзя создавать матерные названия!"
+  }
 }

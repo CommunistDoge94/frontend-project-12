@@ -1,11 +1,10 @@
-import {
-  Formik, Field, Form, ErrorMessage,
-} from 'formik'
+import { Formik, Field, Form, ErrorMessage } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
+
 import useAuth from '../hooks/useAuth'
 import { apiRoutes } from '../api'
 
@@ -16,15 +15,15 @@ const SignupPage = () => {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, t('signupForm.usernameMinError'))
-      .max(20, t('signupForm.usernameMaxError'))
-      .required(t('signupForm.requiredField')),
+      .min(3, t('signupForm.error.usernameMinLength'))
+      .max(20, t('signupForm.error.usernameMaxLength'))
+      .required(t('signupForm.error.required')),
     password: Yup.string()
-      .min(6, t('signupForm.passwordMinError'))
-      .required(t('signupForm.requiredField')),
+      .min(6, t('signupForm.error.passwordMinLength'))
+      .required(t('signupForm.error.required')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], t('signupForm.passwordMismatch'))
-      .required(t('signupForm.requiredField')),
+      .oneOf([Yup.ref('password'), null], t('signupForm.error.passwordMismatch'))
+      .required(t('signupForm.error.required')),
   })
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
@@ -39,10 +38,10 @@ const SignupPage = () => {
     }
     catch (error) {
       if (error.response?.status === 409) {
-        setErrors({ username: t('signupForm.userExistsError') })
+        setErrors({ username: t('signupForm.error.userExists') })
       }
       else {
-        toast.error(t('registrationFailed'))
+        toast.error(t('toast.registrationFailed'))
       }
     }
     finally {
@@ -79,10 +78,10 @@ const SignupPage = () => {
                   <ErrorMessage name="confirmPassword" component="div" className="text-danger" />
                 </div>
                 <button type="submit" className="btn btn-success w-100 mb-3" disabled={isSubmitting}>
-                  {isSubmitting ? t('buttons.registering') : t('buttons.register')}
+                  {isSubmitting ? t('signupForm.button.registering') : t('signupForm.button.register')}
                 </button>
                 <button type="button" className="btn btn-secondary w-100" onClick={() => navigate('/login')}>
-                  {t('buttons.cancel')}
+                  {t('signupForm.button.cancel')}
                 </button>
               </Form>
             )}

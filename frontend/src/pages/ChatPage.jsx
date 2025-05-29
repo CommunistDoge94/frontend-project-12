@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+
 import { fetchMessages, selectMessages } from '../slices/messagesSlice'
 import { fetchChannels, selectChannels, selectActiveChannelId } from '../slices/channelsSlice'
 import useSocket from '../hooks/useSocket'
@@ -38,7 +39,7 @@ const ChatPage = () => {
 
   const handleAddChannel = () => dispatch(openModal({ type: 'addChannel' }))
 
-  if (channelsLoading || messagesLoading) return <p>{t('status.loading')}</p>
+  if (channelsLoading || messagesLoading) return <p>{t('inStatus.loadingData')}</p>
   if (channelsError || messagesError) return null
 
   return (
