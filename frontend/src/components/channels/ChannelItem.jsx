@@ -41,7 +41,7 @@ const ChannelItem = ({ channel, isActive, onClick }) => {
           </span>
         </button>
         {channel.removable && (
-          <Dropdown onClick={e => e.stopPropagation()}>
+          <Dropdown>
             <Dropdown.Toggle
               variant="secondary"
               size="sm"
