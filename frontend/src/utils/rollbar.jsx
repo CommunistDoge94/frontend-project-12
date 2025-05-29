@@ -1,4 +1,4 @@
-import { Provider as RollbarProvider } from '@rollbar/react';
+import { Provider as RollbarProvider } from '@rollbar/react'
 
 const rollbarConfig = {
   accessToken: import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN,

@@ -30,13 +30,13 @@ const PrivateRoute = ({ children }) => {
         console.error(t('errors.verify'), err)
         setIsValid(false)
       }
-    };
+    }
 
     verifyAndLoad()
   }, [dispatch, isLoggedIn, checkAuth, t])
 
   if (isValid === null) return <div>{t('inStatus.loading')}</div>
   return isValid ? children : <Navigate to="/login" replace />
-};
+}
 
 export default PrivateRoute
