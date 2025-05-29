@@ -8,18 +8,12 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import store from './store'
 import i18n from './i18n'
-
-const rollbarConfig = {
-  accessToken: 'df1d77e71336453697b620bf906848d475243c6639f7c8ef05f18f549ed12f91706af7edd7ecc23211e8c49daffe870f',
-  environment: 'production',
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-}
+import { Rollbar } from './utils/rollbar'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <RollbarProvider config={rollbarConfig}>
+    <Rollbar>
       <I18nextProvider i18n={i18n}>
         <Provider store={store}>
           <BrowserRouter>
@@ -27,6 +21,6 @@ root.render(
           </BrowserRouter>
         </Provider>
       </I18nextProvider>
-    </RollbarProvider>
+    </Rollbar>
   </React.StrictMode>,
 )
