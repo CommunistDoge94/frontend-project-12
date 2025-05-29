@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "start-server -s ./frontend/dist"
+    "start": "start-server -s ./frontend/dist",
+    "install": "cd frontend && npm install"
   },
   "dependencies": {
     "@hexlet/chat-server": "^2.0.4"
