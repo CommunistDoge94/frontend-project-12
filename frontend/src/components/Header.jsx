@@ -19,6 +19,9 @@ const Header = () => {
   return (
     <Navbar bg="light" fixed="top" className="py-1 shadow-sm">
       <Container>
+        <button onClick={() => { throw new Error('Test Error'); }}>
+      Сломать приложение
+        </button>
         <Navbar.Brand as={NavLink} to="/">
           {t('header.brand')}
         </Navbar.Brand>
