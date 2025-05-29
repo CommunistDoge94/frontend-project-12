@@ -99,7 +99,7 @@
     "goHome": "На главную"   
   },
 
-  "signUpForm": {
+  "signupForm": {
     "confirmPassword": "Подтвердите пароль",
     "password": "Пароль",
     "registration": "Регистрация",
