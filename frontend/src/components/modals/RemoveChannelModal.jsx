@@ -2,7 +2,6 @@ import { Modal, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import axios from 'axios'
 
 import { removeChannel } from '../../slices/channelsSlice'
 import { removeMessagesByChannelId } from '../../slices/messagesSlice'
