@@ -39,4 +39,15 @@ export const patchApi = async (url, data, headers = {}) => {
   }
 }
 
+export const getApi = async (url, headers = {}) => {
+  try {
+    const response = await apiClient.get(url, { headers })
+    return response.data
+  } catch (error) {
+    console.error(t('errors.api'), error)
+    toast.error(t('toast.networkError'))
+    throw error
+  }
+}
+
 export default apiClient

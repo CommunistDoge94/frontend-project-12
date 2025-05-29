@@ -24,9 +24,9 @@ const LoginPage = () => {
             onSubmit={async (values, { setSubmitting }) => {
               try {
                 setAuthError(null)
-                const response = await axios.post(apiRoutes.login(), values)
-                const { token, username } = response.data
+                const response = await postApi(apiRoutes.login(), values)
 
+                const { token, username } = response
                 handleLogin(token, username)
                 navigate('/')
               }

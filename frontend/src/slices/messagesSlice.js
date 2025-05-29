@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { getApi } from '../api/createApi'
 import { apiRoutes } from '../api/api'
 
 export const fetchMessages = createAsyncThunk(
@@ -7,10 +7,9 @@ export const fetchMessages = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get(apiRoutes.getMessages(), {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      return response.data
+      const response = await getApi(apiRoutes.getMessages(), { Authorization: `Bearer ${token}` })
+
+      return response
     }
     catch (error) {
       return rejectWithValue(error.message)

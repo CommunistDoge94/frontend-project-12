@@ -28,7 +28,7 @@ const SignupPage = () => {
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const { data } = await axios.post(apiRoutes.signup(), {
+      const data = await postApi(apiRoutes.signup(), {
         username: values.username,
         password: values.password,
       })

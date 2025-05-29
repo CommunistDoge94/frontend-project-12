@@ -1,8 +1,9 @@
 import { useDispatch } from 'react-redux'
-import axios from 'axios'
 
+import { getApi } from '../api/createApi'
 import { apiRoutes } from '../api/api'
 import { loginSuccess, logout } from '../slices/authSlice'
+import { getAuthHeader } from '../utils/auth'
 
 const useAuth = () => {
   const dispatch = useDispatch()
@@ -12,9 +13,8 @@ const useAuth = () => {
     if (!token) return false
 
     try {
-      await axios.get(apiRoutes.getChannels(), {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      await getApi(apiRoutes.getChannels(), getAuthHeader(token))
+
       return true
     }
     catch (err) {

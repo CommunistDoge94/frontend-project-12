@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import axios from 'axios'
 
 import { apiRoutes } from '../api/api'
 import { setActiveChannel } from '../slices/channelsSlice'
+import { postApi, deleteApi, patchApi } from '../api/createApi'
 
 const useChannels = () => {
   const dispatch = useDispatch()
@@ -19,7 +19,7 @@ const useChannels = () => {
   return {
     addChannel: async (name) => {
       try {
-        const newChannel = await axios.post(apiRoutes.createChannel(), { name })
+        const newChannel = await postApi(apiRoutes.createChannel(), { name })
         return { success: true, newChannel }
       }
       catch (error) {
@@ -31,7 +31,7 @@ const useChannels = () => {
 
     removeChannel: async (id) => {
       try {
-        await axios.delete(apiRoutes.deleteChannel(id))
+        await deleteApi(apiRoutes.deleteChannel(id))
         return { success: true }
       }
       catch (error) {
@@ -43,7 +43,7 @@ const useChannels = () => {
 
     renameChannel: async (id, name) => {
       try {
-        await axios.patch(apiRoutes.editChannel(id), { name })
+        await patchApi(apiRoutes.editChannel(id), { name })
         return { success: true }
       }
       catch (error) {
