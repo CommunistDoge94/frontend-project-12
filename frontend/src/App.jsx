@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { ErrorBoundary as RollbarErrorBoundary } from '@rollbar/react'
-import { useTranslation } from 'react-i18next'
 
 import Header from './components/Header.jsx'
 import SignupPage from './pages/SignupPage.jsx'
@@ -21,6 +20,7 @@ const App = () => {
       await checkAuth()
       setAuthChecked(true)
     }
+
     validateAuth()
   }, [checkAuth])
 
