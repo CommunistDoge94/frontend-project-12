@@ -39,7 +39,7 @@ const MessageForm = () => {
           channelId: activeChannelId,
           username,
         },
-        getAuthHeader(token)
+        getAuthHeader(token),
       ),
       resetForm()
     }
