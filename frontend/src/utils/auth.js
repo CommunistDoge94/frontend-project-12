@@ -1,6 +1,5 @@
 const getToken = () => localStorage.getItem('token')
 
-
 const getAuthHeader = () => {
   const token = getToken()
   return {

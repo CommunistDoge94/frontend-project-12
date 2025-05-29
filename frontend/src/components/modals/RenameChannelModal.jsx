@@ -28,7 +28,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
     const token = getToken()
     try {
       const filteredName = filterProfanity(name.trim())
-      
+
       if (!filteredName) {
         setFieldError('name', t('modal.error.emptyChannelName'))
         return
@@ -49,9 +49,8 @@ const RenameChannelModal = ({ channelId, currentName }) => {
     catch (err) {
       console.error(t('errors.renameChannel'), err)
       toast.error(t('toast.networkError'))
-    } 
-    finally
-    {
+    }
+    finally {
       setSubmitting(false)
     }
   }

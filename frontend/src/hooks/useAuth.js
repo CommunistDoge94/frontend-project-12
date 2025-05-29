@@ -16,7 +16,8 @@ const useAuth = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       return true
-    } catch (err) {
+    }
+    catch (err) {
       console.error(err)
       localStorage.removeItem('token')
       dispatch(logout())

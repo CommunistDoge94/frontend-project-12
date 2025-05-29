@@ -17,8 +17,8 @@ const AddChannelModal = () => {
   const dispatch = useDispatch()
   const { closeModal } = useModal()
 
-  const show = useSelector((state) => state.modal.type === 'addChannel')
-  const channels = useSelector((state) => state.channels.items)
+  const show = useSelector(state => state.modal.type === 'addChannel')
+  const channels = useSelector(state => state.channels.items)
   const token = getToken()
 
   const validationSchema = Yup.object().shape({
@@ -35,7 +35,7 @@ const AddChannelModal = () => {
       const filteredName = filterProfanity(rawName)
 
       const exists = channels.some(
-        (ch) => ch.name.toLowerCase() === filteredName.toLowerCase(),
+        ch => ch.name.toLowerCase() === filteredName.toLowerCase(),
       )
 
       if (exists) {
