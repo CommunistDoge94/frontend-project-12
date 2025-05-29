@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
-import axios from 'axios'
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik'
 
 import { renameChannel as renameChannelAction } from '../../slices/channelsSlice'
@@ -11,6 +10,7 @@ import filterProfanity from '../../utils/profanityFilter'
 import useModal from '../../hooks/useModal'
 import { apiRoutes } from '../../api/api'
 import { getAuthHeader, getToken } from '../../utils/auth'
+import { patchApi } from '../../api/createApi'
 
 const RenameChannelModal = ({ channelId, currentName }) => {
   const { t } = useTranslation()
@@ -34,13 +34,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
         return
       }
 
-      await axios.patch(
-        apiRoutes.editChannel(channelId),
-        { name: filteredName },
-        {
-          headers: getAuthHeader(token),
-        },
-      )
+      await patchApi(apiRoutes.editChannel(channelId), { name: filteredName }, getAuthHeader(token))
 
       toast.success(t('toast.channelRenamed'))
       dispatch(renameChannelAction({ id: channelId, name: filteredName }))

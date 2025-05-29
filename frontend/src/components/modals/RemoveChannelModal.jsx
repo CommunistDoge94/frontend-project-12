@@ -9,6 +9,7 @@ import { removeMessagesByChannelId } from '../../slices/messagesSlice'
 import useModal from '../../hooks/useModal'
 import { apiRoutes } from '../../api/api'
 import { getToken, getAuthHeader } from '../../utils/auth'
+import { deleteApi } from '../../api/createApi'
 
 const RemoveChannelModal = () => {
   const { t } = useTranslation()
@@ -21,23 +22,21 @@ const RemoveChannelModal = () => {
   }
 
   const handleRemove = async () => {
-    const token = getToken()
+  const token = getToken()
 
-    try {
-      await axios.delete(apiRoutes.deleteChannel(channelId), {
-        headers: getAuthHeader(token),
-      })
+  try {
+    await deleteApi(apiRoutes.deleteChannel(channelId), getAuthHeader(token))
 
-      dispatch(removeChannel(channelId))
-      dispatch(removeMessagesByChannelId(channelId))
-      toast.success(t('toast.channelDeleted'))
-      closeModal()
-    }
-    catch (err) {
-      console.error(t('errors.removeChannel'), err)
-      toast.error(t('toast.networkError'))
-    }
+    dispatch(removeChannel(channelId))
+    dispatch(removeMessagesByChannelId(channelId))
+    toast.success(t('toast.channelDeleted'))
+    closeModal()
   }
+  catch (err) {
+    console.error(t('errors.removeChannel'), err)
+    toast.error(t('toast.networkError'))
+  }
+}
 
   return (
     <Modal show centered onHide={handleClose}>

@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
-import axios from 'axios'
 import { toast } from 'react-toastify'
 
 import filterProfanity from '../../utils/profanityFilter'
 import { apiRoutes } from '../../api/api'
 import { getToken, getAuthHeader } from '../../utils/auth'
+import { postApi } from '../../api/createApi'
 
 const MessageForm = () => {
   const { t } = useTranslation()
@@ -32,16 +32,14 @@ const MessageForm = () => {
     }
 
     try {
-      await axios.post(
+      await postApi(
         apiRoutes.createMessage(),
         {
           body: filteredText,
           channelId: activeChannelId,
           username,
         },
-        {
-          headers: getAuthHeader(token),
-        },
+        getAuthHeader(token)
       )
       resetForm()
     }

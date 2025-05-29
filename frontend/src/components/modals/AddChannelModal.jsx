@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Formik, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import axios from 'axios'
 import { toast } from 'react-toastify'
 
 import { apiRoutes } from '../../api/api'
@@ -11,6 +10,7 @@ import useModal from '../../hooks/useModal'
 import filterProfanity from '../../utils/profanityFilter'
 import { addChannel } from '../../slices/channelsSlice'
 import { getToken, getAuthHeader } from '../../utils/auth'
+import { postApi } from '../../api/createApi'
 
 const AddChannelModal = () => {
   const { t } = useTranslation()
@@ -43,17 +43,15 @@ const AddChannelModal = () => {
         return
       }
 
-      const response = await axios.post(
+      const data = await postApi(
         apiRoutes.createChannel(),
         { name: filteredName },
-        {
-          headers: getAuthHeader(token),
-        },
+        getAuthHeader(token)
       )
 
       dispatch(
         addChannel({
-          id: Number(response.data.id),
+          id: Number(data.id),
           name: filteredName,
           removable: true,
           isOwned: true,
