@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { apiRoutes } from '../api'
+import { apiRoutes } from '../api/api'
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',

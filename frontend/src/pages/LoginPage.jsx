@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useTranslation } from 'react-i18next'
 
 import useAuth from '../hooks/useAuth'
-import { apiRoutes } from '../api'
+import { apiRoutes } from '../api/api'
 
 const LoginPage = () => {
   const { t } = useTranslation()

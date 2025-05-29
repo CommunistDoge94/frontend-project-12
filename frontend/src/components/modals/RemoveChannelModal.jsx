@@ -7,7 +7,7 @@ import axios from 'axios'
 import { removeChannel } from '../../slices/channelsSlice'
 import { removeMessagesByChannelId } from '../../slices/messagesSlice'
 import useModal from '../../hooks/useModal'
-import { apiRoutes } from '../../api'
+import { apiRoutes } from '../../api/api'
 import { getToken, getAuthHeader } from '../../utils/auth'
 
 const RemoveChannelModal = () => {

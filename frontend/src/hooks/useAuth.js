@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 
-import { apiRoutes } from '../api'
+import { apiRoutes } from '../api/api'
 import { loginSuccess, logout } from '../slices/authSlice'
 
 const useAuth = () => {

@@ -9,7 +9,7 @@ import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik'
 import { renameChannel as renameChannelAction } from '../../slices/channelsSlice'
 import filterProfanity from '../../utils/profanityFilter'
 import useModal from '../../hooks/useModal'
-import { apiRoutes } from '../../api'
+import { apiRoutes } from '../../api/api'
 import { getAuthHeader, getToken } from '../../utils/auth'
 
 const RenameChannelModal = ({ channelId, currentName }) => {

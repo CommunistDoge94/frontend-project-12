@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-import { apiRoutes } from '../../api'
+import { apiRoutes } from '../../api/api'
 import useModal from '../../hooks/useModal'
 import filterProfanity from '../../utils/profanityFilter'
 import { addChannel } from '../../slices/channelsSlice'

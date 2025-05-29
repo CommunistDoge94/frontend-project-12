@@ -5,7 +5,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 
 import filterProfanity from '../../utils/profanityFilter'
-import { apiRoutes } from '../../api'
+import { apiRoutes } from '../../api/api'
 import { getToken, getAuthHeader } from '../../utils/auth'
 
 const MessageForm = () => {

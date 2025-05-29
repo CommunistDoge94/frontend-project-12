@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 
-import { apiRoutes } from '../api'
+import { apiRoutes } from '../api/api'
 import { setActiveChannel } from '../slices/channelsSlice'
 
 const useChannels = () => {

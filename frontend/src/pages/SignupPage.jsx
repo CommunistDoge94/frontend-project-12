@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 
 import useAuth from '../hooks/useAuth'
-import { apiRoutes } from '../api'
+import { apiRoutes } from '../api/api'
 
 const SignupPage = () => {
   const { t } = useTranslation()
