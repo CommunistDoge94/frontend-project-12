@@ -13,26 +13,11 @@ import useAuth from './hooks/useAuth.js'
 
 const App = () => {
   const { checkAuth } = useAuth()
-  const [authChecked, setAuthChecked] = useState(false)
 
   useEffect(() => {
-    const validateAuth = async () => {
-      await checkAuth()
-      setAuthChecked(true)
-    }
-
-    validateAuth()
+    checkAuth()
   }, [checkAuth])
-
-  if (!authChecked) {
-    return (
-      <div className="d-flex vh-100 justify-content-center align-items-center">
-        <div className="spinner-border text-primary" role="status" aria-hidden="true"></div>
-        <span className="ms-2">Loading...</span>
-      </div>
-    )
-  }
-
+  
   return (
     <RollbarErrorBoundary>
       <div className="d-flex flex-column vh-100">
