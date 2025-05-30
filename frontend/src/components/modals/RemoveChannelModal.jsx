@@ -6,25 +6,23 @@ import { toast } from 'react-toastify'
 import { removeChannel } from '../../slices/channelsSlice'
 import { removeMessagesByChannelId } from '../../slices/messagesSlice'
 import useModal from '../../hooks/useModal'
-import { apiRoutes } from '../../api/api'
-import { getToken, getAuthHeader } from '../../utils/auth'
-import { deleteApi } from '../../api/createApi'
+import { useDeleteChannelMutation } from '../../api/createApi'
 
 const RemoveChannelModal = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const { closeModal } = useModal()
-  const { channelId } = useSelector(state => state.modal.extra || {})
+  const { channelId } = useSelector((state) => state.modal.extra || {})
+
+  const [deleteChannel] = useDeleteChannelMutation()
 
   const handleClose = () => {
     closeModal()
   }
 
   const handleRemove = async () => {
-    const token = getToken()
-
     try {
-      await deleteApi(apiRoutes.deleteChannel(channelId), getAuthHeader(token))
+      await deleteChannel(channelId).unwrap()
 
       dispatch(removeChannel(channelId))
       dispatch(removeMessagesByChannelId(channelId))

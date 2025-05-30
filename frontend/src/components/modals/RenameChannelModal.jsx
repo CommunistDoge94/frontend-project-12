@@ -8,9 +8,7 @@ import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik'
 import { renameChannel as renameChannelAction } from '../../slices/channelsSlice'
 import filterProfanity from '../../utils/profanityFilter'
 import useModal from '../../hooks/useModal'
-import { apiRoutes } from '../../api/api'
-import { getAuthHeader, getToken } from '../../utils/auth'
-import { patchApi } from '../../api/createApi'
+import { useEditChannelMutation } from '../../api/createApi'
 
 const RenameChannelModal = ({ channelId, currentName }) => {
   const { t } = useTranslation()
@@ -24,18 +22,20 @@ const RenameChannelModal = ({ channelId, currentName }) => {
       .required(t('modal.error.required')),
   })
 
+  const [editChannel] = useEditChannelMutation()
+
   const handleSubmit = async ({ name }, { setSubmitting, setFieldError }) => {
-    const token = getToken()
+    const filteredName = filterProfanity(name.trim())
+
+    if (!filteredName) {
+      setFieldError('name', t('modal.error.emptyChannelName'))
+      setSubmitting(false)
+      return
+    }
+
     try {
-      const filteredName = filterProfanity(name.trim())
-
-      if (!filteredName) {
-        setFieldError('name', t('modal.error.emptyChannelName'))
-        return
-      }
-
-      await patchApi(apiRoutes.editChannel(channelId), { name: filteredName }, getAuthHeader(token))
-
+      await editChannel({ id: channelId, name: filteredName }).unwrap()
+      
       toast.success(t('toast.channelRenamed'))
       dispatch(renameChannelAction({ id: channelId, name: filteredName }))
       closeModal()

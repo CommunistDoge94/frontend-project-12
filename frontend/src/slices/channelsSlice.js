@@ -1,20 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiRoutes } from '../api/api'
-import { getApi } from '../api/createApi'
+import { apiSlice } from '../api/createApi'
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
-      const token = localStorage.getItem('token')
-      const response = await getApi(apiRoutes.getChannels(), { Authorization: `Bearer ${token}` })
-
+      const response = await dispatch(apiSlice.endpoints.getChannels.initiate()).unwrap()
       return response
     }
     catch (error) {
       return rejectWithValue(error.message)
     }
-  },
+  }
 )
 
 const channelsSlice = createSlice({
@@ -90,7 +87,5 @@ const channelsSlice = createSlice({
 
 export const selectChannels = state => state.channels.items
 export const selectActiveChannelId = state => state.channels.activeChannelId
-export const {
-  addChannel, setActiveChannel, removeChannel, renameChannel,
-} = channelsSlice.actions
+export const { addChannel, setActiveChannel, removeChannel, renameChannel } = channelsSlice.actions
 export default channelsSlice.reducer

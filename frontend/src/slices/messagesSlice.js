@@ -1,20 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { getApi } from '../api/createApi'
-import { apiRoutes } from '../api/api'
+import { apiSlice } from '../api/createApi'
 
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
-      const token = localStorage.getItem('token')
-      const response = await getApi(apiRoutes.getMessages(), { Authorization: `Bearer ${token}` })
-
+      const response = await dispatch(apiSlice.endpoints.getMessages.initiate()).unwrap()
       return response
     }
     catch (error) {
       return rejectWithValue(error.message)
     }
-  },
+  }
 )
 
 const messagesSlice = createSlice({
@@ -34,7 +31,7 @@ const messagesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    (builder)
+    builder
       .addCase(fetchMessages.pending, (state) => {
         state.loading = true
         state.error = null

@@ -1,16 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiRoutes } from '../api/api'
-import { getApi } from '../api/createApi'
-import { getAuthHeader } from '../utils/auth'
+import { apiSlice } from '../api/createApi'
 
 export const checkAuth = createAsyncThunk(
   'auth/checkAuth',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     const token = localStorage.getItem('token')
     if (!token) return rejectWithValue('No token')
 
     try {
-      await getApi(apiRoutes.getChannels(), getAuthHeader(token))
+      await dispatch(apiSlice.endpoints.getChannels.initiate()).unwrap()
       return {
         token,
         username: localStorage.getItem('username'),
@@ -21,7 +19,7 @@ export const checkAuth = createAsyncThunk(
       localStorage.removeItem('username')
       return rejectWithValue(error)
     }
-  },
+  }
 )
 
 const initialState = {

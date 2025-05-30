@@ -5,12 +5,10 @@ import { Formik, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 
-import { apiRoutes } from '../../api/api'
 import useModal from '../../hooks/useModal'
 import filterProfanity from '../../utils/profanityFilter'
 import { addChannel } from '../../slices/channelsSlice'
-import { getToken, getAuthHeader } from '../../utils/auth'
-import { postApi } from '../../api/createApi'
+import { useCreateChannelMutation } from '../../api/createApi'
 
 const AddChannelModal = () => {
   const { t } = useTranslation()
@@ -19,7 +17,6 @@ const AddChannelModal = () => {
 
   const show = useSelector(state => state.modal.type === 'addChannel')
   const channels = useSelector(state => state.channels.items)
-  const token = getToken()
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -29,33 +26,32 @@ const AddChannelModal = () => {
       .required(t('modal.error.required')),
   })
 
+  const [createChannel] = useCreateChannelMutation()
+
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    const rawName = values.name.trim()
+    const filteredName = filterProfanity(rawName)
+
+    const exists = channels.some(
+      ch => ch.name.toLowerCase() === filteredName.toLowerCase()
+    )
+
+    if (exists) {
+      toast.error(t('toast.channelExists'))
+      setSubmitting(false)
+      return
+    }
+
     try {
-      const rawName = values.name.trim()
-      const filteredName = filterProfanity(rawName)
-
-      const exists = channels.some(
-        ch => ch.name.toLowerCase() === filteredName.toLowerCase(),
-      )
-
-      if (exists) {
-        toast.error(t('toast.channelExists'))
-        return
-      }
-
-      const data = await postApi(
-        apiRoutes.createChannel(),
-        { name: filteredName },
-        getAuthHeader(token),
-      )
+      const result = await createChannel({ name: filteredName }).unwrap()
 
       dispatch(
         addChannel({
-          id: Number(data.id),
+          id: Number(result.id),
           name: filteredName,
           removable: true,
           isOwned: true,
-        }),
+        })
       )
 
       toast.success(t('toast.channelCreated'))
@@ -64,7 +60,7 @@ const AddChannelModal = () => {
     }
     catch (err) {
       console.error(t('errors.channelCreation'), err)
-      if (err.response?.status === 409) {
+      if (err?.status === 409) {
         toast.error(t('toast.channelExists'))
       }
       else {

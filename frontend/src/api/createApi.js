@@ -1,57 +1,89 @@
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import i18n from '../i18n'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const t = i18n.t.bind(i18n)
+const baseUrl = '/api/v1'
 
-const apiClient = axios.create()
+export const apiSlice = createApi({
+  reducerPath: 'api',
+  baseQuery: fetchBaseQuery({
+    baseUrl,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem('token')
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`)
+      }
+      return headers
+    },
+  }),
+  endpoints: (builder) => ({
 
-export const postApi = async (url, data, headers = {}) => {
-  try {
-    const response = await apiClient.post(`${url}`, data, { headers })
-    return response.data
-  }
-  catch (error) {
-    console.error(t('errors.api'), error)
-    toast.error(t('toast.networkError'))
-    throw error
-  }
-}
+    getChannels: builder.query({
+      query: () => '/channels',
+    }),
 
-export const deleteApi = async (url, headers = {}) => {
-  try {
-    const response = await apiClient.delete(`${url}`, { headers })
-    return response.data
-  }
-  catch (error) {
-    console.error(t('errors.api'), error)
-    toast.error(t('toast.networkError'))
-    throw error
-  }
-}
+    createChannel: builder.mutation({
+      query: (newChannel) => ({
+        url: '/channels',
+        method: 'POST',
+        body: newChannel,
+      }),
+    }),
 
-export const patchApi = async (url, data, headers = {}) => {
-  try {
-    const response = await apiClient.patch(`${url}`, data, { headers })
-    return response.data
-  }
-  catch (error) {
-    console.error(t('errors.api'), error)
-    toast.error(t('toast.networkError'))
-    throw error
-  }
-}
+    editChannel: builder.mutation({
+      query: ({ id, name }) => ({
+        url: `/channels/${id}`,
+        method: 'PATCH',
+        body: { name },
+      }),
+    }),
 
-export const getApi = async (url, headers = {}) => {
-  try {
-    const response = await apiClient.get(url, { headers })
-    return response.data
-  }
-  catch (error) {
-    console.error(t('errors.api'), error)
-    toast.error(t('toast.networkError'))
-    throw error
-  }
-}
+    deleteChannel: builder.mutation({
+      query: (id) => ({
+        url: `/channels/${id}`,
+        method: 'DELETE',
+      }),
+    }),
 
-export default apiClient
+    getMessages: builder.query({
+      query: () => '/messages',
+    }),
+    createMessage: builder.mutation({
+      query: (message) => ({
+        url: '/messages',
+        method: 'POST',
+        body: message,
+      }),
+    }),
+
+    login: builder.mutation({
+      query: (credentials) => ({
+        url: '/login',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
+    signup: builder.mutation({
+      query: (credentials) => ({
+        url: '/signup',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
+    getCurrentUser: builder.query({
+      query: () => '/users/me',
+    }),
+  }),
+})
+
+export const {
+  useGetChannelsQuery,
+  useCreateChannelMutation,
+  useEditChannelMutation,
+  useDeleteChannelMutation,
+  useGetMessagesQuery,
+  useCreateMessageMutation,
+  useLoginMutation,
+  useSignupMutation,
+  useGetCurrentUserQuery,
+} = apiSlice
+
+export default apiSlice
