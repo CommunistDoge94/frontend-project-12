@@ -1,6 +1,5 @@
 import { Provider, useDispatch } from 'react-redux'
 import { I18nextProvider } from 'react-i18next'
-import { ToastContainer } from 'react-toastify'
 import { Rollbar } from './utils/rollbar.jsx'
 import { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'
