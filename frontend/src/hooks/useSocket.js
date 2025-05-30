@@ -9,6 +9,14 @@ const useSocket = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    if (!socket.connected) {
+      const token = localStorage.getItem('token')
+      if (token) {
+        socket.auth.token = `Bearer ${token}`
+        socket.connect()
+      }
+    }
+
     const handleNewMessage = message => dispatch(addMessage(message))
 
     const handleNewChannel = channel => dispatch(addChannel({

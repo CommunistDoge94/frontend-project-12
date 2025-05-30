@@ -20,16 +20,30 @@ const AuthProvider = ({ children }) => {
   return children
 }
 
-const init = () => {
+const SocketInitializer = ({ children }) => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    return () => {
+      socket.disconnect()
+    }
+  }, [dispatch])
+  
+  return children
+}
+
+const init = (socket) => {
   return (
     <Rollbar>
       <Provider store={store}>
         <BrowserRouter>
           <AuthProvider>
-            <I18nextProvider i18n={i18n}>
-              <App />
-              <ToastContainer />
-            </I18nextProvider>
+            <SocketInitializer>
+              <I18nextProvider i18n={i18n}>
+                <App />
+                <ToastContainer />
+              </I18nextProvider>
+            </SocketInitializer>
           </AuthProvider>
         </BrowserRouter>
       </Provider>
