@@ -1,9 +1,34 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { apiRoutes } from '../api/api'
+import { getApi } from '../api/createApi'
+import { getAuthHeader } from '../utils/auth'
+
+export const checkAuth = createAsyncThunk(
+  'auth/checkAuth',
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem('token')
+    if (!token) return rejectWithValue('No token')
+
+    try {
+      await getApi(apiRoutes.getChannels(), getAuthHeader(token))
+      return {
+        token,
+        username: localStorage.getItem('username')
+      }
+    }
+    catch (error) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('username')
+      return rejectWithValue(error)
+    }
+  }
+)
 
 const initialState = {
   username: null,
   token: null,
   isLoggedIn: false,
+  initialized: false,
 }
 
 const authSlice = createSlice({
@@ -14,6 +39,7 @@ const authSlice = createSlice({
       state.username = action.payload.username
       state.token = action.payload.token
       state.isLoggedIn = true
+      state.initialized = true
     },
     logout(state) {
       state.username = null
@@ -21,6 +47,21 @@ const authSlice = createSlice({
       state.isLoggedIn = false
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(checkAuth.fulfilled, (state, action) => {
+        state.token = action.payload.token
+        state.username = action.payload.username
+        state.isLoggedIn = true
+        state.initialized = true
+      })
+      .addCase(checkAuth.rejected, (state) => {
+        state.token = null
+        state.username = null
+        state.isLoggedIn = false
+        state.initialized = true
+      })
+  }
 })
 
 export const { loginSuccess, logout } = authSlice.actions
