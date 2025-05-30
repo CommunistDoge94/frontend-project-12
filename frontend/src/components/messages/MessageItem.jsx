@@ -1,7 +1,7 @@
 const MessageItem = ({ message }) => {
   return (
     <div className="mb-2">
-      <b>
+      <b className="me-1">
         {message.username}
         :
       </b>
