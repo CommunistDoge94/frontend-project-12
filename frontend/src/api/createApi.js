@@ -10,16 +10,16 @@ export const apiSlice = createApi({
       if (token) {
         headers.set('Authorization', `Bearer ${token}`)
       }
-      
+
       return headers
     },
   }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getChannels: builder.query({
       query: () => apiRoutes.getChannels(),
     }),
     createChannel: builder.mutation({
-      query: (newChannel) => ({
+      query: newChannel => ({
         url: apiRoutes.createChannel(),
         method: 'POST',
         body: newChannel,
@@ -33,7 +33,7 @@ export const apiSlice = createApi({
       }),
     }),
     deleteChannel: builder.mutation({
-      query: (id) => ({
+      query: id => ({
         url: apiRoutes.deleteChannel(id),
         method: 'DELETE',
       }),
@@ -42,21 +42,21 @@ export const apiSlice = createApi({
       query: () => apiRoutes.getMessages(),
     }),
     createMessage: builder.mutation({
-      query: (message) => ({
+      query: message => ({
         url: apiRoutes.createMessage(),
         method: 'POST',
         body: message,
       }),
     }),
     login: builder.mutation({
-      query: (credentials) => ({
+      query: credentials => ({
         url: apiRoutes.login(),
         method: 'POST',
         body: credentials,
       }),
     }),
     signup: builder.mutation({
-      query: (credentials) => ({
+      query: credentials => ({
         url: apiRoutes.signup(),
         method: 'POST',
         body: credentials,
