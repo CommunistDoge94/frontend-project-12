@@ -24,7 +24,8 @@ const useChannels = () => {
       try {
         const newChannel = await createChannelMutation({ name }).unwrap()
         return { success: true, newChannel }
-      } catch (error) {
+      }
+      catch (error) {
         console.error(t('errors.addChannel'))
         handleError(error, t('toast.networkError'))
         return { success: false }
@@ -35,7 +36,8 @@ const useChannels = () => {
       try {
         await deleteChannelMutation(id).unwrap()
         return { success: true }
-      } catch (error) {
+      }
+      catch (error) {
         console.error(t('errors.removeChannel'))
         handleError(error, t('toast.channelRemoveError'))
         return { success: false }
@@ -46,14 +48,15 @@ const useChannels = () => {
       try {
         await editChannelMutation({ id, name }).unwrap()
         return { success: true }
-      } catch (error) {
+      }
+      catch (error) {
         console.log(t('errors.renameChannel'))
         handleError(error, t('toast.channelRenameError'))
         return { success: false }
       }
     },
 
-    setActiveChannel: (id) => dispatch(setActiveChannel(id)),
+    setActiveChannel: id => dispatch(setActiveChannel(id)),
   }
 }
 

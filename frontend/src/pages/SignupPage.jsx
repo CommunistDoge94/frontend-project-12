@@ -36,7 +36,8 @@ const SignupPage = () => {
 
       handleLogin(response.token, values.username)
       navigate('/', { replace: true })
-    } catch (error) {
+    }
+    catch (error) {
       if (error?.status === 409) {
         setErrors({ username: t('signupForm.error.userExists') })
       }

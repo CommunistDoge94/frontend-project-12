@@ -13,6 +13,6 @@ export default configureStore({
     modal: modalReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSlice.middleware),
 })

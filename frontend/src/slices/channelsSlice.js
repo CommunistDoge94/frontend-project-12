@@ -11,7 +11,7 @@ export const fetchChannels = createAsyncThunk(
     catch (error) {
       return rejectWithValue(error.message)
     }
-  }
+  },
 )
 
 const channelsSlice = createSlice({

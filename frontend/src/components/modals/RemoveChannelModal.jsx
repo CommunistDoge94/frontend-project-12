@@ -12,7 +12,7 @@ const RemoveChannelModal = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const { closeModal } = useModal()
-  const { channelId } = useSelector((state) => state.modal.extra || {})
+  const { channelId } = useSelector(state => state.modal.extra || {})
 
   const [deleteChannel] = useDeleteChannelMutation()
 

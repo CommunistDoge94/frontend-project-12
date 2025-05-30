@@ -11,7 +11,7 @@ export const fetchMessages = createAsyncThunk(
     catch (error) {
       return rejectWithValue(error.message)
     }
-  }
+  },
 )
 
 const messagesSlice = createSlice({

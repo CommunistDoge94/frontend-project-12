@@ -35,7 +35,7 @@ const RenameChannelModal = ({ channelId, currentName }) => {
 
     try {
       await editChannel({ id: channelId, name: filteredName }).unwrap()
-      
+
       toast.success(t('toast.channelRenamed'))
       dispatch(renameChannelAction({ id: channelId, name: filteredName }))
       closeModal()

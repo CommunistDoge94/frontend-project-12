@@ -19,7 +19,7 @@ export const checkAuth = createAsyncThunk(
       localStorage.removeItem('username')
       return rejectWithValue(error)
     }
-  }
+  },
 )
 
 const initialState = {
