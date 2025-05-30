@@ -35,7 +35,6 @@ const init = (socket) => {
             <SocketProvider socket={socket}>
               <I18nextProvider i18n={i18n}>
                 <App />
-                <ToastContainer />
               </I18nextProvider>
             </SocketProvider>
           </AuthProvider>
