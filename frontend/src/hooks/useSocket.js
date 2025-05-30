@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import socket from '../socket'
 import { addChannel, removeChannel, renameChannel } from '../slices/channelsSlice'
 import { addMessage, removeMessagesByChannelId } from '../slices/messagesSlice'
+import socket from '../socket'
 
 const useSocket = () => {
   const dispatch = useDispatch()
@@ -12,6 +12,7 @@ const useSocket = () => {
     if (!socket.connected) {
       const token = localStorage.getItem('token')
       if (token) {
+        socket.auth = socket.auth || {}
         socket.auth.token = `Bearer ${token}`
         socket.connect()
       }

@@ -3,12 +3,13 @@ import { I18nextProvider } from 'react-i18next'
 import { ToastContainer } from 'react-toastify'
 import { Rollbar } from './utils/rollbar.jsx'
 import { useEffect } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
 import App from './App.jsx'
 import i18n from './i18n.js'
 import store from './store/index.js'
-import { BrowserRouter } from 'react-router-dom'
 import { checkAuth } from './slices/authSlice'
+import useSocket from './hooks/useSocket.js'
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch()
@@ -20,15 +21,8 @@ const AuthProvider = ({ children }) => {
   return children
 }
 
-const SocketInitializer = ({ children }) => {
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    return () => {
-      socket.disconnect()
-    }
-  }, [dispatch])
-  
+const SocketProvider = ({ children, socket }) => {
+  useSocket(socket)
   return children
 }
 
@@ -38,12 +32,12 @@ const init = (socket) => {
       <Provider store={store}>
         <BrowserRouter>
           <AuthProvider>
-            <SocketInitializer>
+            <SocketProvider socket={socket}>
               <I18nextProvider i18n={i18n}>
                 <App />
                 <ToastContainer />
               </I18nextProvider>
-            </SocketInitializer>
+            </SocketProvider>
           </AuthProvider>
         </BrowserRouter>
       </Provider>

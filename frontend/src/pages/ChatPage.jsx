@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 
 import { fetchMessages, selectMessages } from '../slices/messagesSlice'
 import { fetchChannels, selectChannels, selectActiveChannelId } from '../slices/channelsSlice'
-import useSocket from '../hooks/useSocket'
 import ModalManager from '../components/modals/ModalManager'
 import ChannelsList from '../components/channels/ChannelsList'
 import MessagesList from '../components/messages/MessagesList'
@@ -29,8 +28,6 @@ const ChatPage = () => {
     () => messages.filter(msg => msg.channelId === activeChannelId).length,
     [messages, activeChannelId],
   )
-
-  useSocket()
 
   useEffect(() => {
     dispatch(fetchChannels())
