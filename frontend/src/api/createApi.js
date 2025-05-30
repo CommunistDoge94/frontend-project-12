@@ -1,76 +1,68 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
-const baseUrl = '/api/v1'
+import { API_BASE, apiRoutes } from './apiRoutes'
 
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl,
+    baseUrl: API_BASE,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('token')
       if (token) {
         headers.set('Authorization', `Bearer ${token}`)
       }
-
       return headers
     },
   }),
-  endpoints: builder => ({
-
+  endpoints: (builder) => ({
     getChannels: builder.query({
-      query: () => '/channels',
+      query: () => apiRoutes.getChannels(),
     }),
-
     createChannel: builder.mutation({
-      query: newChannel => ({
-        url: '/channels',
+      query: (newChannel) => ({
+        url: apiRoutes.createChannel(),
         method: 'POST',
         body: newChannel,
       }),
     }),
-
     editChannel: builder.mutation({
       query: ({ id, name }) => ({
-        url: `/channels/${id}`,
+        url: apiRoutes.editChannel(id),
         method: 'PATCH',
         body: { name },
       }),
     }),
-
     deleteChannel: builder.mutation({
-      query: id => ({
-        url: `/channels/${id}`,
+      query: (id) => ({
+        url: apiRoutes.deleteChannel(id),
         method: 'DELETE',
       }),
     }),
-
     getMessages: builder.query({
-      query: () => '/messages',
+      query: () => apiRoutes.getMessages(),
     }),
     createMessage: builder.mutation({
-      query: message => ({
-        url: '/messages',
+      query: (message) => ({
+        url: apiRoutes.createMessage(),
         method: 'POST',
         body: message,
       }),
     }),
-
     login: builder.mutation({
-      query: credentials => ({
-        url: '/login',
+      query: (credentials) => ({
+        url: apiRoutes.login(),
         method: 'POST',
         body: credentials,
       }),
     }),
     signup: builder.mutation({
-      query: credentials => ({
-        url: '/signup',
+      query: (credentials) => ({
+        url: apiRoutes.signup(),
         method: 'POST',
         body: credentials,
       }),
     }),
     getCurrentUser: builder.query({
-      query: () => '/users/me',
+      query: () => apiRoutes.getCurrentUser(),
     }),
   }),
 })
