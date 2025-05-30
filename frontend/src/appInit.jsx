@@ -13,7 +13,7 @@ import useSocket from './hooks/useSocket.js'
 
 const AuthProvider = ({ children }) => {
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     dispatch(checkAuth())
   }, [dispatch])

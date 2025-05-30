@@ -13,7 +13,7 @@ export const checkAuth = createAsyncThunk(
       await getApi(apiRoutes.getChannels(), getAuthHeader(token))
       return {
         token,
-        username: localStorage.getItem('username')
+        username: localStorage.getItem('username'),
       }
     }
     catch (error) {
@@ -21,7 +21,7 @@ export const checkAuth = createAsyncThunk(
       localStorage.removeItem('username')
       return rejectWithValue(error)
     }
-  }
+  },
 )
 
 const initialState = {
@@ -61,7 +61,7 @@ const authSlice = createSlice({
         state.isLoggedIn = false
         state.initialized = true
       })
-  }
+  },
 })
 
 export const { loginSuccess, logout } = authSlice.actions
