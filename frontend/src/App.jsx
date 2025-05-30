@@ -19,27 +19,27 @@ const App = () => {
           <Routes>
             <Route
               path="/signup"
-              element={
+              element={(
                 <UnauthenticatedRoute>
                   <SignupPage />
                 </UnauthenticatedRoute>
-              }
+              )}
             />
             <Route
               path="/login"
-              element={
+              element={(
                 <UnauthenticatedRoute>
                   <LoginPage />
                 </UnauthenticatedRoute>
-              }
+              )}
             />
             <Route
               path="/"
-              element={
+              element={(
                 <PrivateRoute>
                   <ChatPage />
                 </PrivateRoute>
-              }
+              )}
             />
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/404" replace />} />
